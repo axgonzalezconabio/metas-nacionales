@@ -31,7 +31,7 @@ class ContenidoSeed {
 
       final ejeIds = <String, int>{};
       final metaGlobalIds = <String, int>{};
-      final metaNacionalIds = <String, int>{};
+      final metaNacionalIds = <String, int>{};  
 
       Future<int> insertarEje({
         required String nombre,
@@ -54,6 +54,7 @@ class ContenidoSeed {
       Future<int> insertarMetaGlobal({
         required String codigo,
         required String nombre,
+        required String descripcion,
         required String eje,
         required int orden,
       }) async {
@@ -63,7 +64,7 @@ class ContenidoSeed {
               MetasGlobalesCompanion.insert(
                 codigo: codigo,
                 nombre: nombre,
-                descripcion: Value(nombre),
+                descripcion: Value(descripcion),
                 ejeId: ejeIds[eje]!,
                 orden: orden,
               ),
@@ -173,66 +174,162 @@ class ContenidoSeed {
 
       // -------------------------------------------------------------------
       // 23 METAS GLOBALES
-      // La numeración oficial se conserva exactamente.
+      //
+      // Las descripciones corresponden al texto de las Metas Globales
+      // presentado en la Guía oficial (primera edición, 2026).
+      //
+      // En la base de datos se normalizan los códigos como 1.0…23.0
+      // para diferenciarlos de las Metas Nacionales (1.1, 1.2, etc.).
       // -------------------------------------------------------------------
-      const metasGlobales = <String, String>{
-        '1': "Planificación espacial",
-        '2': "Restauración de ecosistemas",
-        '3': "Conservación de áreas",
-        '4': "Detener la extinción de especies",
-        '5': "Uso y comercio de especies",
-        '6': "Reducción de especies exóticas invasoras (EEI)",
-        '7': "Reducción de la contaminación",
-        '8': "Reducción de los impactos del cambio climático",
-        '9': "Gestión sustentable de especies silvestres",
-        '10': "Integración de la biodiversidad en los sectores productivos",
-        '11': "Contribuciones de la naturaleza",
-        '12': "Mejora de espacios verdes y azules en zonas urbanas",
-        '13': "Beneficios de los recursos genéticos",
-        '14': "Integrar la biodiversidad en la toma de decisiones",
-        '15': "Responsabilidad empresarial y financiera en la biodiversidad",
-        '16': "Consumo sustentable",
-        '17': "Fortalecimiento de la bioseguridad",
-        '18': "Incentivos y subsidios",
-        '19': "Financiamiento para la biodiversidad",
-        '20': "Fortalecimiento de capacidades y cooperación",
-        '21': "Acceso al conocimiento",
-        '22': "Participación social en la toma de decisiones",
-        '23': "Igualdad de género al aplicar el Marco",
-      };
-
-      const ejePorMetaGlobal = <String, String>{
-        '1': 'Conservar',
-        '2': 'Conservar',
-        '3': 'Conservar',
-        '4': 'Conservar',
-        '5': 'Evitar',
-        '6': 'Evitar',
-        '7': 'Evitar',
-        '8': 'Evitar',
-        '9': 'Salvaguardar',
-        '10': 'Salvaguardar',
-        '11': 'Salvaguardar',
-        '12': 'Salvaguardar',
-        '13': 'Salvaguardar',
-        '14': 'Actuar',
-        '15': 'Actuar',
-        '16': 'Actuar',
-        '17': 'Actuar',
-        '18': 'Actuar',
-        '19': 'Actuar',
-        '20': 'Actuar',
-        '21': 'Actuar',
-        '22': 'Actuar',
-        '23': 'Actuar',
+      const metasGlobales = <String, Map<String, String>>{
+        '1.0': {
+          'nombre': 'Planificación espacial',
+          'descripcion':
+              'Garantizar que todas las zonas estén sujetas a planificación espacial participativa integrada que tenga en cuenta la biodiversidad y/o procesos de gestión eficaces que aborden el cambio en el uso de la tierra y los océanos, a fin de que la pérdida de zonas de suma importancia para la biodiversidad, incluidos los ecosistemas de gran integridad ecológica, se acerque a cero para 2030, respetando al mismo tiempo los derechos de los pueblos indígenas y las comunidades locales.',
+          'eje': 'Conservar',
+        },
+        '2.0': {
+          'nombre': 'Restauración de ecosistemas',
+          'descripcion':
+              'Garantizar que para 2030 al menos un 30 % de las zonas de ecosistemas terrestres, de aguas continentales y costeros y marinos degradados estén siendo objeto de una restauración efectiva, con el fin de mejorar la biodiversidad y las funciones y los servicios de los ecosistemas y la integridad y conectividad ecológicas.',
+          'eje': 'Conservar',
+        },
+        '3.0': {
+          'nombre': 'Conservación de áreas',
+          'descripcion':
+              'Garantizar y hacer posible que, para 2030, al menos un 30 % de las zonas terrestres y de aguas continentales y de las zonas marinas y costeras, especialmente las zonas de particular importancia para la biodiversidad y las funciones y los servicios de los ecosistemas, se conserven y gestionen eficazmente mediante sistemas de áreas protegidas ecológicamente representativos, bien conectados y gobernados equitativamente y otras medidas de conservación eficaces basadas en áreas, reconociendo, cuando proceda, los territorios indígenas y tradicionales, y que estén integradas a los paisajes terrestres, marinos y oceánicos más amplios, garantizando al mismo tiempo que toda utilización sostenible, cuando proceda en dichas zonas, sea plenamente coherente con la obtención de resultados de conservación, reconociendo y respetando los derechos de los pueblos indígenas y las comunidades locales, incluidos aquellos relativos a sus territorios tradicionales.',
+          'eje': 'Conservar',
+        },
+        '4.0': {
+          'nombre': 'Detener la extinción de especies',
+          'descripcion':
+              'Garantizar que se adopten con urgencia medidas de gestión para detener la extinción de especies amenazadas conocidas y para la recuperación y conservación de las especies, en particular, las especies amenazadas, a fin de reducir significativamente el riesgo de extinción, así como de mantener y restaurar la diversidad genética entre las poblaciones de especies autóctonas, silvestres y domesticadas y dentro de ellas a fin de preservar su potencial de adaptación, entre otras cosas, mediante prácticas sostenibles de gestión y conservación in situ y ex situ, y gestionar eficazmente las interacciones entre los seres humanos y la fauna y flora silvestres, con miras a reducir al mínimo los conflictos entre los seres humanos y las especies silvestres en favor de la coexistencia.',
+          'eje': 'Conservar',
+        },
+        '5.0': {
+          'nombre': 'Uso y comercio de especies',
+          'descripcion':
+              'Garantizar que el uso, la recolección y el comercio de especies silvestres sea sostenible, seguro y lícito, previniendo la sobreexplotación, minimizando los impactos sobre las especies no buscadas y los ecosistemas, y reduciendo el riesgo de propagación de patógenos, aplicando el enfoque por ecosistemas, al tiempo que se respeta y protege la utilización consuetudinaria sostenible por los pueblos indígenas y las comunidades locales.',
+          'eje': 'Evitar',
+        },
+        '6.0': {
+          'nombre': 'Reducción de especies exóticas invasoras (EEI)',
+          'descripcion':
+              'Eliminar, minimizar o reducir las especies exóticas invasoras o mitigar sus impactos en la biodiversidad y los servicios de los ecosistemas mediante la detección y la gestión de las vías de introducción de las especies exóticas, previniendo la introducción y el establecimiento de especies exóticas invasoras prioritarias, reduciendo las tasas de introducción y establecimiento de otras especies exóticas invasoras conocidas o potenciales en al menos un 50% para 2030, y erradicando o controlando las especies exóticas invasoras, en especial en lugares prioritarios, como las islas.',
+          'eje': 'Evitar',
+        },
+        '7.0': {
+          'nombre': 'Reducción de la contaminación',
+          'descripcion':
+              'Reducir para 2030 los riesgos de contaminación y el impacto negativo de la contaminación de todas las fuentes a niveles que no sean perjudiciales para la diversidad biológica y las funciones y los servicios de los ecosistemas, considerando los efectos acumulativos, entre otras cosas: a) reduciendo al menos a la mitad el exceso de nutrientes que se liberan al medio ambiente, como por ejemplo mediante un ciclo y un uso más eficientes de los nutrientes; b) reduciendo el riesgo general de los plaguicidas y las sustancias químicas altamente peligrosas al menos a la mitad, incluido mediante la gestión integrada de plagas, basándose en la ciencia, teniendo en cuenta la seguridad alimentaria y los medios de vida; y c) previniendo, reduciendo y procurando eliminar la contaminación por plástico.',
+          'eje': 'Evitar',
+        },
+        '8.0': {
+          'nombre': 'Reducción de los impactos del cambio climático',
+          'descripcion':
+              'Minimizar el impacto del cambio climático y la acidificación de los océanos en la biodiversidad, y aumentar su resiliencia mediante medidas de mitigación, adaptación y reducción del riesgo de desastres, entre otras cosas por medio de soluciones basadas en la naturaleza y/o enfoques basados en los ecosistemas, al tiempo que se minimizan los impactos negativos y se fomentan los impactos positivos de la acción por el clima en la biodiversidad.',
+          'eje': 'Evitar',
+        },
+        '9.0': {
+          'nombre': 'Gestión sustentable de especies silvestres',
+          'descripcion':
+              'Garantizar que la gestión y el uso de especies silvestres sean sostenibles, proporcionando así beneficios sociales, económicos y ambientales para las personas, en especial aquellas que se encuentran en situaciones de vulnerabilidad y aquellas que más dependen de la biodiversidad, entre otras cosas, mediante actividades, productos y servicios sostenibles basados en la biodiversidad que la fortalezcan, y mediante la protección y promoción de la utilización consuetudinaria sostenible por los pueblos indígenas y las comunidades locales.',
+          'eje': 'Salvaguardar',
+        },
+        '10.0': {
+          'nombre': 'Integración de la biodiversidad en los sectores productivos',
+          'descripcion':
+              'Garantizar que las superficies dedicadas a la agricultura, la acuicultura, la pesca y la silvicultura se gestionen de manera sostenible, en particular a través de la utilización sostenible de la diversidad biológica, entre otras cosas, mediante un aumento sustancial del empleo de prácticas favorables a la diversidad biológica, tales como enfoques de intensificación sostenible, enfoques agroecológicos y otros enfoques innovadores, contribuyendo a la resiliencia y a la eficiencia y productividad a largo plazo de estos sistemas de producción y a la seguridad alimentaria, conservando y restaurando la diversidad biológica y manteniendo las contribuciones de la naturaleza a las personas, entre ellas las funciones y los servicios de los ecosistemas.',
+          'eje': 'Salvaguardar',
+        },
+        '11.0': {
+          'nombre': 'Contribuciones de la naturaleza',
+          'descripcion':
+              'Restaurar, mantener y mejorar las contribuciones de la naturaleza a las personas, entre ellas las funciones y los servicios de los ecosistemas, tales como la regulación del aire, el agua y el clima, la salud de los suelos, la polinización y la reducción del riesgo de enfermedades, así como la protección frente a peligros y desastres naturales, mediante soluciones basadas en la naturaleza y/o enfoques basados en los ecosistemas en beneficio de todas las personas y la naturaleza.',
+          'eje': 'Salvaguardar',
+        },
+        '12.0': {
+          'nombre': 'Mejora de espacios verdes y azules en zonas urbanas',
+          'descripcion':
+              'Aumentar significativamente la superficie, la calidad y la conectividad de los espacios verdes y azules en las zonas urbanas y densamente pobladas, así como el acceso a ellos y los beneficios que se deriven de ellos, de manera sostenible, integrando la conservación y la utilización sostenible de la diversidad biológica, y garantizar una planificación urbana que tenga en cuenta la diversidad biológica, mejorando la diversidad biológica autóctona, la conectividad y la integridad ecológicas y mejorando la salud y el bienestar de los seres humanos y su conexión con la naturaleza, así como contribuyendo a una urbanización inclusiva y sostenible y a la prestación de funciones y servicios de los ecosistemas.',
+          'eje': 'Salvaguardar',
+        },
+        '13.0': {
+          'nombre': 'Beneficios de los recursos genéticos',
+          'descripcion':
+              'Tomar medidas jurídicas, de políticas, administrativas y de creación de capacidad a todos los niveles, según proceda, con miras a lograr la participación justa y equitativa en los beneficios que se deriven de la utilización de los recursos genéticos y de la información digital sobre secuencias de recursos genéticos, así como de los conocimientos tradicionales asociados a los recursos genéticos, y a lograr que para 2030 se haya propiciado un aumento significativo de los beneficios compartidos, de conformidad con los instrumentos internacionales de acceso y participación en los beneficios aplicables.',
+          'eje': 'Salvaguardar',
+        },
+        '14.0': {
+          'nombre': 'Integrar la biodiversidad en la toma de decisiones',
+          'descripcion':
+              'Garantizar la integración plena de la biodiversidad y sus múltiples valores en las políticas, los reglamentos, los procesos de planificación y de desarrollo, las estrategias de erradicación de la pobreza, las evaluaciones ambientales estratégicas y las evaluaciones de impacto ambiental y, cuando proceda, las cuentas nacionales, en todos los niveles de gobierno y todos los sectores, en particular aquellos que provocan impactos significativos en la biodiversidad, armonizando progresivamente todas las actividades públicas y privadas pertinentes y las corrientes financieras y fiscales con los objetivos y las metas del presente Marco.',
+          'eje': 'Actuar',
+        },
+        '15.0': {
+          'nombre': 'Responsabilidad empresarial y financiera en la biodiversidad',
+          'descripcion':
+              'Tomar medidas jurídicas, administrativas o de políticas para alentar y habilitar a las empresas para que, y en particular, en el caso de las empresas transnacionales y las instituciones financieras, garantizar que: a) Hagan periódicamente un seguimiento y una evaluación de sus riesgos, dependencias de la biodiversidad e impactos en ella, y los den a conocer de manera transparente, incluido, en el caso de las grandes empresas y las empresas transnacionales e instituciones financieras, mediante el establecimiento de requisitos a lo largo de sus operaciones, cadenas de suministro y de valor y carteras; b) Proporcionen la información necesaria a los consumidores a fin de promover modalidades de consumo sostenibles; c) Informen sobre el cumplimiento de los reglamentos y medidas de acceso y participación en los beneficios, según proceda; con el fin de reducir progresivamente los impactos negativos en la biodiversidad, aumentar los impactos positivos, reducir los riesgos relacionados con la biodiversidad para las empresas y las instituciones financieras, y promover acciones encaminadas a lograr modalidades de producción sostenibles.',
+          'eje': 'Actuar',
+        },
+        '16.0': {
+          'nombre': 'Consumo sustentable',
+          'descripcion':
+              'Garantizar que se aliente y apoye a las personas para que elijan opciones de consumo sostenible, entre otras cosas mediante el establecimiento de marcos de políticas, legislativos o normativos de apoyo, mejorando la enseñanza y el acceso a información pertinente y precisa y alternativas, y, para 2030, reducir la huella mundial del consumo de manera equitativa, entre otras cosas reduciendo a la mitad el desperdicio mundial de alimentos, reduciendo significativamente el consumo excesivo, y reduciendo sustancialmente la generación de desechos, a fin de que todas las personas puedan vivir bien en armonía con la Madre Tierra.',
+          'eje': 'Actuar',
+        },
+        '17.0': {
+          'nombre': 'Fortalecimiento de la bioseguridad',
+          'descripcion':
+              'En todos los países, establecer y aplicar medidas de seguridad de la biotecnología, y reforzar la capacidad al respecto, tal como se establece en el artículo 8 g) del Convenio sobre la Diversidad Biológica, y medidas para la gestión de la biotecnología y la distribución de sus beneficios, tal como se establece en el artículo 19 del Convenio.',
+          'eje': 'Actuar',
+        },
+        '18.0': {
+          'nombre': 'Incentivos y subsidios',
+          'descripcion':
+              'Identificar para 2025 y eliminar gradualmente o reformar los incentivos, entre ellos los subsidios, perjudiciales para la diversidad biológica, de manera proporcionada, justa, efectiva y equitativa, reduciéndolos sustancial y progresivamente en al menos 500 000 millones de dólares de los Estados Unidos al año para 2030, empezando por los incentivos más perjudiciales, y aumentar los incentivos positivos para la conservación y la utilización sostenible de la diversidad biológica.',
+          'eje': 'Actuar',
+        },
+        '19.0': {
+          'nombre': 'Financiamiento para la biodiversidad',
+          'descripcion':
+              'Aumentar sustancial y progresivamente, de manera eficaz, oportuna y de fácil acceso, el nivel de recursos financieros de todas las fuentes, entre ellos los recursos nacionales, internacionales, públicos y privados, de conformidad con el artículo 20 del Convenio, a fin de implementar las estrategias y planes de acción nacionales en materia de biodiversidad, movilizando al menos 200 000 millones de dólares de los Estados Unidos al año para 2030, entre otras cosas: a) Aumentando el total de recursos financieros internacionales relacionados con la biodiversidad procedentes de los países desarrollados, incluida la asistencia oficial para el desarrollo, y de los países que asuman voluntariamente las obligaciones de las Partes que son países desarrollados, para los países en desarrollo, en particular, los países menos adelantados y los pequeños Estados insulares en desarrollo, así como los países con economías en transición, al menos a 20 000 millones de dólares de los Estados Unidos al año para 2025 y al menos a 30 000 millones de dólares al año para 2030; b) Aumentando significativamente la movilización de recursos nacionales, facilitada mediante la preparación y aplicación de planes nacionales de financiación de la biodiversidad o instrumentos similares de acuerdo con las necesidades, prioridades y circunstancias nacionales; c) Apalancando la financiación privada, promoviendo la financiación combinada, aplicando estrategias de obtención de recursos nuevos y adicionales, y alentando al sector privado a invertir en la biodiversidad, entre otras cosas, mediante fondos de impacto y otros instrumentos; d) Estimulando planes innovadores, como pagos por los servicios de los ecosistemas, bonos verdes, compensaciones y créditos de biodiversidad y mecanismos de participación en los beneficios, con salvaguardias ambientales y sociales; e) Optimizando los beneficios secundarios y las sinergias de la financiación destinada a atender las crisis de la biodiversidad y del clima; f) Reforzando el papel de las acciones colectivas, entre ellas las de los pueblos indígenas y las comunidades locales, las acciones centradas en la Madre Tierra y los enfoques no relacionados con el mercado, incluida la gestión comunitaria de los recursos naturales y la cooperación y solidaridad de la sociedad civil dirigidas a la conservación de la diversidad biológica; g) Reforzando la eficacia, eficiencia y transparencia de la provisión y utilización de los recursos.',
+          'eje': 'Actuar',
+        },
+        '20.0': {
+          'nombre': 'Fortalecimiento de capacidades y cooperación',
+          'descripcion':
+              'Fortalecer la creación y el desarrollo de capacidad, así como el acceso a tecnología y transferencia de tecnología, y promover el desarrollo y el acceso a la innovación y la cooperación científica y técnica, incluido a través de la cooperación Sur-Sur, Norte-Sur y triangular, para satisfacer las necesidades de una implementación eficaz, en particular en los países en desarrollo, promoviendo el desarrollo conjunto de tecnología y programas conjuntos de investigación científica para la conservación y la utilización sostenible de la diversidad biológica y el fortalecimiento de las capacidades de investigación científica y de seguimiento, en forma acorde con el nivel de ambición de los objetivos y las metas del Marco.',
+          'eje': 'Actuar',
+        },
+        '21.0': {
+          'nombre': 'Acceso al conocimiento',
+          'descripcion':
+              'Lograr que los mejores datos, información y conocimientos estén disponibles a los encargados de la toma de decisiones, los profesionales y el público, para que guíen una gobernanza eficaz y equitativa, una gestión integrada y participativa de la diversidad biológica, y para mejorar la comunicación, la concienciación, la educación, la investigación y la gestión de los conocimientos, y también en el contexto de que solo se disponga de los conocimientos tradicionales, las innovaciones, las prácticas y las tecnologías de los pueblos indígenas y las comunidades locales con su consentimiento libre, previo e informado, de conformidad con la legislación nacional.',
+          'eje': 'Actuar',
+        },
+        '22.0': {
+          'nombre': 'Participación social en la toma de decisiones',
+          'descripcion':
+              'Garantizar la participación y representación plena, equitativa, inclusiva, efectiva y con perspectiva de género de los pueblos indígenas y las comunidades locales en la toma de decisiones, y su acceso a la justicia y a información en materia de biodiversidad, respetando sus culturas y sus derechos sobre las tierras, los territorios, los recursos y los conocimientos tradicionales, así como de las mujeres y las niñas, la infancia y la juventud y las personas con discapacidad, y garantizar la protección plena de los defensores y las defensoras de los derechos humanos relacionados con el medio ambiente.',
+          'eje': 'Actuar',
+        },
+        '23.0': {
+          'nombre': 'Igualdad de género al aplicar el Marco',
+          'descripcion':
+              'Garantizar la igualdad de género en la implementación del Marco mediante un enfoque con perspectiva de género en el cual todas las mujeres y las niñas tengan igualdad de oportunidades y capacidad para contribuir a los tres objetivos del Convenio, entre otras cosas reconociendo su igualdad en cuanto a los derechos y el acceso a las tierras y a los recursos naturales y su participación y liderazgo plenos, equitativos, significativos e informados en todos los niveles de acción, participación, formulación de políticas y toma de decisiones relacionados con la biodiversidad.',
+          'eje': 'Actuar',
+        },
       };
 
       for (var i = 1; i <= 23; i++) {
-        final codigo = i.toString();
+        final codigo = '$i.0';
+        final metaGlobal = metasGlobales[codigo]!;
         await insertarMetaGlobal(
           codigo: codigo,
-          nombre: metasGlobales[codigo]!,
-          eje: ejePorMetaGlobal[codigo]!,
+          nombre: metaGlobal['nombre']!,
+          descripcion: metaGlobal['descripcion']!,
+          eje: metaGlobal['eje']!,
           orden: i,
         );
       }
@@ -246,285 +343,292 @@ class ContenidoSeed {
           'nombre': "Ordenamientos ecológicos, territoriales, turísticos y de desarrollo urbano",
           'descripcion': "Para 2030, 80% de las entidades del país cuentan con instrumentos de planeación ecológica, territorial, de desarrollo urbano y turístico, los cuales son decretados mediante procesos de planeación espacial adaptativa, participativa, transparente y armonizada, considerando criterios de conservación, manejo sustentable de la biodiversidad, del patrimonio biocultural, bajo principios de igualdad y equidad.",
           'eje': 'Conservar',
-          'global': '1',
+          'global': '1.0',
         },
         '1.2': {
           'nombre': "Ordenamiento ecológico marino",
           'descripcion': "Al 2027, 100% de las zonas marinas mexicanas y sus zonas federales adyacentes cuentan con Programas de Ordenamiento Ecológico Marino en ejecución que se monitorean y evalúan para su actualización y mejora.",
           'eje': 'Conservar',
-          'global': '1',
+          'global': '1.0',
         },
         '1.3': {
           'nombre': "Gestión sustentable de mares y costas",
           'descripcion': "Al 2030, México implementa el manejo integrado del territorio marítimo mexicano mediante la ejecución de la Política Nacional para el Manejo Sustentable de Mares y Costas de México (pnmsmcm) actualizada.",
           'eje': 'Conservar',
-          'global': '1',
+          'global': '1.0',
         },
         '1.4': {
           'nombre': "Tasa de cero deforestación neta",
-          'descripcion': "Para 2030, en México se logra una tasa de 0% deforestación neta.",
+          'descripcion':
+              "Para 2030, en México se logra una tasa de 0% deforestación neta.",
           'eje': 'Conservar',
-          'global': '1',
+          'global': '1.0',
         },
         '2.1': {
           'nombre': "Restauración de ecosistemas terrestres degradados",
           'descripcion': "Al 2030, la restauración ambiental se ha convertido en una política pública prioritaria.",
           'eje': 'Conservar',
-          'global': '2',
+          'global': '2.0',
         },
         '2.2': {
           'nombre':
               "Restauración de ecosistemas acuáticos continentales degradados",
           'descripcion': "Para 2030, se mejora la integridad ecológica del 30% de los cuerpos de agua continentales.",
           'eje': 'Conservar',
-          'global': '2',
+          'global': '2.0',
         },
         '2.3': {
           'nombre': "Restauración de ecosistemas marinos y costeros degradados",
           'descripcion': "Al 2030, al menos 30% de la superficie de los ecosistemas marinos y costeros degradados, se encuentran en proceso de restauración efectiva¹ y de uso sostenible, tomando en cuenta escenarios de cambio climático.",
           'eje': 'Conservar',
-          'global': '2',
+          'global': '2.0',
         },
         '3.1': {
           'nombre': "Incremento de la superficie de áreas naturales protegidas",
           'descripcion': "Para 2030, México incrementa 30% la superficie terrestre protegida y 30% la superficie marina, de manera efectiva a través de los sistemas de áreas naturales protegidas (anp) federales, estatales y municipales.",
           'eje': 'Conservar',
-          'global': '3',
+          'global': '3.0',
         },
         '3.2': {
           'nombre': "Establecimiento del sistema nacional de otras medidas efectivas de conservación basadas en áreas",
           'descripcion': "Para 2030, se implementa el sistema nacional de reconocimiento, registro, monitoreo, evaluación y reporte de otras medidas efectivas de conservación basadas en áreas (omec).",
           'eje': 'Conservar',
-          'global': '3',
+          'global': '3.0',
         },
         '4.0': {
           'nombre': "Reducción del riesgo para especies en peligro de extinción y amenazadas",
           'descripcion': "Para 2030, México adopta y fortalece medidas de gestión para la recuperación y conservación de las especies silvestres en peligro de extinción y amenazadas según la nom-059-semarnat-2010¹, incluidas las poblaciones que se encuentran bajo manejo, y establece e implementa acciones de conservación y monitoreo de la diversidad genética asociada a especies importantes para la agrobiodiversidad.",
           'eje': 'Conservar',
-          'global': '4',
+          'global': '4.0',
         },
         '5.0': {
           'nombre': "Uso y comercio sustentables de especies silvestres",
-          'descripcion': "Al 2030 se cuenta con los mecanismos robustos y armonizados para conducir la sustentabilidad, legalidad, trazabilidad y seguridad de las actividades extractivas y de comercio de la vida silvestre.",
+          'descripcion':
+              "Al 2030 se cuenta con los mecanismos robustos y armonizados para conducir la sustentabilidad, legalidad, trazabilidad y seguridad de las actividades extractivas y de comercio de la vida silvestre.",
           'eje': 'Evitar',
-          'global': '5',
+          'global': '5.0',
         },
         '6.1': {
           'nombre': "Prevención y reducción de la introducción de especies exóticas invasoras",
           'descripcion': "Al 2030, México cuenta con programas, herramientas e instrumentos para prevenir y reducir la introducción de especies exóticas invasoras (eei) en las principales rutas de introducción asociadas a las actividades humanas.",
           'eje': 'Evitar',
-          'global': '6',
+          'global': '6.0',
         },
         '6.2': {
           'nombre': "Gestión de especies exóticas invasoras en áreas naturales protegidas insulares",
           'descripcion': "Para 2030, México implementa acciones para la prevención, manejo, control y erradicación de poblaciones de especies exóticas invasoras (eei) que amenazan la integridad de los ecosistemas en las áreas naturales protegidas (anp) insulares.",
           'eje': 'Evitar',
-          'global': '6',
+          'global': '6.0',
         },
         '6.3': {
           'nombre': "Gestión de especies exóticas invasoras en áreas naturales protegidas continentales",
           'descripcion': "Para 2030, México implementa acciones de prevención, manejo, control y erradicación de especies exóticas invasoras (eei) en áreas naturales protegidas (anp) continentales.",
           'eje': 'Evitar',
-          'global': '6',
+          'global': '6.0',
         },
         '7.1': {
           'nombre': "Reducción de la contaminación de agua",
           'descripcion': "Para 2030, se mejora la calidad de cuerpos de agua epicontinentales bajo estrategias efectivas de monitoreo, prevención, control y reducción de contaminantes, incluidos tres ríos de interés: Tula, Lerma-Santiago y Atoyac.",
           'eje': 'Evitar',
-          'global': '7',
+          'global': '7.0',
         },
         '7.2': {
           'nombre': "Reducción de la contaminación del suelo",
           'descripcion': "Para 2030, México optimiza la gestión del uso de Plaguicidas Altamente Peligrosos (pap) para contribuir a reducir la contaminación del suelo.",
           'eje': 'Evitar',
-          'global': '7',
+          'global': '7.0',
         },
         '7.3': {
           'nombre': "Reducción de la contaminación del aire mediante la disminución del consumo de hfc",
           'descripcion': "Reducir el consumo de hidrofluorocarbonos (hfc) en un 10% para 2030, a través de la implementación del Plan de reducción gradual del consumo nacional de hfc, a fin de disminuir los efectos del cambio climático y contribuir a protección de la biosfera, la biodiversidad, los ecosistemas y los ciclos globales¹, en el marco de la implementación del Protocolo de Montreal en México.",
           'eje': 'Evitar',
-          'global': '7',
+          'global': '7.0',
         },
         '7.4': {
           'nombre': "Reducción de la contaminación del aire mediante la eliminación del consumo de hcfc",
           'descripcion': "Para 2030, se elimina 100% del consumo de hidroclorofluorocarbonos (hcfc), bajo los siguientes consumos máximos permitidos para estas sustancias, por año en toneladas pao (tpao¹): 209.20 en 2025 y 2026, 190.90 en 2027, 135.70 en 2028, 123.40 en 2029 y 0 en 2030.",
           'eje': 'Evitar',
-          'global': '7',
+          'global': '7.0',
         },
         '7.5': {
           'nombre': "Reducción de la contaminación marina y costera",
           'descripcion': "Para 2030, se refuerzan las políticas, programas y medidas para el monitoreo, vigilancia, prevención, control y mitigación de la contaminación de ambientes marino-costeros de México.",
           'eje': 'Evitar',
-          'global': '7',
+          'global': '7.0',
         },
         '8.1': {
           'nombre': "Adaptación al cambio climático",
           'descripcion': "Para 2030, se adoptan iniciativas y medidas sectoriales e intersectoriales encaminadas a reducir la vulnerabilidad o el riesgo sobre la biodiversidad y los socioecosistemas ante los efectos del cambio climático, mediante acciones coordinadas y transversales adoptando enfoques como: Soluciones basadas en la Naturaleza (SbN), Adaptación basada en Ecosistemas (AbE), complementados con Adaptación basada en Comunidades (AbC) y Adaptación basada en la Reducción del Riesgo de Desastres (AbRRD).",
           'eje': 'Evitar',
-          'global': '8',
+          'global': '8.0',
         },
         '8.2': {
           'nombre': "Mitigación de gases y compuestos de efecto invernadero",
           'descripcion': "Para 2030, se refuerzan los programas, mecanismos y acciones que contribuyen a la mitigación de gases y compuestos de efecto invernadero y/o su monitoreo, incluyendo acciones que fomentan la reducción o evitación del cambio de uso del suelo -principalmente, la deforestación- y la protección e incremento de los reservorios de carbono.",
           'eje': 'Evitar',
-          'global': '8',
+          'global': '8.0',
         },
         '9.0': {
           'nombre': "Impulso a cadenas de valor sustentables basadas en especies silvestres nativas",
           'descripcion': "Se identifican y fortalecen al menos 10 redes o cadenas de valor sustentables de especies silvestres nativas, incrementando los beneficios de los productores rurales con prioridad en uno o más de los siguientes criterios: los pueblos indígenas, comunidades locales y afromexicanas (picla), con alto nivel de marginación o con perspectiva de género e intergeneracional.",
           'eje': 'Salvaguardar',
-          'global': '9',
+          'global': '9.0',
         },
         '10.1': {
           'nombre': "Fomento de la agricultura sustentable",
           'descripcion': "Para 2030, se incrementan las unidades de producción que implementan prácticas agrícolas sustentables para la biodiversidad.",
           'eje': 'Salvaguardar',
-          'global': '10',
+          'global': '10.0',
         },
         '10.2': {
           'nombre': "Fomento de la ganadería sustentable",
           'descripcion': "Para 2030, se incrementan las Unidades de Producción Pecuaria (upp) que implementan prácticas ganaderas sustentables para la biodiversidad.",
           'eje': 'Salvaguardar',
-          'global': '10',
+          'global': '10.0',
         },
         '10.3': {
           'nombre': "Fomento de la acuacultura sustentable",
           'descripcion': "Para 2030, se incrementa el número de cuerpos de agua en los que se realizan actividades acuícolas que cuentan con los instrumentos para ser manejados sustentablemente.",
           'eje': 'Salvaguardar',
-          'global': '10',
+          'global': '10.0',
         },
         '10.4': {
           'nombre': "Fomento de la pesca sustentable",
           'descripcion': "Para 2030, México cuenta con instrumentos y herramientas de manejo sólidas que promueven la sustentabilidad de las pesquerías en todas las regiones del territorio nacional.",
           'eje': 'Salvaguardar',
-          'global': '10',
+          'global': '10.0',
         },
         '10.5': {
           'nombre': "Incremento de la superficie de manejo sustentable de silvicultura",
           'descripcion': "Para 2030, se incrementará 30% de la superficie al manejo forestal sustentable (maderable y no maderable).",
           'eje': 'Salvaguardar',
-          'global': '10',
+          'global': '10.0',
         },
         '11.0': {
           'nombre': "Mantenimiento y mejora de los servicios ecosistémicos",
           'descripcion': "Para 2030, en México se desarrollan y fortalecen los mecanismos de generación de información y los instrumentos de política pública dirigidos a la conservación, uso sustentable y recuperación de los ecosistemas, de tal manera que se mantiene su cobertura, calidad y función, así como los servicios que proveen.",
           'eje': 'Salvaguardar',
-          'global': '11',
+          'global': '11.0',
         },
         '12.0': {
           'nombre': "Implementación de criterios y lineamientos para espacios verdes y azules en zonas urbanas",
           'descripcion': "Al 2030, se implementan criterios y lineamientos para la gestión armonizada del territorio bajo un enfoque socioecosistémico, que incrementan la calidad y la superficie de los espacios verdes y azules en zonas urbanas y densamente pobladas, y propician la conectividad ecológica y la conservación de la biodiversidad nativa.",
           'eje': 'Salvaguardar',
-          'global': '12',
+          'global': '12.0',
         },
         '13.0': {
           'nombre':
               "Distribución de beneficios asociados a los recursos genéticos",
           'descripcion': "Al 2030, México cuenta con medidas normativas, administrativas, de política y de creación de capacidades que promueven la participación justa y equitativa en los beneficios que se deriven de la utilización de los recursos genéticos, sus derivados, los conocimientos tradicionales asociados y la información digital sobre secuencias de recursos genéticos, contribuyendo a la conservación de la diversidad biológica y el uso sustentable de sus componentes.",
           'eje': 'Salvaguardar',
-          'global': '13',
+          'global': '13.0',
         },
         '14.1': {
           'nombre': "Integración de la biodiversidad en otros sectores",
           'descripcion': "Para 2030, los sectores gubernamentales responsables de las políticas públicas que impactan directa o indirectamente a la biodiversidad diseñan, ejecutan y dan seguimiento a estrategias de integración de la biodiversidad.",
           'eje': 'Actuar',
-          'global': '14',
+          'global': '14.0',
         },
         '14.2': {
           'nombre': "Integración de la biodiversidad en el turismo",
-          'descripcion': "Para 2030, el sector turístico en México ha incorporado consideraciones de conservación y uso sustentable de la biodiversidad en el marco normativo, planes, programas, estrategias, actividades y negocios.",
+          'descripcion':
+              "Para 2030, el sector turístico en México ha incorporado consideraciones de conservación y uso sustentable de la biodiversidad en el marco normativo, planes, programas, estrategias, actividades y negocios.",
           'eje': 'Actuar',
-          'global': '14',
+          'global': '14.0',
         },
         '15.0': {
           'nombre': "Integración de la biodiversidad en los sectores empresarial y financiero",
           'descripcion': "Para 2030, México ha avanzado en la implementación de una hoja de ruta para el establecimiento de un marco jurídico e institucional (regulaciones, lineamientos, políticas públicas, incentivos, métricas e indicadores) para que los sectores empresarial y financiero identifiquen, analicen, evalúen y difundan con transparencia y regularidad sus impactos, dependencias, riesgos y oportunidades en la diversidad biológica.",
           'eje': 'Actuar',
-          'global': '15',
+          'global': '15.0',
         },
         '16.0': {
           'nombre': "Consumo sustentable de alimentos",
           'descripcion': "Para 2030, en México se promueve el consumo sustentable de alimentos a través de la implementación de la Ley General de la Alimentación Adecuada y Sostenible (lgaas), mediante una alimentación regional basada en las Guías Alimentarias Saludables y Sostenibles para Población Mexicana; se reduce la huella de carbono [y la generación de residuos asociados a la alimentación].",
           'eje': 'Actuar',
-          'global': '16',
+          'global': '16.0',
         },
         '17.1': {
           'nombre': "Fortalecimiento de la bioseguridad asociada a los organismos genéticamente modificados",
           'descripcion': "Para 2030, México fortalece los procesos de análisis (evaluación, gestión y comunicación) de los riesgos asociados a las actividades con los organismos genéticamente modificados (ogm), mediante propuestas de mejora del marco normativo en la materia, que consideren información relativa a los paquetes tecnológicos asociados, las consideraciones socioeconómicas, la observancia del principio precautorio, los derechos humanos, incluyendo los derechos de los pueblos indígenas y comunidades locales y afromexicanas.",
           'eje': 'Actuar',
-          'global': '17',
+          'global': '17.0',
         },
         '17.2': {
           'nombre': "Trazabilidad de los organismos genéticamente modificados",
           'descripcion': "Para 2030, México cuenta con una propuesta de política pública de trazabilidad de maíz genéticamente modificado (gm), bajo un enfoque amplio de bioseguridad de organismos genéticamente modificados (ogm), en concordancia con las obligaciones constitucionales, en materia de derechos humanos y de observancia del principio precautorio.",
           'eje': 'Actuar',
-          'global': '17',
+          'global': '17.0',
         },
         '18.0': {
           'nombre': "Eliminación de incentivos y subsidios perjudiciales para la biodiversidad y fortalecimiento de los positivos",
           'descripcion': "Para 2030, los incentivos, incluidos los subsidios, de los sectores público y privado fomentan el desarrollo sustentable, la internalización de las externalidades y minimizan los riesgos e impactos sobre los ecosistemas y los sistemas agroalimentarios bajo un enfoque de competitividad, desarrollo social y productividad.",
           'eje': 'Actuar',
-          'global': '18',
+          'global': '18.0',
         },
         '19.1': {
           'nombre': "Financiamiento internacional",
           'descripcion': "Al 2030 se hace más eficiente el uso del financiamiento internacional, mediante mecanismos financieros para la implementación de proyectos de conservación, uso sustentable y restauración de la biodiversidad, diseñados con base en los principios de la efectividad y fomentando mecanismos de acceso directo, especialmente para pueblos indígenas y comunidades afromexicanas y atendiendo vacíos y omisiones geográficos y de integridad ecosistémica.",
           'eje': 'Actuar',
-          'global': '19',
+          'global': '19.0',
         },
         '19.2': {
           'nombre': "Movilización de recursos internos",
           'descripcion': "Al 2030, México ha reducido significativamente la brecha de financiamiento para la implementación de la Estrategia Nacional sobre Biodiversidad de México (ENBioMex) y las metas nacionales, y cuenta con herramientas para analizar, mejorar la eficiencia e incrementar la inversión pública en conservación, uso sustentable y restauración de la biodiversidad.",
           'eje': 'Actuar',
-          'global': '19',
+          'global': '19.0',
         },
         '19.3': {
           'nombre': "Financiamiento privado",
-          'descripcion': "Para 2030, México instrumenta planes innovadores de financiamiento para la biodiversidad que habilitan, crean o implementan instrumentos económicos que incentivan la participación y movilización de recursos del sector empresarial y financiero privado, considerando, entre otros, los indicados en la Ley General del Equilibrio Ecológico y Protección al Ambiente (lgeepa) en la materia.",
+          'descripcion':
+              "Para 2030, México instrumenta planes innovadores de financiamiento para la biodiversidad que habilitan, crean o implementan instrumentos económicos que incentivan la participación y movilización de recursos del sector empresarial y financiero privado, considerando, entre otros, los indicados en la Ley General del Equilibrio Ecológico y Protección al Ambiente (lgeepa) en la materia.",
           'eje': 'Actuar',
-          'global': '19',
+          'global': '19.0',
         },
         '19.4': {
           'nombre': "Monitoreo del financiamiento",
           'descripcion': "Para 2030, se implementa un mecanismo federal para la recopilación de información y el reporte sobre la provisión, utilización y brechas de financiamiento recibido y destinado a la biodiversidad, que abarque recursos nacionales e internacionales, bilaterales, regionales, multilaterales, cooperaciones técnicas, así como de fuentes privadas y filantrópicas.",
           'eje': 'Actuar',
-          'global': '19',
+          'global': '19.0',
         },
         '20.1': {
           'nombre': "Fortalecimiento de capacidades nacionales",
           'descripcion': "Para 2030, México incrementa y fortalece de manera progresiva las capacidades nacionales, así como el acceso a la tecnología y su transferencia en materia de biodiversidad a través de la generación de alianzas nacionales e internacionales.",
           'eje': 'Actuar',
-          'global': '20',
+          'global': '20.0',
         },
         '20.2': {
           'nombre': "Fortalecimiento de capacidades a través de la cooperación regional y global",
-          'descripcion': "Para 2030, México contribuye al fortalecimiento de capacidades regionales y globales en materia de biodiversidad mediante la cooperación Sur-Sur y triangular.",
+          'descripcion':
+              "Para 2030, México contribuye al fortalecimiento de capacidades regionales y globales en materia de biodiversidad mediante la cooperación Sur-Sur y triangular.",
           'eje': 'Actuar',
-          'global': '20',
+          'global': '20.0',
         },
         '21.1': {
           'nombre': "Fortalecimiento del conocimiento para la biodiversidad",
           'descripcion': "Para 2030, México habrá consolidado el acceso a datos, información, conocimiento y herramientas sobre la biodiversidad, facilitando la toma de decisiones participativa y promoviendo una cultura de conservación y uso sustentable de la biodiversidad.",
           'eje': 'Actuar',
-          'global': '21',
+          'global': '21.0',
         },
         '21.2': {
           'nombre': "Integración del conocimiento tradicional en la toma de decisiones",
-          'descripcion': "Para 2030, México logra que sus políticas públicas relativas al manejo, aprovechamiento y conservación sustentable de la biodiversidad integren la información disponible, reconociendo e incluyendo conocimientos tradicionales que hayan sido compartidos por pueblos y comunidades indígenas y afromexicanas, a través de un proceso de consulta libre, previa e informada, según corresponda.",
+          'descripcion':
+              "Para 2030, México logra que sus políticas públicas relativas al manejo, aprovechamiento y conservación sustentable de la biodiversidad integren la información disponible, reconociendo e incluyendo conocimientos tradicionales que hayan sido compartidos por pueblos y comunidades indígenas y afromexicanas, a través de un proceso de consulta libre, previa e informada, según corresponda.",
           'eje': 'Actuar',
-          'global': '21',
+          'global': '21.0',
         },
         '22.0': {
           'nombre': "Participación de los pueblos indígenas, comunidades locales y afromexicanas",
           'descripcion': "Al 2030 se logran instrumentar los mecanismos para la participación, el acceso a la información y el acceso a la justicia de los pueblos indígenas, comunidades locales y afromexicanas, defensores ambientales y otros grupos en situación de vulnerabilidad conforme a la normatividad internacional en materia de derechos humanos, en particular el Acuerdo de Escazú y el Convenio 169 de la Organización Internacional del Trabajo (oit).",
           'eje': 'Actuar',
-          'global': '22',
+          'global': '22.0',
         },
         '23.0': {
           'nombre': "Integración de la igualdad de género",
-          'descripcion': "México promueve y fortalece la participación plena y efectiva de las mujeres en toda su diversidad en la toma de decisiones relacionadas con el acceso y control a los beneficios de la conservación, restauración y aprovechamiento sustentable de los recursos naturales a través de la implementación de los programas, políticas, proyectos y acciones de la administración pública federal que involucren temas sobre la diversidad biológica, incluyendo la Estrategia Nacional sobre Biodiversidad de México (ENBioMex).",
+          'descripcion':
+              "México promueve y fortalece la participación plena y efectiva de las mujeres en toda su diversidad en la toma de decisiones relacionadas con el acceso y control a los beneficios de la conservación, restauración y aprovechamiento sustentable de los recursos naturales a través de la implementación de los programas, políticas, proyectos y acciones de la administración pública federal que involucren temas sobre la diversidad biológica, incluyendo la Estrategia Nacional sobre Biodiversidad de México (ENBioMex).",
           'eje': 'Actuar',
-          'global': '23',
+          'global': '23.0',
         },
       };
 
@@ -577,87 +681,87 @@ class ContenidoSeed {
         {
           'codigo': '1.1.1',
           'periodo': '2024',
-          'descripcion': "Para 2024, 50% del territorio nacional cuenta con ordenamientos ecológicos regionales, estales o locales. Responsable: semarnat-dggfsoe; coadyuvante: sedatu.",
+          'descripcion': "Para 2024, 50% del territorio nacional cuenta con ordenamientos ecológicos regionales, estales o locales.",
         },
         {
           'codigo': '1.1.2',
           'periodo': '2024 en adelante',
-          'descripcion': "Para 2024 y en adelante, se incorporan o actualizan 500 mil hectáreas al año a los ordenamientos territoriales comunitarios. Responsable: conafor, coadyuvantes: sedatu, ran y pa.",
+          'descripcion': "Para 2024 y en adelante, se incorporan o actualizan 500 mil hectáreas al año a los ordenamientos territoriales comunitarios.",
         },
         {
           'codigo': '1.1.3',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, se fortalecen las capacidades de gobiernos estatales y municipales para la aplicación de la nom-003sedatu-2023, que establece los lineamientos para el fortalecimiento del sistema territorial para resistir, adaptarse y recuperarse ante amenazas de origen natural y del cambio climático a través del ordenamiento territorial. Responsable: sedatu; coadyuvantes: semarnat-dggfsoe, gobiernos estatales y municipales.",
+          'descripcion': "Para 2025 y en adelante, se fortalecen las capacidades de gobiernos estatales y municipales para la aplicación de la nom-003-sedatu-2023, que establece los lineamientos para el fortalecimiento del sistema territorial para resistir, adaptarse y recuperarse ante amenazas de origen natural y del cambio climático a través del ordenamiento territorial.",
         },
         {
           'codigo': '1.1.4',
           'periodo': '2026',
-          'descripcion': "Para 2026, los estados y municipios incorporan los lineamientos de la nom- 003-sedatu-2023 a sus programas y planes de ordenamiento territorial y de desarrollo urbano, que promueven la conservación y uso sustentable de la biodiversidad, así como la conectividad ecológica y la calidad de las áreas verdes y azules. Responsable: sedatu; coadyuvantes: semarnat-dggfsoe y gobiernos estatales y municipales.",
+          'descripcion': "Para 2026, los estados y municipios incorporan los lineamientos de la nom-003-sedatu-2023 a sus programas y planes de ordenamiento territorial y de desarrollo urbano, que promueven la conservación y uso sustentable de la biodiversidad, así como la conectividad ecológica y la calidad de las áreas verdes y azules.",
         },
         {
           'codigo': '1.1.5',
           'periodo': '2026',
-          'descripcion': "Para 2026, se coordinan esfuerzos para armonizar o vincular las metodologías de ordenamientos ecológicos locales/comunitarios (semarnat) y ordenamientos territoriales comunitarios (manejo forestal y territorios de uso común; conafor). Responsable: semarnat-dggfsoe; coadyuvante: conafor.",
+          'descripcion': "Para 2026, se coordinan esfuerzos para armonizar o vincular las metodologías de ordenamientos ecológicos locales/comunitarios (semarnat) y ordenamientos territoriales comunitarios (manejo forestal y territorios de uso común; conafor).",
         },
         {
           'codigo': '1.1.6',
           'periodo': '2026 en adelante',
-          'descripcion': "Para 2026 y en adelante, se publica en el Diario Oficial de la Federación la actualización del Programa de Ordenamiento Turístico General del Territorio y se cuenta con los acuerdos metodológicos para su aplicación. Responsable: sectur.",
+          'descripcion': "Para 2026 y en adelante, se publica en el Diario Oficial de la Federación la actualización del Programa de Ordenamiento Turístico General del Territorio y se cuenta con los acuerdos metodológicos para su aplicación.",
         },
         {
           'codigo': '1.1.7',
           'periodo': '2026 en adelante',
-          'descripcion': "Para 2026 y en adelante, se cuenta con tres ordenamientos turísticos comunitarios en los estados de Baja California Sur, Oaxaca y Quintana Roo, integrando criterios y salvaguardas de sustentabilidad y conservación de la biodiversidad, así como manejo integral y sustentable del agua. Responsable: sectur.",
+          'descripcion': "Para 2026 y en adelante, se cuenta con tres ordenamientos turísticos comunitarios en los estados de Baja California Sur, Oaxaca y Quintana Roo, integrando criterios y salvaguardas de sustentabilidad y conservación de la biodiversidad, así como manejo integral y sustentable del agua.",
         },
         {
           'codigo': '1.1.8',
           'periodo': '2026 en adelante',
-          'descripcion': "Para 2026 y en adelante, se decretan tres zonas de desarrollo turístico sustentable, integrando políticas y criterios de regulación ecológica, en Baja California Sur, Oaxaca, y Quintana Roo. Responsable: sectur.",
+          'descripcion': "Para 2026 y en adelante, se decretan tres zonas de desarrollo turístico sustentable, integrando políticas y criterios de regulación ecológica, en Baja California Sur, Oaxaca, y Quintana Roo.",
         },
         {
           'codigo': '1.1.9',
           'periodo': '2026',
-          'descripcion': "Para 2026, se incorporan las figuras de ordenamientos turísticos municipales y comunitarios integrando criterios y salvaguardas de sustentabilidad y conservación de la biodiversidad, así como manejo integral y sustentable del agua, en la Ley General de Turismo y su Reglamento. Responsable: sectur.",
+          'descripcion': "Para 2026, se incorporan las figuras de ordenamientos turísticos municipales y comunitarios integrando criterios y salvaguardas de sustentabilidad y conservación de la biodiversidad, así como manejo integral y sustentable del agua, en la Ley General de Turismo y su Reglamento.",
         },
         {
           'codigo': '1.1.10',
           'periodo': '2026 en adelante',
-          'descripcion': "Para 2026 y en adelante, se elaboran los ordenamientos turísticos locales/estatales de Baja California Sur, Oaxaca y Quintana Roo. Responsable: sectur.",
+          'descripcion': "Para 2026 y en adelante, se elaboran los ordenamientos turísticos locales/estatales de Baja California Sur, Oaxaca y Quintana Roo.",
         },
         {
           'codigo': '1.1.11',
           'periodo': '2027',
-          'descripcion': "Al 2027, los estados y municipios inician la armonización de su normatividad local, conforme a los lineamientos establecidos por la nom-003-sedatu-2023. Responsable: sedatu; coadyuvantes: semarnat-dggfsoe, gobiernos estatales y municipales.",
+          'descripcion': "Al 2027, los estados y municipios inician la armonización de su normatividad local, conforme a los lineamientos establecidos por la nom-003-sedatu-2023.",
         },
         {
           'codigo': '1.1.12',
           'periodo': '2027',
-          'descripcion': "Para 2027, se promueve el reconocimiento de los ordenamientos territoriales comunitarios como instrumentos formales de planeación ecológica del territorio. Responsables: semarnat-dggfsoe.",
+          'descripcion': "Para 2027, se promueve el reconocimiento de los ordenamientos territoriales comunitarios como instrumentos formales de planeación ecológica del territorio.",
         },
         {
           'codigo': '1.1.13',
           'periodo': '2028',
-          'descripcion': "Para 2028, Guerrero, San Luis Potosí y Zacatecas realizan sus ordenamientos ecológicos regionales/estatales. Responsable: semarnat-dggfsoe; coadyuvante: sedatu.",
+          'descripcion': "Para 2028, Guerrero, San Luis Potosí y Zacatecas realizan sus ordenamientos ecológicos regionales/estatales.",
         },
         {
           'codigo': '1.1.14',
           'periodo': '2028',
-          'descripcion': "Para 2028, 70% de las entidades han elaborado ordenamientos ecológicos regionales para todo su territorio. Responsables: semarnat-dggfsoe y gobiernos estatales; coadyuvante: sedatu.",
+          'descripcion': "Para 2028, 70% de las entidades han elaborado ordenamientos ecológicos regionales para todo su territorio.",
         },
         {
           'codigo': '1.1.15',
           'periodo': '2028',
-          'descripcion': "Para 2028, se promueve la armonización legal y administrativa de los instrumentos de planeación territorial en cuanto al aspecto urbano y ambiental. Responsable: sedatu; coadyuvantes: semarnat-dggfsoe y gobiernos estatales.",
+          'descripcion': "Para 2028, se promueve la armonización legal y administrativa de los instrumentos de planeación territorial en cuanto al aspecto urbano y ambiental.",
         },
         {
           'codigo': '1.1.16',
           'periodo': '2030',
-          'descripcion': "Para 2030, 25% de las entidades del país actualizan sus ordenamientos ecológicos armonizados con el ordenamiento territorial y urbano. Responsable: semarnat-dggfsoe; coadyuvante: sedatu.",
+          'descripcion': "Para 2030, 25% de las entidades del país actualizan sus ordenamientos ecológicos armonizados con el ordenamiento territorial y urbano.",
         },
         {
           'codigo': '1.1.17',
           'periodo': '2030',
-          'descripcion': "Para 2030, 20% de los municipios del territorio nacional cuentan con ordenamientos ecológicos y territoriales armonizados. Responsable: sedatu; coadyuvantes: semarnat-dggfsoe, gobiernos estatales y municipales.",
+          'descripcion': "Para 2030, 20% de los municipios del territorio nacional cuentan con ordenamientos ecológicos y territoriales armonizados.",
         },
       ];
 
@@ -696,7 +800,7 @@ class ContenidoSeed {
         },
         {
           'codigo': '1.2.6',
-          'descripcion': "Se integra una propuesta de Programa de Ordenamiento Ecológico Marino (poem) de la región Pacífico Centro-Sur, basado en un proceso participativo a nivel local/regional.",
+          'descripcion': "Se integra una propuesta de Programa de Ordenamiento Ecológico Marino (poem) de la región Pacífico Centro-Sur, basado en un proceso participativo a nivel local/ regional.",
         },
         {
           'codigo': '1.2.7',
@@ -763,12 +867,12 @@ class ContenidoSeed {
         {
           'codigo': '1.4.1',
           'periodo': '2025 en adelante',
-          'descripcion': "A partir de 2025, la Estrategia Nacional para la Reducción de Emisiones por Deforestación y Degradación Forestal 2017-2030 (enaredd+) se implementa de manera eficiente, bajo un enfoque de manejo integrado del territorio y con una coordinación interinstitucional efectiva (intersectorial y multinivel). Responsable: semarnat-dgpac; coadyuvante: gt-redd+.",
+          'descripcion': "A partir de 2025, la Estrategia Nacional para la Reducción de Emisiones por Deforestación y Degradación Forestal 2017-2030 (enaredd+) se implementa de manera eficiente, bajo un enfoque de manejo integrado del territorio y con una coordinación interinstitucional efectiva (intersectorial y multinivel).",
         },
         {
           'codigo': '1.4.2',
           'periodo': '2025 en adelante',
-          'descripcion': "A partir de 2025 y en adelante, se realiza bienalmente el monitoreo de la cobertura forestal, con la finalidad de contar con información sobre el estado de la deforestación a nivel nacional. Responsable: conafor; coadyuvante: inegi.",
+          'descripcion': "A partir de 2025 y en adelante, se realiza bienalmente el monitoreo de la cobertura forestal, con la finalidad de contar con información sobre el estado de la deforestación a nivel nacional.",
         },
         {
           'codigo': '1.4.3',
@@ -778,52 +882,52 @@ class ContenidoSeed {
         {
           'codigo': '1.4.4',
           'periodo': '2025',
-          'descripcion': "Para 2025, se incluye la meta de frenar la pérdida y degradación de los ecosistemas naturales, abordando y eliminando sus causas principales, en el Plan Nacional de Desarrollo, así como acciones puntuales en los programas sectoriales y especiales para su cumplimiento, como parte de una política de desarrollo rural y forestal sustentable en México. Responsables: conafor y semarnat-dggfsoe; coadyuvantes: sedatu, agricultura, sectur, pa, entre otros.",
+          'descripcion': "Para 2025, se incluye la meta de frenar la pérdida y degradación de los ecosistemas naturales, abordando y eliminando sus causas principales, en el Plan Nacional de Desarrollo, así como acciones puntuales en los programas sectoriales y especiales para su cumplimiento, como parte de una política de desarrollo rural y forestal sustentable en México.",
         },
         {
           'codigo': '1.4.5',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, las instituciones del sector ambiental y productivo identifican, acuerdan e implementan acciones prioritarias para coadyuvar al cumplimiento de la meta de tasa de cero deforestación neta, y atender las causas que provocan la deforestación en el marco de la enaredd+ y el Acuerdo Nacional por los Bosques, Selvas y Manglares. Responsables: agricultura, sedatu, sectur, pa, entre otros; coadyuvantes: semarnat, conafor y profepa.",
+          'descripcion': "Para 2025 y en adelante, las instituciones del sector ambiental y productivo identifican, acuerdan e implementan acciones prioritarias para coadyuvar al cumplimiento de la meta de tasa de cero deforestación neta, y atender las causas que provocan la deforestación en el marco de la enaredd+ y el Acuerdo Nacional por los Bosques, Selvas y Manglares.",
         },
         {
           'codigo': '1.4.6',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, se realizan, a través de los instrumentos necesarios, arreglos institucionales sólidos entre instancias de los tres órdenes de gobierno para articular políticas y programas que promuevan el desarrollo turístico, inmobiliario, rural y forestal sustentable, buscando ordenar y lograr complementariedad en la gestión territorial para el cumplimiento de la meta. Responsable: semarnat con el apoyo técnico de la conafor.",
+          'descripcion': "Para 2025 y en adelante, se realizan, a través de los instrumentos necesarios, arreglos institucionales sólidos entre instancias de los tres órdenes de gobierno para articular políticas y programas que promuevan el desarrollo turístico, inmobiliario, rural y forestal sustentable, buscando ordenar y lograr complementariedad en la gestión territorial para el cumplimiento de la meta.",
         },
         {
           'codigo': '1.4.7',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, se incrementan y se fortalecen las acciones de inspección, vigilancia, prevención y autorregulación dirigidas al combate de la deforestación, para coadyuvar en el cumplimiento de la meta. Responsable: profepa.",
+          'descripcion': "Para 2025 y en adelante, se incrementan y se fortalecen las acciones de inspección, vigilancia, prevención y autorregulación dirigidas al combate de la deforestación, para coadyuvar en el cumplimiento de la meta.",
         },
         {
           'codigo': '1.4.8',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, se continúa con el fomento de la incorporación de ecosistemas forestales al manejo sustentable como medida para frenar la deforestación, a través de la focalización hacia las zonas de mayor riesgo. Responsables: conafor, agricultura, profepa y las instituciones que manejan incentivos; coadyuvante: conanp.",
+          'descripcion': "Para 2025 y en adelante, se continúa con el fomento de la incorporación de ecosistemas forestales al manejo sustentable como medida para frenar la deforestación, a través de la focalización hacia las zonas de mayor riesgo.",
         },
         {
           'codigo': '1.4.9',
           'periodo': '2026 en adelante',
-          'descripcion': "A partir de 2026 y en adelante, el gt-redd+ realiza actividades para fortalecer la gobernanza local, con la finalidad de impulsar una participación social efectiva bajo igualdad de oportunidades para mujeres y hombres en la implementación de la enaredd+, con respecto a la planeación y toma de decisiones de las acciones colaborativas a desarrollar. Responsable: semarnat-dgpac; coadyuvantes: gt-redd+ y mujeres.",
+          'descripcion': "A partir de 2026 y en adelante, el gt-redd+ realiza actividades para fortalecer la gobernanza local, con la finalidad de impulsar una participación social efectiva bajo igualdad de oportunidades para mujeres y hombres en la implementación de la enaredd+, con respecto a la planeación y toma de decisiones de las acciones colaborativas a desarrollar.",
         },
         {
           'codigo': '1.4.10',
           'periodo': '2026 en adelante',
-          'descripcion': "A partir de 2026, la semarnat, en colaboración con la Secretaría de Agricultura y Desarrollo Rural (agricultura) y la conafor diseñan e implementan un sistema de información para identificar terrenos forestales o agropecuarios, y con ellos promover la producción libre de deforestación. Responsable: semarnat; coadyuvantes: agricultura y conafor.",
+          'descripcion': "A partir de 2026, la semarnat, en colaboración con la Secretaría de Agricultura y Desarrollo Rural (agricultura) y la conafor diseñan e implementan un sistema de información para identificar terrenos forestales o agropecuarios, y con ellos promover la producción libre de deforestación.",
         },
         {
           'codigo': '1.4.11',
           'periodo': '2026',
-          'descripcion': "Para 2026, se realizan acciones efectivas que favorecen la conectividad ecológica y la captura de carbono, mediante el manejo forestal, la conservación, restauración y protección forestal, el manejo de zonas costeras, humedales y manglares. Responsables: semarnat y conafor; coadyuvantes: conabio, bienestar, conanp y agricultura.",
+          'descripcion': "Para 2026, se realizan acciones efectivas que favorecen la conectividad ecológica y la captura de carbono, mediante el manejo forestal, la conservación, restauración y protección forestal, el manejo de zonas costeras, humedales y manglares.",
         },
         {
           'codigo': '1.4.12',
           'periodo': '2026',
-          'descripcion': "Para 2026, se formulan y presentan los reportes sobre el abordaje y respecto de las salvaguardas sociales y ambientales en el marco de la implementación de las acciones redd+ en México, las cuales son reportadas de manera periódica a la Convención Marco de las Naciones Unidas sobre el Cambio Climático (cmnucc). Responsables: semarnat-dgpac y conafor; coadyuvante: sre.",
+          'descripcion': "Para 2026, se formulan y presentan los reportes sobre el abordaje y respecto de las salvaguardas sociales y ambientales en el marco de la implementación de las acciones redd+ en México, las cuales son reportadas de manera periódica a la Convención Marco de las Naciones Unidas sobre el Cambio Climático (cmnucc).",
         },
         {
           'codigo': '1.4.13',
           'periodo': '2028',
-          'descripcion': "Para 2028, se formulan y presentan los reportes sobre el abordaje y respecto de las salvaguardas sociales y ambientales en el marco de la implementación de las acciones redd+ en México, incluyendo los indicadores de cumplimiento de las salvaguardas. Responsables: semarnat-dgpac y conafor; coadyuvante: sre.",
+          'descripcion': "Para 2028, se formulan y presentan los reportes sobre el abordaje y respecto de las salvaguardas sociales y ambientales en el marco de la implementación de las acciones redd+ en México, incluyendo los indicadores de cumplimiento de las salvaguardas.",
         },
       ];
 
@@ -857,47 +961,47 @@ class ContenidoSeed {
         {
           'codigo': '4.0.1',
           'periodo': '2024 en adelante',
-          'descripcion': "Para 2024 y en adelante, se fortalecen, elaboran y/o ponen en marcha, los programas de recuperación de especies (pace-Programas de Acción para la Conservación de Especies, pmt-Planes de Manejo Tipo-, planes de manejo pesquero, planes de acción nacional, entre otros), con base en la priorización de aquellas que requieren con mayor urgencia acciones de conservación. Coadyuvantes: semarnat-dgvs, conanp, conafor, conabio-dap, conabio-ac cites-, imipas y conapesca.",
+          'descripcion': "Para 2024 y en adelante, se fortalecen, elaboran y/o ponen en marcha, los programas de recuperación de especies (pace-Programas de Acción para la Conservación de Especies, pmt-Planes de Manejo Tipo-, planes de manejo pesquero, planes de acción nacional, entre otros), con base en la priorización de aquellas que requieren con mayor urgencia acciones de conservación.",
         },
         {
           'codigo': '4.0.2',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, se realiza al menos un taller al año de capacitación a técnicos responsables y oficiales gubernamentales que elaboran y revisan los planes y programas de manejo e informes anuales de unidades de maejo para la conservación de la vida silvestre (uma), predios e instalaciones que manejan vida silvestre (pimvs) y predios forestales. Responsable: semarnat-dgvs y semarnat-dggfsoe; coadyuvante: conabio-ac cites.",
+          'descripcion': "Para 2025 y en adelante, se realiza al menos un taller al año de capacitación a técnicos responsables y oficiales gubernamentales que elaboran y revisan los planes y programas de manejo e informes anuales de unidades de maejo para la conservación de la vida silvestre (uma), predios e instalaciones que manejan vida silvestre (pimvs) y predios forestales.",
         },
         {
           'codigo': '4.0.3',
           'periodo': '2025',
-          'descripcion': "Para 2025, se publica la actualización de la nom-059-semarnat-2010, tomando en cuenta las evaluaciones de riesgo (mer); los datos son incorporados al Sistema Nacional de Información sobre Biodiversidad (snib). Responsables: semarnat-dgvs y semarnat-dgcgmc; coadyuvantes: conabio-dap y conabio-ac cites.",
+          'descripcion': "Para 2025, se publica la actualización de la nom-059-semarnat-2010, tomando en cuenta las evaluaciones de riesgo (mer); los datos son incorporados al Sistema Nacional de Información sobre Biodiversidad (snib).",
         },
         {
           'codigo': '4.0.4',
           'periodo': '2026',
-          'descripcion': "Para 2026, se deslinda la Lista de Especies en Riesgo de la nom-059-semarnat-2010, con la finalidad de facilitar el proceso de actualización y publicación cada tres años, como lo marca la ley. Responsables: semarnat-dgvs y semarnat-dgcgmc.",
+          'descripcion': "Para 2026, se deslinda la Lista de Especies en Riesgo de la nom-059-semarnat-2010, con la finalidad de facilitar el proceso de actualización y publicación cada tres años, como lo marca la ley.",
         },
         {
           'codigo': '4.0.5',
           'periodo': '2026',
-          'descripcion': "Para 2026, se fortalece la elaboración y revisión de los planes y programas de manejo e informes anuales de uma, pimvs y predios forestales mediante la capacitación de los técnicos responsables y oficiales de las dependencias y sus órganos. Responsables: semarnat-dgvs y conabio-ac cites.",
+          'descripcion': "Para 2026, se fortalece la elaboración y revisión de los planes y programas de manejo e informes anuales de uma, pimvs y predios forestales mediante la capacitación de los técnicos responsables y oficiales de las dependencias y sus órganos.",
         },
         {
           'codigo': '4.0.6',
           'periodo': '2026',
-          'descripcion': "Para 2026, se cuenta con financiamiento para el establecimiento y desarrollo de los programas de recuperación de las especies que se identificaron como prioritarias. Responsables: todas las dependencias relacionadas con la meta.",
+          'descripcion': "Para 2026, se cuenta con financiamiento para el establecimiento y desarrollo de los programas de recuperación de las especies que se identificaron como prioritarias.",
         },
         {
           'codigo': '4.0.7',
           'periodo': '2027',
-          'descripcion': "Para 2027, se establece un mecanismo de coordinación que permita a las instituciones de la administración pública federal la implementación coordinada de medidas de gestión, recuperación y conservación de especies en peligro de extinción y amenazadas según la nom-059-semarnat-2010, silvestres o las que se encuentran bajo manejo. Responsable: semarnat-dgvs con apoyo de todas las dependencias relacionadas con la meta.",
+          'descripcion': "Para 2027, se establece un mecanismo de coordinación que permita a las instituciones de la administración pública federal la implementación coordinada de medidas de gestión, recuperación y conservación de especies en peligro de extinción y amenazadas según la nom-059-semarnat-2010, silvestres o las que se encuentran bajo manejo.",
         },
         {
           'codigo': '4.0.8',
           'periodo': '2027',
-          'descripcion': "Para 2027, se inicia un mecanismo de monitoreo de la diversidad genética de especies de la agrobiodiversidad. Responsable: conabio-carb.",
+          'descripcion': "Para 2027, se inicia un mecanismo de monitoreo de la diversidad genética de especies de la agrobiodiversidad.",
         },
         {
           'codigo': '4.0.9',
           'periodo': '2028',
-          'descripcion': "Para 2028, se inicia la implementación de medidas de conservación de la diversidad genética de especies de la agrobiodiversidad con base en el indicador de diversidad genética. Responsable: conabio-carb.",
+          'descripcion': "Para 2028, se inicia la implementación de medidas de conservación de la diversidad genética de especies de la agrobiodiversidad con base en el indicador de diversidad genética.",
         },
       ];
       for (var i = 0; i < hitos40.length; i++) {
@@ -915,31 +1019,31 @@ class ContenidoSeed {
       const subhitos401 = <Map<String, String>>[
         {
           'codigo': '4.0.1.1',
-          'descripcion': "Para 2024 y en adelante, se fortalece la implementación de los programas de recuperación de los ecosistemas a través de la acuacultura restaurativa, que implica la elaboración y publicación de al menos dos fichas al año de las especies con algún estatus de protección en la Carta Nacional Acuícola; así como la generación de biotecnología para reproducir organismos que permitan la repoblación in situ bajo protocolos adecuados, entre otras actividades que favorezcan la conservación de la biodiversidad y el mejoramiento del medio ambiente. Responsable: imipas.",
+          'descripcion': "Para 2024 y en adelante, se fortalece la implementación de los programas de recuperación de los ecosistemas a través de la acuacultura restaurativa, que implica la elaboración y publicación de al menos dos fichas al año de las especies con algún estatus de protección en la Carta Nacional Acuícola; así como la generación de biotecnología para reproducir organismos que permitan la repoblación in situ bajo protocolos adecuados, entre otras actividades que favorezcan la conservación de la biodiversidad y el mejoramiento del medio ambiente.",
         },
         {
           'codigo': '4.0.1.2',
-          'descripcion': "Para 2025, se publica la actualización del Plan de Acción Nacional para el Manejo y Conservación de Tiburones, Rayas y Especies Afines en México (panmct, segunda edición). Responsables: imipas y conapesca.",
+          'descripcion': "Para 2025, se publica la actualización del Plan de Acción Nacional para el Manejo y Conservación de Tiburones, Rayas y Especies Afines en México (panmct, segunda edición).",
         },
         {
           'codigo': '4.0.1.3',
-          'descripcion': "Al 2025, se mantiene y fortalece la focalización de los incentivos denominados Pago por Servicios Ambientales (psa) en los sitios de atención prioritaria para la conservación de la biodiversidad terrestre considerando los insumos que proporciona la conabio. Responsable: conafor.",
+          'descripcion': "Al 2025, se mantiene y fortalece la focalización de los incentivos denominados Pago por Servicios Ambientales (psa) en los sitios de atención prioritaria para la conservación de la biodiversidad terrestre considerando los insumos que proporciona la conabio.",
         },
         {
           'codigo': '4.0.1.4',
-          'descripcion': "Para 2025 y en adelante, se establecen anualmente al menos dos nuevas zonas de refugio pesquero, que contribuyan a la protección y conservación de especies de importancia ecológica, incluyendo especies que se encuentran en alguna categoría de riesgo dentro de la nom-059-semarnat-2010. Responsable: conapesca.",
+          'descripcion': "Para 2025 y en adelante, se establecen anualmente al menos dos nuevas zonas de refugio pesquero, que contribuyan a la protección y conservación de especies de importancia ecológica, incluyendo especies que se encuentran en alguna categoría de riesgo dentro de la nom-059-semarnat-2010.",
         },
         {
           'codigo': '4.0.1.5',
-          'descripcion': "Para 2025 y en adelante, se desarrollan seis pmt para especies en la categoría de amenazadas y dos para especies en la categoría en peligro de extinción. Responsables: semarnat-dgvs; coadyuvantes: conabio-dap y conabio-ac cites.",
+          'descripcion': "Para 2025 y en adelante, se desarrollan seis pmt para especies en la categoría de amenazadas y dos para especies en la categoría en peligro de extinción.",
         },
         {
           'codigo': '4.0.1.6',
-          'descripcion': "Para 2026, se realiza un diagnóstico de la implementación de los pace y se identifican acciones puntuales para su fortalecimiento. Responsable: semarnat-dgvs; coadyuvantes: conabio-dap y conabio-ac cites.",
+          'descripcion': "Para 2026, se realiza un diagnóstico de la implementación de los pace y se identifican acciones puntuales para su fortalecimiento.",
         },
         {
           'codigo': '4.0.1.7',
-          'descripcion': "Al 2030, se promueven y fortalecen los mecanismos y procesos normativos para la identificación y operación de hábitats críticos para la conservación de la vida silvestre y áreas de refugio. Responsable: conanp.",
+          'descripcion': "Al 2030, se promueven y fortalecen los mecanismos y procesos normativos para la identificación y operación de hábitats críticos para la conservación de la vida silvestre y áreas de refugio.",
         },
       ];
 
@@ -966,27 +1070,27 @@ class ContenidoSeed {
         {
           'codigo': '5.0.1',
           'periodo': '2025',
-          'descripcion': "Para 2025, se establece un grupo de contacto de especialistas de las dependencias que tienen atribuciones en materia de vida silvestre, forestal, pesquera, fito y zoosanitaria, para sistematizar la información sobre medidas, esfuerzos, actividades, bases de datos y sistemas de trazabilidad, considerando mecanismos de coordinación interinstitucional para fortalecer la sustentabilidad. Responsable: semarnat-dgpeea; coadyuvantes: semarnat-dgvs, semarnat-dggfsoe, semarnat-dgit, agricultura (senasica, conapesca e imipas), profepa, anam, conafor, conabio-ac cites, conabio-carb, conabio-dap, inecc e imta.",
+          'descripcion': "Para 2025, se establece un grupo de contacto de especialistas de las dependencias que tienen atribuciones en materia de vida silvestre, forestal, pesquera, fito y zoosanitaria, para sistematizar la información sobre medidas, esfuerzos, actividades, bases de datos y sistemas de trazabilidad, considerando mecanismos de coordinación interinstitucional para fortalecer la sustentabilidad.",
         },
         {
           'codigo': '5.0.2',
           'periodo': '2026',
-          'descripcion': "Para 2026, se cuenta con un diagnóstico que incluye un mapeo sobre las herramientas de seguimiento y trazabilidad (sistemas de trazabilidad, bases de datos y otros), así como las diferentes dependencias que tienen atribuciones en materia de vida silvestre, forestal, pesquera, fito y zoosanitaria; así como el plan de trabajo para implementar la interoperabilidad de los sistemas. Responsable: semarnat-dgpeea; coadyuvantes: semarnat-dgvs, semarnat-dggfsoe, semarnat-dgit, agricultura (senasica, conapesca e imipas), profepa, anam, conafor, conabio-ac cites, conabio-carb, conabio-dap, inecc e imta (incluyendo a las áreas informáticas de cada dependencia). • Realizar reuniones de coordinación entre distintas autoridades. • Determinar qué información se manejará, qué información es considerada sensible, cómo se rastrea, documentación equivalente, fotografías, información genética, etc. • Definir qué estadísticas generan los sistemas que manejan las dependencias y qué es lo que se espera del sistema vinculado para la toma de decisiones (priorización de especies, criterios, entre otros). • Realizar un análisis de ciclo de vida de la información.",
+          'descripcion': "Para 2026, se cuenta con un diagnóstico que incluye un mapeo sobre las herramientas de seguimiento y trazabilidad (sistemas de trazabilidad, bases de datos y otros), así como las diferentes dependencias que tienen atribuciones en materia de vida silvestre, forestal, pesquera, fito y zoosanitaria; así como el plan de trabajo para implementar la interoperabilidad de los sistemas. • Realizar reuniones de coordinación entre distintas autoridades. • Determinar qué información se manejará, qué información es considerada sensible, cómo se rastrea, documentación equivalente, fotografías, información genética, etc. • Definir qué estadísticas generan los sistemas que manejan las dependencias y qué es lo que se espera del sistema vinculado para la toma de decisiones (priorización de especies, criterios, entre otros). • Realizar un análisis de ciclo de vida de la información.",
         },
         {
           'codigo': '5.0.3',
           'periodo': '2027',
-          'descripcion': "Para 2027, se realiza la vinculación y se programa la interfase de interoperación, se realizan las pruebas piloto pertinentes. Responsable: semarnat-dgpeea; coadyuvantes: semarnat-dgvs, semarnat-dggfsoe, semarnat-dgit, agricultura (senasica, conapesca e imipas), profepa, anam, conafor, conabio-ac cites, conabio-carb, conabio-dap, inecc e imta (incluyendo a las áreas informáticas de cada dependencia).",
+          'descripcion': "Para 2027, se realiza la vinculación y se programa la interfase de interoperación, se realizan las pruebas piloto pertinentes.",
         },
         {
           'codigo': '5.0.4',
           'periodo': '2030',
-          'descripcion': "Para 2030, México cuenta con un sistema de trazabilidad de ejemplares, productos y subproductos que se generan del aprovechamiento de especies silvestres interoperando, desde su origen, hasta su destino final. Responsable: semarnat-dgpeea; coadyuvantes: semarnat-dgvs, semarnat-dggfsoe, semarnat-dgit, agricultura (senasica, conapesca e imipas), profepa, anam, conafor, conabio-ac cites, conabio-carb, conabio-dap, inecc e imta (incluyendo a las áreas informáticas de cada dependencia).",
+          'descripcion': "Para 2030, México cuenta con un sistema de trazabilidad de ejemplares, productos y subproductos que se generan del aprovechamiento de especies silvestres interoperando, desde su origen, hasta su destino final.",
         },
         {
           'codigo': '5.0.5',
           'periodo': '2030',
-          'descripcion': "Para 2030, la información estadística derivada del sistema apoya la toma la toma de decisiones para fortalecer la transparencia y accesibilidad del sistema de trazabilidad. Responsable: semarnat-dgpeea; coadyuvantes: semarnat-dgvs, semarnat-dggfsoe, semarnat-dgit, agricultura (senasica, conapesca e imipas), profepa, anam, conafor, conabio-ac cites, conabio-carb, conabio-dap, inecc e imta (incluyendo a las áreas informáticas de cada dependencia).",
+          'descripcion': "Para 2030, la información estadística derivada del sistema apoya la toma la toma de decisiones para fortalecer la transparencia y accesibilidad del sistema de trazabilidad.",
         },
       ];
       for (var i = 0; i < hitos50.length; i++) {
@@ -1009,37 +1113,37 @@ class ContenidoSeed {
         {
           'codigo': '6.1.1',
           'periodo': '2026',
-          'descripcion': "Para 2026, se evalúan los avances y cumplimiento de la Estrategia Nacional de Especies Exóticas Invasoras (eneei), y se identifican las acciones prioritarias a seguir. Responsable: conabio; coadyuvantes: semarnat-dgvs, profepa, senasica, imipa y sict.",
+          'descripcion': "Para 2026, se evalúan los avances y cumplimiento de la Estrategia Nacional de Especies Exóticas Invasoras (eneei), y se identifican las acciones prioritarias a seguir.",
         },
         {
           'codigo': '6.1.2',
           'periodo': '2026',
-          'descripcion': "Para 2026, se actualiza la lista de eei de México, incluyendo las plagas de importancia cuarentenaria detectadas en embalajes de madera utilizados en el comercio internacional de mercancías y bienes, y se publica en el Diario Oficial de la Federación, incluyendo todos los grupos taxonómicos. Responsable: semarnat-dgvs; coadyuvantes: conabio en coordinación con la semarnat-dggfsoe, semarnat-dggcgmc y senasica; como unidades administrativas reguladoras en materia de importación de mercancías.",
+          'descripcion': "Para 2026, se actualiza la lista de eei de México, incluyendo las plagas de importancia cuarentenaria detectadas en embalajes de madera utilizados en el comercio internacional de mercancías y bienes, y se publica en el Diario Oficial de la Federación, incluyendo todos los grupos taxonómicos.",
         },
         {
           'codigo': '6.1.3',
           'periodo': '2026',
-          'descripcion': "Para 2026, se fortalecen los mecanismos de intercambio de información, vinculación y comunicación entre las instancias que regulan y participan en la detección temprana y atención a casos de introducción de eei entre instituciones nacionales e internacionales. Responsables: semarnat-dggfsoe y semarnat-dgvs; coadyuvantes: profepa, conafor, senasica y anam.",
+          'descripcion': "Para 2026, se fortalecen los mecanismos de intercambio de información, vinculación y comunicación entre las instancias que regulan y participan en la detección temprana y atención a casos de introducción de eei entre instituciones nacionales e internacionales.",
         },
         {
           'codigo': '6.1.4',
           'periodo': '2026 en adelante',
-          'descripcion': "Para 2026 y en adelante, se actualizan los materiales (guías, listados, trípticos, catálogos, etc.) y se refuerzan los mecanismos de divulgación sobre las eei, los cuales se distribuyen en los principales puertos, aeropuertos y fronteras y son de acceso público. Responsables: profepa y senasica; coadyuvantes: semarnat-dgvs, semarnat-cecadesu, conapesca, imipas y anam.",
+          'descripcion': "Para 2026 y en adelante, se actualizan los materiales (guías, listados, trípticos, catálogos, etc.) y se refuerzan los mecanismos de divulgación sobre las eei, los cuales se distribuyen en los principales puertos, aeropuertos y fronteras y son de acceso público.",
         },
         {
           'codigo': '6.1.5',
           'periodo': '2026',
-          'descripcion': "Al 2026, se cuenta con lineamientos generales para el control y manejo de las bioincrustaciones en embarcaciones, así como de las aguas de lastre consistentes con los lineamientos internacionales Organización Marítima Internacional (omi) para controlar y minimizar la transferencia de eei por esta ruta de introducción. Responsable: semarnat; coadyuvantes: conapesca e imipas.",
+          'descripcion': "Al 2026, se cuenta con lineamientos generales para el control y manejo de las bioincrustaciones en embarcaciones, así como de las aguas de lastre consistentes con los lineamientos internacionales Organización Marítima Internacional (omi) para controlar y minimizar la transferencia de eei por esta ruta de introducción.",
         },
         {
           'codigo': '6.1.6',
           'periodo': '2030',
-          'descripcion': "Para 2030, se actualiza el marco normativo con base en la actualización de la lista de eei. Responsables: semarnat-dgvs y semarnat-dggfsoe; coadyuvantes: profepa y semarnat-dgcgmc.",
+          'descripcion': "Para 2030, se actualiza el marco normativo con base en la actualización de la lista de eei.",
         },
         {
           'codigo': '6.1.7',
           'periodo': '2030',
-          'descripcion': "Para 2030, se fortalece la coordinación institucional para implementar procedimientos orientados a la prevención y reducción de la introducción de eei en los aeropuertos, puertos y fronteras de México, considerando las principales rutas de introducción. Responsables: semarnat-dgvs, semarnat-dggfsoe, senasica y economía; coadyuvantes: semarnat-dgcgmc, profepa y semar.",
+          'descripcion': "Para 2030, se fortalece la coordinación institucional para implementar procedimientos orientados a la prevención y reducción de la introducción de eei en los aeropuertos, puertos y fronteras de México, considerando las principales rutas de introducción.",
         },
       ];
       for (var i = 0; i < hitos61.length; i++) {
@@ -1115,42 +1219,42 @@ class ContenidoSeed {
         {
           'codigo': '6.3.1',
           'periodo': '2026',
-          'descripcion': "Al 2026, se cuenta con una línea base actualizada del impacto de las eei en anp continentales de competencia federal, que permite identificar prioridades para la implementación de proyectos piloto de control y erradicación. Responsable: conanp.",
+          'descripcion': "Al 2026, se cuenta con una línea base actualizada del impacto de las eei en anp continentales de competencia federal, que permite identificar prioridades para la implementación de proyectos piloto de control y erradicación.",
         },
         {
           'codigo': '6.3.2',
           'periodo': '2027',
-          'descripcion': "Para 2027, se desarrolla un diagnóstico de capacidades institucionales de la Comisión Nacional de Áreas Naturales Protegidas (conanp) y con ello se desarrolla un plan de fortalecimiento de capacidades para la prevención, manejo, control y erradicación de eei en anp continentales de carácter federal. Responsable: conanp.",
+          'descripcion': "Para 2027, se desarrolla un diagnóstico de capacidades institucionales de la Comisión Nacional de Áreas Naturales Protegidas (conanp) y con ello se desarrolla un plan de fortalecimiento de capacidades para la prevención, manejo, control y erradicación de eei en anp continentales de carácter federal.",
         },
         {
           'codigo': '6.3.3',
           'periodo': '2027',
-          'descripcion': "En 2027, se actualiza el Programa para la Atención y Manejo de Especies Exóticas Invasoras y Ferales en anp de competencia federal. Responsable: conanp.",
+          'descripcion': "En 2027, se actualiza el Programa para la Atención y Manejo de Especies Exóticas Invasoras y Ferales en anp de competencia federal.",
         },
         {
           'codigo': '6.3.4',
           'periodo': '2027',
-          'descripcion': "Al 2027, se evalúa y actualiza la Estrategia Nacional sobre Especies Invasoras en México, para conocer el avance y fortalecer el control y erradicación de las eei. Responsable: conabio.",
+          'descripcion': "Al 2027, se evalúa y actualiza la Estrategia Nacional sobre Especies Invasoras en México, para conocer el avance y fortalecer el control y erradicación de las eei.",
         },
         {
           'codigo': '6.3.5',
           'periodo': '2027',
-          'descripcion': "Al 2027, se cuenta con acuerdos de coordinación y cooperación intersecretarial e interinstitucional para la implementación del Programa para la Atención y Manejo de Especies Exóticas Invasoras y Ferales en anp de competencia federal. Responsable: conanp.",
+          'descripcion': "Al 2027, se cuenta con acuerdos de coordinación y cooperación intersecretarial e interinstitucional para la implementación del Programa para la Atención y Manejo de Especies Exóticas Invasoras y Ferales en anp de competencia federal.",
         },
         {
           'codigo': '6.3.6',
           'periodo': '2028',
-          'descripcion': "Al 2028, se implementan las acciones prioritarias para prevenir, manejar, controlar y erradicar las eei en anp continentales de carácter federal con base en la Estrategia Nacional sobre Especies Invasoras en México actualizada y el Programa para la Atención y Manejo de Especies Exóticas Invasoras y Ferales en anp de competencia federal. Responsable: conanp; coadyuvantes: semarnat-dgvs, imipas, conapesca y conabio.",
+          'descripcion': "Al 2028, se implementan las acciones prioritarias para prevenir, manejar, controlar y erradicar las eei en anp continentales de carácter federal con base en la Estrategia Nacional sobre Especies Invasoras en México actualizada y el Programa para la Atención y Manejo de Especies Exóticas Invasoras y Ferales en anp de competencia federal.",
         },
         {
           'codigo': '6.3.7',
           'periodo': '2030',
-          'descripcion': "Para 2030, se fortalece el marco jurídico en materia de control y erradicación de eei que considere estas acciones como medidas prioritarias de restauración ecológica y conservación de la diversidad biológica. Responsable: conanp.",
+          'descripcion': "Para 2030, se fortalece el marco jurídico en materia de control y erradicación de eei que considere estas acciones como medidas prioritarias de restauración ecológica y conservación de la diversidad biológica.",
         },
         {
           'codigo': '6.3.8',
           'periodo': '2025–2030',
-          'descripcion': "Entre 2025 y 2030, se implementan campañas de difusión y divulgación en anp continentales de carácter federal sobre las invasiones biológicas dirigido a prestadores de servicios, visitantes, comunidades, productores e instituciones, entre otros. Responsable: conanp.",
+          'descripcion': "Entre 2025 y 2030, se implementan campañas de difusión y divulgación en anp continentales de carácter federal sobre las invasiones biológicas dirigido a prestadores de servicios, visitantes, comunidades, productores e instituciones, entre otros.",
         },
       ];
       for (var i = 0; i < hitos63.length; i++) {
@@ -1226,77 +1330,77 @@ class ContenidoSeed {
         {
           'codigo': '2.2.1',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, se incrementa la cobertura de tratamiento de aguas residuales con respecto a las aguas municipales generadas. Responsables: municipios; coadyuvante: conagua, línea base 2023.",
+          'descripcion': "Para 2025 y en adelante, se incrementa la cobertura de tratamiento de aguas residuales con respecto a las aguas municipales generadas.",
         },
         {
           'codigo': '2.2.2',
           'periodo': '2025–2030',
-          'descripcion': "De 2025 a 2030, se fortalece la red de monitoreo de calidad del agua a nivel nacional, priorizando el monitoreo de los ríos Tula, Lerma-Santiago y Atoyac. Responsable: conagua.",
+          'descripcion': "De 2025 a 2030, se fortalece la red de monitoreo de calidad del agua a nivel nacional, priorizando el monitoreo de los ríos Tula, Lerma-Santiago y Atoyac.",
         },
         {
           'codigo': '2.2.3',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 en adelante, se incrementa la capacitación a los productores en buenas prácticas (personas campesinas y productoras agropecuarias y acuícolas) en el uso de agroquímicos y medicamentos. Responsables: conapesca, imipas (30%) y senasica.",
+          'descripcion': "Para 2025 en adelante, se incrementa la capacitación a los productores en buenas prácticas (personas campesinas y productoras agropecuarias y acuícolas) en el uso de agroquímicos y medicamentos.",
         },
         {
           'codigo': '2.2.4',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, se incrementa la captación de agua de lluvia urbana para reducir la presión sobre los ríos, haciendo énfasis en centros urbanos-agrícolas y que se derive a otras actividades que no requieran de uso humano directo. Responsables: gobiernos estatales y municipales.",
+          'descripcion': "Para 2025 y en adelante, se incrementa la captación de agua de lluvia urbana para reducir la presión sobre los ríos, haciendo énfasis en centros urbanos-agrícolas y que se derive a otras actividades que no requieran de uso humano directo.",
         },
         {
           'codigo': '2.2.5',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 en adelante, se promueven campañas de limpieza de ríos y otros cuerpos de agua, con la participación de las comunidades y la ciudadanía. Responsables: gobiernos estatales y municipales, semarnat y conagua.",
+          'descripcion': "Para 2025 en adelante, se promueven campañas de limpieza de ríos y otros cuerpos de agua, con la participación de las comunidades y la ciudadanía.",
         },
         {
           'codigo': '2.2.6',
           'periodo': '2030',
-          'descripcion': "Para 2030, se realizan acciones de conservación y restauración en zonas de humedal, así como el repoblamiento con especies nativas en cuerpos de agua en áreas naturales protegidas (anp) y sitios prioritarios. Responsables: semarnat, conanp, conapesca, imipas e imta.",
+          'descripcion': "Para 2030, se realizan acciones de conservación y restauración en zonas de humedal, así como el repoblamiento con especies nativas en cuerpos de agua en áreas naturales protegidas (anp) y sitios prioritarios.",
         },
         {
           'codigo': '2.2.7',
           'periodo': '2030',
-          'descripcion': "Para 2030, se actualiza el inventario de presas y represas, con la finalidad de establecer su seguridad estructural y funcional. Responsable: conagua.",
+          'descripcion': "Para 2030, se actualiza el inventario de presas y represas, con la finalidad de establecer su seguridad estructural y funcional.",
         },
         {
           'codigo': '2.2.8',
           'periodo': '2030',
-          'descripcion': "Para 2030, se actualiza la información referente a la cantidad y calidad del agua de los ríos seleccionados. Responsable: conagua.",
+          'descripcion': "Para 2030, se actualiza la información referente a la cantidad y calidad del agua de los ríos seleccionados.",
         },
         {
           'codigo': '2.2.9',
           'periodo': '2030',
-          'descripcion': "Para 2030, se incrementa la cantidad de sitios de monitoreo para evaluar la integridad ecológica mediante acciones de biomonitoreo. Responsable: imta.",
+          'descripcion': "Para 2030, se incrementa la cantidad de sitios de monitoreo para evaluar la integridad ecológica mediante acciones de biomonitoreo.",
         },
         {
           'codigo': '2.2.10',
           'periodo': '2030',
-          'descripcion': "Se mejoran las capacidades municipales para la captación de agua de lluvia. Responsable: conaza en zonas áridas.",
+          'descripcion': "Se mejoran las capacidades municipales para la captación de agua de lluvia.",
         },
         {
           'codigo': '2.2.11',
           'periodo': '2030',
-          'descripcion': "Para 2030, se realiza el diagnóstico de presas para garantizar su funcionamiento óptimo; de ser necesario, se establecen programas de desazolve para la rehabilitación de dichos cuerpos de agua. Responsable: conagua.",
+          'descripcion': "Para 2030, se realiza el diagnóstico de presas para garantizar su funcionamiento óptimo; de ser necesario, se establecen programas de desazolve para la rehabilitación de dichos cuerpos de agua.",
         },
         {
           'codigo': '2.2.12',
           'periodo': '2030',
-          'descripcion': "Para 2030, se realiza la biorremediación de cuerpos de agua en anp y sitios prioritarios, considerando diversas técnicas, el tipo de contaminante, el medio afectado y el nivel de daño. Responsables: imipas e imta; coadyuvante: conanp.",
+          'descripcion': "Para 2030, se realiza la biorremediación de cuerpos de agua en anp y sitios prioritarios, considerando diversas técnicas, el tipo de contaminante, el medio afectado y el nivel de daño.",
         },
         {
           'codigo': '2.2.13',
           'periodo': '2030',
-          'descripcion': "Para 2030, se incluyen en las medidas de seguimiento a las acciones de restauración/rehabilitación de ríos contaminados la evaluación de la respuesta biológica mediante valoración de calidad del hábitat y biomonitoreo. Responsable: imta.",
+          'descripcion': "Para 2030, se incluyen en las medidas de seguimiento a las acciones de restauración/rehabilitación de ríos contaminados la evaluación de la respuesta biológica mediante valoración de calidad del hábitat y biomonitoreo.",
         },
         {
           'codigo': '2.2.14',
           'periodo': '2030',
-          'descripcion': "Para 2030, se brinda acompañamiento técnico y especializado a las acciones de rehabilitación de riberas a los organismos responsables de los programas de restauración a nivel nacional. Responsable: imta.",
+          'descripcion': "Para 2030, se brinda acompañamiento técnico y especializado a las acciones de rehabilitación de riberas a los organismos responsables de los programas de restauración a nivel nacional.",
         },
         {
           'codigo': '2.2.15',
           'periodo': '2030',
-          'descripcion': "Para 2030 se brinda acompañamiento técnico y especializado para la delimitación de zona federal en las acciones de intervención de programas de restauración. Responsable: imta.",
+          'descripcion': "Para 2030 se brinda acompañamiento técnico y especializado para la delimitación de zona federal en las acciones de intervención de programas de restauración.",
         },
       ];
       for (var i = 0; i < hitos22.length; i++) {
@@ -1323,52 +1427,52 @@ class ContenidoSeed {
         {
           'codigo': '2.3.1',
           'periodo': '2025–2030',
-          'descripcion': "Para 2025, se implementan acciones de restauración efectivas y monitoreo en 5% de los ecosistemas marinos y costeros degradados (considerando la línea base de 2024) y se aumenta progresivamente la superficie en procesos de restauración hasta alcanzar 50% en el 2030, involucrando a las comunidades locales en todas las etapas. Responsables: semarnat-dgra y semarnat-dgcgmc, conafor y conanp; coadyuvante: conabio.",
+          'descripcion': "Para 2025, se implementan acciones de restauración efectivas y monitoreo en 5% de los ecosistemas marinos y costeros degradados (considerando la línea base de 2024) y se aumenta progresivamente la superficie en procesos de restauración hasta alcanzar 50% en el 2030, involucrando a las comunidades locales en todas las etapas.",
         },
         {
           'codigo': '2.3.2',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, se contará con fichas técnicas descriptivas de los sitios prioritarios para la restauración de ecosistemas marino-costeros e insulares, de acuerdo con el pnra; que incorporen información básica sobre criterios ecológicos, amenazas y presiones, como base para orientar diagnósticos más integrales en etapas posteriores, así como respecto de ecosistemas de referencia para la restauración ecológica. Responsables: semarnat, conabio y conafor; coadyuvante: conanp. 1 Restauración efectiva: se define como la restauración basada en estándares y principios que contribuyen al beneficio, mejora y recuperación de la biodiversidad, la salud e integridad de los ecosistemas, sus funciones y los servicios que provee, así como para el bienestar humano.",
+          'descripcion': "Para 2025 y en adelante, se contará con fichas técnicas descriptivas de los sitios prioritarios para la restauración de ecosistemas marino-costeros e insulares, de acuerdo con el pnra; que incorporen información básica sobre criterios ecológicos, amenazas y presiones, como base para orientar diagnósticos más integrales en etapas posteriores, así como respecto de ecosistemas de referencia para la restauración ecológica.",
         },
         {
           'codigo': '2.3.3',
           'periodo': '2025',
-          'descripcion': "Para 2025, se cuenta con una priorización de los sitios y ecosistemas marino-costeros a restaurar, considerando a información recabada en las fichas técnicas descriptivas del hito 2.3.2, de acuerdo con el pnra. Responsable: semarnat.",
+          'descripcion': "Para 2025, se cuenta con una priorización de los sitios y ecosistemas marino-costeros a restaurar, considerando a información recabada en las fichas técnicas descriptivas del hito 2.3.2, de acuerdo con el pnra.",
         },
         {
           'codigo': '2.3.4',
           'periodo': '2026',
-          'descripcion': "Para 2026, se impulsan acciones de fortalecimiento de capacidades dirigidas a técnicos, científicos y personas involucradas en la gestión de programas y proyectos de restauración y el uso de herramientas, en colaboración con aliados estratégicos del ámbito académico, social, comunitario y de cooperación internacional. Responsable: semarnat; coadyuvantes: conapesca, conafor, conanp, imipas y conabio.",
+          'descripcion': "Para 2026, se impulsan acciones de fortalecimiento de capacidades dirigidas a técnicos, científicos y personas involucradas en la gestión de programas y proyectos de restauración y el uso de herramientas, en colaboración con aliados estratégicos del ámbito académico, social, comunitario y de cooperación internacional.",
         },
         {
           'codigo': '2.3.5',
           'periodo': '2026–2027',
-          'descripcion': "Para el periodo 2026-2027, se habrá avanzado en el fortalecimiento del marco jurídico e institucional necesario para facilitar la coordinación e implementación de acciones de restauración. Este proceso se articulará con los avances del pnra como instrumento programático rector. Responsables: semarnat-ucaj y áreas jurídicas de las subsecretarías; coadyuvantes: conanp, conafor, conabio y conapesca.",
+          'descripcion': "Para el periodo 2026-2027, se habrá avanzado en el fortalecimiento del marco jurídico e institucional necesario para facilitar la coordinación e implementación de acciones de restauración. Este proceso se articulará con los avances del pnra como instrumento programático rector.",
         },
         {
           'codigo': '2.3.6',
           'periodo': '2026',
-          'descripcion': "Para 2026, se cuenta con una metodología validada para la generación de arrecifes artificiales (con residuos de la ostricultura), como una solución basada en la naturaleza para la restauración de estos ecosistemas y el incremento de los reservorios de CO2. Responsable: imipas.",
+          'descripcion': "Para 2026, se cuenta con una metodología validada para la generación de arrecifes artificiales (con residuos de la ostricultura), como una solución basada en la naturaleza para la restauración de estos ecosistemas y el incremento de los reservorios de CO2.",
         },
         {
           'codigo': '2.3.7',
           'periodo': '2027',
-          'descripcion': "Para 2027, se comienzan proyectos piloto para la generación de arrecifes artificiales. Responsable: imipas.",
+          'descripcion': "Para 2027, se comienzan proyectos piloto para la generación de arrecifes artificiales.",
         },
         {
           'codigo': '2.3.8',
           'periodo': '2028–2030',
-          'descripcion': "Para 2028-2030, se cuenta con estrategias y herramientas de monitoreo y/o seguimiento, evaluación y adaptación continuos para los proyectos de restauración. Responsable: semarnat; coadyuvantes: conabio, conafor y conapesca.",
+          'descripcion': "Para 2028-2030, se cuenta con estrategias y herramientas de monitoreo y/o seguimiento, evaluación y adaptación continuos para los proyectos de restauración.",
         },
         {
           'codigo': '2.3.9',
           'periodo': '2030',
-          'descripcion': "Para 2030, se encuentran en ejecución procesos de restauración en cinco sitios deteriorados del Golfo de California y cinco sitios en el Golfo de México. Responsable: semarnat; coadyuvantes: conapesca, conanp, conafor e imipas.",
+          'descripcion': "Para 2030, se encuentran en ejecución procesos de restauración en cinco sitios deteriorados del Golfo de California y cinco sitios en el Golfo de México.",
         },
         {
           'codigo': '2.3.10',
           'periodo': '2030',
-          'descripcion': "Para 2030, se amplía la superficie de Zonas de Refugio Pesquero (zrp) en 175 mil hectáreas mediante la publicación de al menos 15 Nuevos Acuerdos Regulatorios de zrp y se implementan acciones de restauración. Responsables: conapesca e imipas.",
+          'descripcion': "Para 2030, se amplía la superficie de Zonas de Refugio Pesquero (zrp) en 175 mil hectáreas mediante la publicación de al menos 15 Nuevos Acuerdos Regulatorios de zrp y se implementan acciones de restauración.",
         },
       ];
       for (var i = 0; i < hitos23.length; i++) {
@@ -1385,7 +1489,7 @@ class ContenidoSeed {
       await insertarSubhito(
         codigo: '2.3.1.1',
         hito: '2.3.1',
-        descripcion: 'Para 2030, en el marco del Programa Nacional de Restauración Ambiental (pnra), se restauran 15 mil hectáreas de manglares, equivalentes a 30% de los manglares con procesos de degradación en México, contribuyendo a la recuperación de su cobertura y sus servicios ecosistémicos.',
+        descripcion: "Para 2030, en el marco del Programa Nacional de Restauración Ambiental (pnra), se restauran 15 mil hectáreas de manglares, equivalentes a 30% de los manglares con procesos de degradación en México, contribuyendo a la recuperación de su cobertura y sus servicios ecosistémicos.",
         orden: 1,
         referenciaOrigenId: ref25,
       );
@@ -1408,7 +1512,7 @@ class ContenidoSeed {
         {
           'codigo': '3.1.3',
           'periodo': '2027',
-          'descripcion': "Para 2027, se ha compilado la información geoespacial actualizada de todos los sistemas de áreas protegidas (federales, estatales y municipales). Responsable: conanp, para áreas protegidas federales; coadyuvante: conabio, para áreas protegidas estatales y municipales.",
+          'descripcion': "Para 2027, se ha compilado la información geoespacial actualizada de todos los sistemas de áreas protegidas (federales, estatales y municipales).",
         },
         {
           'codigo': '3.1.4',
@@ -1433,7 +1537,8 @@ class ContenidoSeed {
         {
           'codigo': '3.1.8',
           'periodo': '2030',
-          'descripcion': "En 2030, el gobierno federal ha incrementado la superficie marina protegida.",
+          'descripcion':
+              "En 2030, el gobierno federal ha incrementado la superficie marina protegida.",
         },
         {
           'codigo': '3.1.9',
@@ -1524,42 +1629,43 @@ class ContenidoSeed {
         {
           'codigo': '7.1.1',
           'periodo': '2024 en adelante',
-          'descripcion': "Para 2024 en adelante, a través del proagua, se brinda asistencia técnica a solicitud de las entidades federativas o municipios para el establecimiento de sistemas de tratamiento de aguas residuales municipales. Responsable: conagua.",
+          'descripcion': "Para 2024 en adelante, a través del proagua, se brinda asistencia técnica a solicitud de las entidades federativas o municipios para el establecimiento de sistemas de tratamiento de aguas residuales municipales.",
         },
         {
           'codigo': '7.1.2',
           'periodo': '2024 en adelante',
-          'descripcion': "Para 2024 y en adelante, se actualiza el inventario de infraestructura de tratamiento de aguas residuales municipales e industriales a nivel nacional. Responsable: conagua (entidades federativas y organismos operadores).",
+          'descripcion': "Para 2024 y en adelante, se actualiza el inventario de infraestructura de tratamiento de aguas residuales municipales e industriales a nivel nacional.",
         },
         {
           'codigo': '7.1.3',
           'periodo': '2024 en adelante',
-          'descripcion': "Para 2024 y en adelante se informan anualmente los resultados globales en la disminución de la contaminación generada por particulares y empresas cuya actividad preponderante sea servicios de alojamiento temporal y de preparación de alimentos y bebidas (clave scian 72) ubicadas en municipios al interior de la República. Responsable: profepa.",
+          'descripcion': "Para 2024 y en adelante se informan anualmente los resultados globales en la disminución de la contaminación generada por particulares y empresas cuya actividad preponderante sea servicios de alojamiento temporal y de preparación de alimentos y bebidas (clave scian 72) ubicadas en municipios al interior de la República.",
         },
         {
           'codigo': '7.1.4',
           'periodo': '2025',
-          'descripcion': "Para 2025, se fortalece la red de monitoreo de calidad del agua a nivel nacional, priorizando el monitoreo de los ríos Tula, Lerma-Santiago y Atoyac. Responsable: conagua.",
+          'descripcion': "Para 2025, se fortalece la red de monitoreo de calidad del agua a nivel nacional, priorizando el monitoreo de los ríos Tula, Lerma-Santiago y Atoyac.",
         },
         {
           'codigo': '7.1.5',
           'periodo': '2025',
-          'descripcion': "Para 2025, se fortalecen las capacidades de inspección y vigilancia. Responsables: conagua y profepa.",
+          'descripcion':
+              "Para 2025, se fortalecen las capacidades de inspección y vigilancia.",
         },
         {
           'codigo': '7.1.6',
           'periodo': '2026',
-          'descripcion': "Para 2026, se formulan estrategias de prevención ambiental en cuatro cuencas prioritarias: Lerma-Santiago, Tula, Atoyac y Sonora. Responsable: profepa.",
+          'descripcion': "Para 2026, se formulan estrategias de prevención ambiental en cuatro cuencas prioritarias: Lerma-Santiago, Tula, Atoyac y Sonora.",
         },
         {
           'codigo': '7.1.7',
           'periodo': '2030',
-          'descripcion': "Para 2030, se fortalecen las capacidades de productores acuícolas en materia de sanidad acuícola, uso de antibióticos y otros medicamentos, prácticas de alimentación, entre otros. Responsable: imipas.",
+          'descripcion': "Para 2030, se fortalecen las capacidades de productores acuícolas en materia de sanidad acuícola, uso de antibióticos y otros medicamentos, prácticas de alimentación, entre otros.",
         },
         {
           'codigo': '7.1.8',
           'periodo': '2030',
-          'descripcion': "Para 2030, se incluye información sobre integridad ecológica a partir de acciones de biomonitoreo y valoración de la calidad del hábitat como complemento a la valoración fisicoquímica en puntos de monitoreo a nivel nacional. Responsable: imta.",
+          'descripcion': "Para 2030, se incluye información sobre integridad ecológica a partir de acciones de biomonitoreo y valoración de la calidad del hábitat como complemento a la valoración fisicoquímica en puntos de monitoreo a nivel nacional.",
         },
       ];
       for (var i = 0; i < hitos71.length; i++) {
@@ -1586,67 +1692,67 @@ class ContenidoSeed {
         {
           'codigo': '7.2.1',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante se revisan y se cancelan, según proceda, los registros de ingredientes activos de plaguicidas registrados en México. Responsables: agricultura, cofepris, semarnat y cenaprece.",
+          'descripcion': "Para 2025 y en adelante se revisan y se cancelan, según proceda, los registros de ingredientes activos de plaguicidas registrados en México.",
         },
         {
           'codigo': '7.2.2',
           'periodo': '2026',
-          'descripcion': "Para 2026, se incorpora en el marco regulatorio la definición de Plaguicida Altamente Peligroso y disposiciones correspondientes para su identificación. Responsables: cofepris, cenaprece, agricultura y semarnat.",
+          'descripcion': "Para 2026, se incorpora en el marco regulatorio la definición de Plaguicida Altamente Peligroso y disposiciones correspondientes para su identificación.",
         },
         {
           'codigo': '7.2.3',
           'periodo': '2026',
-          'descripcion': "Para 2026, se incorpora en el Reglamento plafest un esquema de renovación específico tomando en consideración la peligrosidad de los plaguicidas y tipo de vigencia para su nueva evaluación, para aquellos registros vigentes: Responsables: cofepris, cenaprece, agricultura y semarnat.",
+          'descripcion': "Para 2026, se incorpora en el Reglamento plafest un esquema de renovación específico tomando en consideración la peligrosidad de los plaguicidas y tipo de vigencia para su nueva evaluación, para aquellos registros vigentes:",
         },
         {
           'codigo': '7.2.4',
           'periodo': '2026',
-          'descripcion': "Para 2026, se incorpora en el Reglamento plafest la evaluación de riesgo ecológico y a la salud humana como requisitos obligatorios para para otorgar o negar la autorización de los registros de plaguicidas altamente peligrosos. Responsables: semarnat y cofepris.",
+          'descripcion': "Para 2026, se incorpora en el Reglamento plafest la evaluación de riesgo ecológico y a la salud humana como requisitos obligatorios para para otorgar o negar la autorización de los registros de plaguicidas altamente peligrosos.",
         },
         {
           'codigo': '7.2.5',
           'periodo': '2026 en adelante',
-          'descripcion': "Para 2026 y en adelante, se cuenta con la actualización de las nom-232-ssa1-2009 (requisitos del envase, embalaje y etiquetado de plaguicidas); nom-052-fito-1995 (aplicación aérea de plaguicidas agrícolas), nom- 034-fito-1995 (fabricación, formulación e importación de plaguicidas agrícolas), la nom-033-fito-2016 (especificaciones, criterios y procedimientos fitosanitarios para las personas físicas o morales que presten servicios de tratamientos fitosanitarios) y la nom-032-ssa2-2014 (para la vigilancia epidemiológica, promoción, prevención y control de las enfermedades transmitidas por vector). Responsables: agricultura, senasica, semarnat, cofepris y cenaprece.",
+          'descripcion': "Para 2026 y en adelante, se cuenta con la actualización de las nom-232-ssa1-2009 (requisitos del envase, embalaje y etiquetado de plaguicidas); nom-052-fito-1995 (aplicación aérea de plaguicidas agrícolas), nom-034-fito-1995 (fabricación, formulación e importación de plaguicidas agrícolas), la nom-033-fito-2016 (especificaciones, criterios y procedimientos fitosanitarios para las personas físicas o morales que presten servicios de tratamientos fitosanitarios) y la nom-032-ssa2-2014 (para la vigilancia epidemiológica, promoción, prevención y control de las enfermedades transmitidas por vector).",
         },
         {
           'codigo': '7.2.6',
           'periodo': '2026',
-          'descripcion': "Para 2026 habrá iniciado el proceso de mapeo de los pap más comercializados en el país. Responsables: agricultura, senasica y semarnat; coadyuvantes: cofepris y cenaprece.",
+          'descripcion': "Para 2026 habrá iniciado el proceso de mapeo de los pap más comercializados en el país.",
         },
         {
           'codigo': '7.2.7',
           'periodo': '2026',
-          'descripcion': "Para 2026, México cuenta con una estrategia de reducción y uso adecuado de plaguicidas para la agricultura. Responsable: agricultura; coadyuvantes: semarnat, cofepris y cenaprece.",
+          'descripcion': "Para 2026, México cuenta con una estrategia de reducción y uso adecuado de plaguicidas para la agricultura.",
         },
         {
           'codigo': '7.2.8',
           'periodo': '2027',
-          'descripcion': "Para 2027, se cuenta con un sistema electrónico que implique información desde la importación, producción, formulación y hasta la comercialización de los pap. Responsable: agricultura (producción y uso); coadyuvantes: cofepris (deacip-control documental y validación sanitaria de importaciones), senasica, salud (uso), cofepris (importación y trazabilidad de registros autorizados) y semarnat, profepa (inspecciones en fronteras), se (comercio exterior), anam (incluida la Ventanilla Única de Comercio Exterior Mexicano, vucem).",
+          'descripcion': "Para 2027, se cuenta con un sistema electrónico que implique información desde la importación, producción, formulación y hasta la comercialización de los pap.",
         },
         {
           'codigo': '7.2.9',
           'periodo': '2027',
-          'descripcion': "Para 2027, se cuenta con un instrumento de gestión que permita la trazabilidad de los envases vacíos de plaguicidas a nivel nacional. Responsable: semarnat.",
+          'descripcion': "Para 2027, se cuenta con un instrumento de gestión que permita la trazabilidad de los envases vacíos de plaguicidas a nivel nacional.",
         },
         {
           'codigo': '7.2.10',
           'periodo': '2027',
-          'descripcion': "Para 2027, se impulsa la sustitución gradual de pap por aquellas alternativas de plaguicida que demuestren la eficacia del producto y que no suponen un riesgo inaceptable para la salud humana o animal ni para el medio ambiente. Responsable: agricultura; coadyuvante: cofepris y semarnat.",
+          'descripcion': "Para 2027, se impulsa la sustitución gradual de pap por aquellas alternativas de plaguicida que demuestren la eficacia del producto y que no suponen un riesgo inaceptable para la salud humana o animal",
         },
         {
           'codigo': '7.2.11',
           'periodo': '2027',
-          'descripcion': "Para 2027, se publica un estudio sobre los factores relacionados con las muertes masivas de abejas, cuantificando plaguicidas presentes en suelos. Responsables: inecc y secihti.",
+          'descripcion': "Para 2027, se publica un estudio sobre los factores relacionados con las muertes masivas de abejas, cuantificando plaguicidas presentes en suelos.",
         },
         {
           'codigo': '7.2.12',
           'periodo': '2028',
-          'descripcion': "Para 2028, se actualiza el Acuerdo por el que se da a conocer la lista de plaguicidas bioquímicos, microbianos, botánicos y misceláneos de riesgo reducido. Responsables: cofepris, senasica, semarnat y cenaprece.",
+          'descripcion': "Para 2028, se actualiza el Acuerdo por el que se da a conocer la lista de plaguicidas bioquímicos, microbianos, botánicos y misceláneos de riesgo reducido.",
         },
         {
           'codigo': '7.2.13',
           'periodo': '2028',
-          'descripcion': "Para 2028, se cuenta con elementos de diseño de un plan de monitoreo ambiental de la presencia y concentración de pap prioritarios. Responsables: semarnat.",
+          'descripcion': "Para 2028, se cuenta con elementos de diseño de un plan de monitoreo ambiental de la presencia y concentración de pap prioritarios.",
         },
       ];
       for (var i = 0; i < hitos72.length; i++) {
@@ -1669,7 +1775,7 @@ class ContenidoSeed {
         {
           'codigo': '7.3.1',
           'periodo': '2024',
-          'descripcion': "Para 2024, se regulan las importaciones de hfc en México, a través del trámite semarnat- 2020-071-002-A.",
+          'descripcion': "Para 2024, se regulan las importaciones de hfc en México, a través del trámite semarnat-2020-071-002-A.",
         },
         {
           'codigo': '7.3.2',
@@ -1709,7 +1815,7 @@ class ContenidoSeed {
         {
           'codigo': '7.3.9',
           'periodo': '2030',
-          'descripcion': "Para 2030, México habrá reducido 10% del consumo nacional de hfc, que equivale a reducir 7 698 266 de tCO2e2, a través del Plan de reducción gradual del consumo nacional de hfc.",
+          'descripcion': "Para 2030, México habrá reducido 10% del consumo nacional de hfc, que equivale a retCOe2, ducir 7 698 266 de a través del Plan de reducción gradual del consumo nacional de hfc. Ambientales del Protocolo de Montreal: y animales presentes en México: estudios de caso. Unidad de Protecultravioleta y las interacciones con el cambio climático. https:// https://acp.copernicus.org/articles/23/5135/2023/ la cantidad de sustancias en términos del impacto en el calenta- (pca) de cada gas .",
         },
       ];
       for (var i = 0; i < hitos73.length; i++) {
@@ -1732,7 +1838,7 @@ class ContenidoSeed {
         {
           'codigo': '7.4.1',
           'periodo': '2025 en adelante',
-          'descripcion': "A partir de 2025, se desarrolla el Plan de eliminación del consumo nacional de hcfc, para eliminar 100% de su consumo al 1 de enero de 2030, en el marco de la implementación del Protocolo de Montreal para contribuir a reducir el efecto de las sustancias que dañan la capa de ozono2.",
+          'descripcion': "A partir de 2025, se desarrolla el Plan de eliminación del consumo nacional de hcfc, para eliminar 100% de su consumo al 1 de enero de 2030, en el marco de la implementación del Protocolo de Montreal para contribuir a reducir el efecto de las sustancias que dañan la capa de ozono².",
         },
         {
           'codigo': '7.4.2',
@@ -1764,102 +1870,102 @@ class ContenidoSeed {
         {
           'codigo': '7.5.1',
           'periodo': '2024 en adelante',
-          'descripcion': "Para 2024 y en adelante se informan anualmente los resultados globales en la disminución de la contaminación de las empresas ubicadas en municipios costeros cuya actividad preponderante sea servicios de alojamiento temporal y de preparación de alimentos y bebidas (clave sican 72). Responsable: profepa; coadyuvante: sectur.",
+          'descripcion': "Para 2024 y en adelante se informan anualmente los resultados globales en la disminución de la contaminación de las empresas ubicadas en municipios costeros cuya actividad preponderante sea servicios de alojamiento temporal y de preparación de alimentos y bebidas (clave sican 72).",
         },
         {
           'codigo': '7.5.2',
           'periodo': '2025',
-          'descripcion': "Para 2025, México se adhiere al proyecto procaribe para aumentar la colaboración con la región. Responsable: semarnat-dgcgmc.",
+          'descripcion': "Para 2025, México se adhiere al proyecto procaribe para aumentar la colaboración con la región.",
         },
         {
           'codigo': '7.5.3',
           'periodo': '2025–2026',
-          'descripcion': "Para 2025 y 2026, se determina y evalúa la calidad del agua en al menos cuatro desembocaduras que vierten al Golfo de México. Responsable: imta.",
+          'descripcion': "Para 2025 y 2026, se determina y evalúa la calidad del agua en al menos cuatro desembocaduras que vierten al Golfo de México.",
         },
         {
           'codigo': '7.5.4',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, a través del simar se fortalecen y actualizan diversos índices de calidad del agua en ambientes marino-costeros (marea roja, sargazo) mediante herramientas satelitales. Responsable: conabio; coadyuvante: semarnat-dgcgmc.",
+          'descripcion': "Para 2025 y en adelante, a través del simar se fortalecen y actualizan diversos índices de calidad del agua en ambientes marino-costeros (marea roja, sargazo) mediante herramientas satelitales.",
         },
         {
           'codigo': '7.5.5',
           'periodo': '2025 en adelante',
-          'descripcion': "De 2025 y en adelante, se coordinan acciones para fortalecer el monitoreo de las zonas marino-costeras contaminadas, incluida la red de monitoreo de calidad del agua a nivel nacional. Responsables: semarnat-dgcgmc, conagua, semar y cofepris.",
+          'descripcion': "De 2025 y en adelante, se coordinan acciones para fortalecer el monitoreo de las zonas marino-costeras contaminadas, incluida la red de monitoreo de calidad del agua a nivel nacional.",
         },
         {
           'codigo': '7.5.6',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, a través del geopesca y otras herramientas o acciones, se fortalecen y actualizan diversos índices de calidad del agua en ambientes marino-costeros in situ de México. Responsables: imipas, cofepris (monitoreo de enterococos fecales/playas para uso recreativo) y semar.",
+          'descripcion': "Para 2025 y en adelante, a través del geopesca y otras herramientas o acciones, se fortalecen y actualizan diversos índices de calidad del agua en ambientes marino-costeros in situ de México.",
         },
         {
           'codigo': '7.5.7',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, se identifican a las empresas que cuentan con título de concesión y se sitúan en estados costeros; se verifica que cumplan con los lineamientos a los que estén sujetos. Responsable: profepa.",
+          'descripcion': "Para 2025 y en adelante, se identifican a las empresas que cuentan con título de concesión y se sitúan en estados costeros; se verifica que cumplan con los lineamientos a los que estén sujetos.",
         },
         {
           'codigo': '7.5.8',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, se implementan el plan nacional y los planes locales o regionales para la atención de contingencias por derrames petroleros, y se fortalecen y mejoran con base en las lecciones aprendidas. Responsable: ciconmar.",
+          'descripcion': "Para 2025 y en adelante, se implementan el plan nacional y los planes locales o regionales para la atención de contingencias por derrames petroleros, y se fortalecen y mejoran con base en las lecciones aprendidas.",
         },
         {
           'codigo': '7.5.9',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, se reciben y atienden las denuncias por irregularidades en el uso del agua, que se ubiquen en cuencas de estados costeros, a través del podan. Responsable: conagua.",
+          'descripcion': "Para 2025 y en adelante, se reciben y atienden las denuncias por irregularidades en el uso del agua, que se ubiquen en cuencas de estados costeros, a través del podan.",
         },
         {
           'codigo': '7.5.10',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, se continúa el proyecto de reciclado de artes de pesca y se inicia el proyecto de remoción de artes de pesca fantasma, en particular en el Alto Golfo de California. Responsable: conapesca; coadyuvantes: profepa, imipas y conanp.",
+          'descripcion': "Para 2025 y en adelante, se continúa el proyecto de reciclado de artes de pesca y se inicia el proyecto de remoción de artes de pesca fantasma, en particular en el Alto Golfo de California.",
         },
         {
           'codigo': '7.5.11',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, se implementan campañas de manejo de residuos en áreas naturales protegidas (anp) marino-costeras. Responsable: conanp.",
+          'descripcion': "Para 2025 y en adelante, se implementan campañas de manejo de residuos en áreas naturales protegidas (anp) marino-costeras.",
         },
         {
           'codigo': '7.5.12',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, en cumplimiento de los tratados internacionales, se llevan a cabo inspecciones para la prevención de la contaminación por aguas de lastre y descargas de aguas residuales provenientes de embarcaciones. Responsable: semar.",
+          'descripcion': "Para 2025 y en adelante, en cumplimiento de los tratados internacionales, se llevan a cabo inspecciones para la prevención de la contaminación por aguas de lastre y descargas de aguas residuales provenientes de embarcaciones.",
         },
         {
           'codigo': '7.5.13',
           'periodo': '2025–2030',
-          'descripcion': "Para 2025 y progresivamente hacia 2030, se implementa y se da continuidad al programa de limpieza y conservación de playas, se realizan campañas de sensibilización sobre el manejo de residuos que afectan a zonas marino-costeras. Responsable: semarnat-dgcgmc; coadyuvantes: semarnat-dgzfmtac, conanp, conagua, semarnat-cecadesu, profepa, conapesca y sectur.",
+          'descripcion': "Para 2025 y progresivamente hacia 2030, se implementa y se da continuidad al programa de limpieza y conservación de playas, se realizan campañas de sensibilización sobre el manejo de residuos que afectan a zonas marino-costeras.",
         },
         {
           'codigo': '7.5.14',
           'periodo': '2026 en adelante',
-          'descripcion': "A partir de 2026, se implementan las estrategias identificadas para revertir y controlar la contaminación en ambientes marino costeros identificados en la Política Nacional para el Manejo Sustentable de Mares y Costas de México, en línea con la meta nacional 1.3. Responsable: semarnat-dgcgmc.",
+          'descripcion': "A partir de 2026, se implementan las estrategias identificadas para revertir y controlar la contaminación en ambientes marino costeros identificados en la Política Nacional para el Manejo Sustentable de Mares y Costas de México, en línea con la meta nacional 1.3.",
         },
         {
           'codigo': '7.5.15',
           'periodo': '2026 en adelante',
-          'descripcion': "Para 2026 y en adelante, se realizan visitas de inspección a desarrollos inmobiliarios que están localizados en los 17 estados con litoral costero, con el objeto de verificar el tratamiento de sus aguas residuales y su disposición final. Responsable: profepa.",
+          'descripcion': "Para 2026 y en adelante, se realizan visitas de inspección a desarrollos inmobiliarios que están localizados en los 17 estados con litoral costero, con el objeto de verificar el tratamiento de sus aguas residuales y su disposición final.",
         },
         {
           'codigo': '7.5.16',
           'periodo': '2030',
-          'descripcion': "Para 2030, se da seguimiento y supervisión a programas para el cumplimiento de la nom-001-semarnat 2021 y los permisos de descarga, de manera que los sujetos regulados que se encuentran ubicados en estados costeros cumplan con el marco normativo de calidad de sus descargas; de acuerdo con los recursos humanos, financieros y materiales con que cuente la conagua. Responsable: conagua.",
+          'descripcion': "Para 2030, se da seguimiento y supervisión a programas para el cumplimiento de la nom-001-semarnat 2021 y los permisos de descarga, de manera que los sujetos regulados que se encuentran ubicados en estados costeros cumplan con el marco normativo de calidad de sus descargas; de acuerdo con los recursos humanos, financieros y materiales con que cuente la conagua.",
         },
         {
           'codigo': '7.5.17',
           'periodo': '2030',
-          'descripcion': "Para 2030, se refuerzan los mecanismos e instrumentos para la conservación de los ambientes marino-costeros, mediante el otorgamiento de superficies de Zona Federal Marítimo Terrestre y Ambientes Costeros, a través de la planificación territorial y el otorgamiento de Destinos y Concesiones para el uso de protección. Responsable: semarnat-dgzfmtac.",
+          'descripcion': "Para 2030, se refuerzan los mecanismos e instrumentos para la conservación de los ambientes marino-costeros, mediante el otorgamiento de superficies de Zona Federal Marítimo Terrestre y Ambientes Costeros, a través de la planificación territorial y el otorgamiento de Destinos y Concesiones para el uso de protección.",
         },
         {
           'codigo': '7.5.18',
           'periodo': '2030',
-          'descripcion': "Para 2030, se mejora la calidad de agua de la desembocadura del Lerma-Santiago, disminuyendo el aporte de contaminantes a los ecosistemas marinos y costeros, en línea con la meta nacional 7.1. Responsable: conagua.",
+          'descripcion': "Para 2030, se mejora la calidad de agua de la desembocadura del Lerma-Santiago, disminuyendo el aporte de contaminantes a los ecosistemas marinos y costeros, en línea con la meta nacional 7.1.",
         },
         {
           'codigo': '7.5.19',
           'periodo': '2030',
-          'descripcion': "Para 2030, se cuenta con un proyecto de elaboración de nmx para el monitoreo y análisis de microplásticos en ambientes acuáticos, incluyendo marinos. Responsable: imta.",
+          'descripcion': "Para 2030, se cuenta con un proyecto de elaboración de nmx para el monitoreo y análisis de microplásticos en ambientes acuáticos, incluyendo marinos.",
         },
         {
           'codigo': '7.5.20',
           'periodo': '2030',
-          'descripcion': "Para 2030 se consolidará un Polo de Economía Circular para el Sargazo en Quintana Roo, que integre la recolección oceánica y su aprovechamiento productivo bajo un esquema de atención integral y sustentable. Responsable: semarnat.",
+          'descripcion': "Para 2030 se consolidará un Polo de Economía Circular para el Sargazo en Quintana Roo, que integre la recolección oceánica y su aprovechamiento productivo bajo un esquema de atención integral y sustentable.",
         },
       ];
       for (var i = 0; i < hitos75.length; i++) {
@@ -1886,67 +1992,67 @@ class ContenidoSeed {
         {
           'codigo': '8.1.1',
           'periodo': '2025',
-          'descripcion': "Para 2025, se publica el Programa Nacional Hídrico con un eje particular sobre adaptación al cambio climático. Responsable: conagua.",
+          'descripcion': "Para 2025, se publica el Programa Nacional Hídrico con un eje particular sobre adaptación al cambio climático.",
         },
         {
           'codigo': '8.1.2',
           'periodo': '2025',
-          'descripcion': "Para 2025, se presenta la actualización de la tercera contribución determinada a nivel nacional (ndc 3.0) con los compromisos de adaptación al cc, asumidos por México (ante la cmnucc) que considera los temas de conservación, restauración, uso sostenible de la biodiversidad y los servicios ecosistémicos, sistemas productivos resilientes y seguridad alimentaria y gestión de los recursos hídricos; temas que están integrados en los ejes C, B y D. Responsables: inecc y semarnat-dgpac.",
+          'descripcion': "Para 2025, se presenta la actualización de la tercera contribución determinada a nivel nacional (ndc 3.0) con los compromisos de adaptación al cc, asumidos por México (ante la cmnucc) que considera los temas de conservación, restauración, uso sostenible de la biodiversidad y los servicios ecosistémicos, sistemas productivos resilientes y seguridad alimentaria y gestión de los recursos hídricos; temas que están integrados en los ejes C, B y D.",
         },
         {
           'codigo': '8.1.3',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, se promueven SbN y AbE mediante la instrumentación el Programa Nacional de Restauración Ambiental 2025-2030. Responsables: semarnat-dgra, conanp, conafor, conagua y semarnat-dggcmc; coadyuvantes: asea, profepa, semarnat-dgvs y semarnat-dgira.",
+          'descripcion': "Para 2025 y en adelante, se promueven SbN y AbE mediante la instrumentación el Programa Nacional de Restauración Ambiental 2025-2030.",
         },
         {
           'codigo': '8.1.4',
           'periodo': '2026',
-          'descripcion': "Para 2026, se presenta la actualización del Programa Especial de Cambio Climático (pecc), con la integración de objetivos, estrategias, acciones y metas para la adaptación al cambio climático, integrando el enfoque de género y abarcando medidas de conservación, restauración y aprovechamiento sustentable de la biodiversidad, los ecosistemas y los servicios que proveen. Responsables: semarnat-dgpac e inecc; coadyuvantes: toda la administración pública federal y mujeres.",
+          'descripcion': "Para 2026, se presenta la actualización del Programa Especial de Cambio Climático (pecc), con la integración de objetivos, estrategias, acciones y metas para la adaptación al cambio climático, integrando el enfoque de género y abarcando medidas de conservación, restauración y aprovechamiento sustentable de la biodiversidad, los ecosistemas y los servicios que proveen.",
         },
         {
           'codigo': '8.1.5',
           'periodo': '2026 en adelante',
-          'descripcion': "Para 2026 y en adelante, se integran las SbN en los instrumentos de ordenamiento territorial y ecológico, poniendo al centro a los ecosistemas en la planificación de los asentamientos humanos, considerando diversos escenarios de cambio climático (en línea con la C 6.1 de la ndc 3.0). Responsable: semarnat-dggfsoe.",
+          'descripcion': "Para 2026 y en adelante, se integran las SbN en los instrumentos de ordenamiento territorial y ecológico, poniendo al centro a los ecosistemas en la planificación de los asentamientos humanos, considerando diversos escenarios de cambio climático (en línea con la C 6.1 de la ndc 3.0).",
         },
         {
           'codigo': '8.1.6',
           'periodo': '2026 en adelante',
-          'descripcion': "Para 2026 y en adelante, en colaboración con otras instituciones, se integran y analizan datos para evaluar la exposición climática futura de grupos de especies relevantes para la conservación y restauración, identificando su vulnerabilidad frente al cambio climático. Responsable: conabio.",
+          'descripcion': "Para 2026 y en adelante, en colaboración con otras instituciones, se integran y analizan datos para evaluar la exposición climática futura de grupos de especies relevantes para la conservación y restauración, identificando su vulnerabilidad frente al cambio climático.",
         },
         {
           'codigo': '8.1.7',
           'periodo': '2027',
-          'descripcion': "Para 2027, el Atlas Nacional de Vulnerabilidad ante el Cambio Climático se actualiza hacia una Plataforma Nacional de Riesgos y Adaptación ante el Cambio Climático, orientada a integrar y sistematizar información actualizada sobre escenarios de cambio climático, riesgos, impactos observados y proyectados, así como medidas de adaptación. Responsable: inecc; coadyuvantes: semarnat-dgpac, conabio, conafor, conanp y cenapred.",
+          'descripcion': "Para 2027, el Atlas Nacional de Vulnerabilidad ante el Cambio Climático se actualiza hacia una Plataforma Nacional de Riesgos y Adaptación ante el Cambio Climático, orientada a integrar y sistematizar información actualizada sobre escenarios de cambio climático, riesgos, impactos observados y proyectados, así como medidas de adaptación.",
         },
         {
           'codigo': '8.1.8',
           'periodo': '2027',
-          'descripcion': "Para 2027, se cuenta con un instrumento de política pública en adaptación al cambio climático (nap, por sus siglas en inglés), que articula actores, sectores y opera medidas de adaptación, considerando los temas de gestión de los recursos hídricos, conservación, restauración y uso sustentable de la biodiversidad y los servicios ecosistémicos, sistemas productivos resilientes y seguridad alimentaria; con enfoque de SbN. Responsables: inecc y semarnat-dgpac; coadyuvantes: conabio, conafor, conanp, imta y conapesca.",
+          'descripcion': "Para 2027, se cuenta con un instrumento de política pública en adaptación al cambio climático (nap, por sus siglas en inglés), que articula actores, sectores y opera medidas de adaptación, considerando los temas de gestión de los recursos hídricos, conservación, restauración y uso sustentable de la biodiversidad y los servicios ecosistémicos, sistemas productivos resilientes y seguridad alimentaria; con enfoque de SbN.",
         },
         {
           'codigo': '8.1.9',
           'periodo': '2027',
-          'descripcion': "Para 2027, se cuenta con una actualización de la dinámica de la línea de costa asociada a manglares. Responsable: conabio.",
+          'descripcion': "Para 2027, se cuenta con una actualización de la dinámica de la línea de costa asociada a manglares.",
         },
         {
           'codigo': '8.1.10',
           'periodo': '2027',
-          'descripcion': "Para 2027, se cuenta con un diagnóstico de vulnerabilidad del sector acuícola ante el cc. Responsable: imipas.",
+          'descripcion': "Para 2027, se cuenta con un diagnóstico de vulnerabilidad del sector acuícola ante el cc.",
         },
         {
           'codigo': '8.1.11',
           'periodo': '2027',
-          'descripcion': "Para 2027, Se actualiza el Atlas de vulnerabilidad hídrica en México ante el cc. Responsable: imta.",
+          'descripcion': "Para 2027, Se actualiza el Atlas de vulnerabilidad hídrica en México ante el cc.",
         },
         {
           'codigo': '8.1.12',
           'periodo': '2030',
-          'descripcion': "Al 2030 se implementan, medidas de adaptación en áreas naturales protegidas (anp) federales y sus zonas de influencia con alto riesgo ante el cambio climático a nivel nacional. Responsable: conanp; coadyuvantes: inecc y conabio.",
+          'descripcion': "Al 2030 se implementan, medidas de adaptación en áreas naturales protegidas (anp) federales y sus zonas de influencia con alto riesgo ante el cambio climático a nivel nacional.",
         },
         {
           'codigo': '8.1.13',
           'periodo': '2030',
-          'descripcion': "Para 2030, se promueven medidas de adaptación SbN y AbE mediante la implementación del Programa Nacional de Auditoría Ambiental, la Estrategia Nacional de Prevención Ambiental y otras medidas de autorregulación. Responsable: profepa.",
+          'descripcion': "Para 2030, se promueven medidas de adaptación SbN y AbE mediante la implementación del Programa Nacional de Auditoría Ambiental, la Estrategia Nacional de Prevención Ambiental y otras medidas de autorregulación.",
         },
       ];
       for (var i = 0; i < hitos81.length; i++) {
@@ -1960,7 +2066,8 @@ class ContenidoSeed {
           referenciaOrigenId: i < 7 ? ref54 : ref55,
         );
       }
-      const subhitos812 = <Map<String, String>>[];
+      const subhitos812 = <Map<String, String>>[
+      ];
       for (var i = 0; i < subhitos812.length; i++) {
         final subhito = subhitos812[i];
         await insertarSubhito(
@@ -1980,47 +2087,47 @@ class ContenidoSeed {
         {
           'codigo': '8.2.1',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, se promueve esquemas de conservación y manejo sustentable de los ecosistemas forestales, en la línea con la línea de acción del C.1 (líneas C. 1.1. a la C.1.6 de la ndc 3.0). Responsable: conafor; coadyuvantes: inecc, semarnat-dggfsoe y semarnat-dgpac.",
+          'descripcion': "Para 2025 y en adelante, se promueve esquemas de conservación y manejo sustentable de los ecosistemas forestales, en la línea con la línea de acción del C.1 (líneas C. 1.1. a la C.1.6 de la ndc 3.0).",
         },
         {
           'codigo': '8.2.2',
           'periodo': '2025–2030',
-          'descripcion': "Para 2025 y al 2030, se promueve la producción y uso de bienes duraderos derivados de la madera, impulsando cadenas de valor sustentables y el desarrollo de economías locales (en línea con la acción 7.5.1. de la ndc y la meta nacional 9.0). Responsable: conafor; coadyuvante: semarnat-dggfsoe.",
+          'descripcion': "Para 2025 y al 2030, se promueve la producción y uso de bienes duraderos derivados de la madera, impulsando cadenas de valor sustentables y el desarrollo de economías locales (en línea con la acción 7.5.1. de la ndc y la meta nacional 9.0).",
         },
         {
           'codigo': '8.2.3',
           'periodo': '2026',
-          'descripcion': "Para 2026, se actualiza el mapa de distribución de manglares en México, incorporando las tendencias de verdor de la vegetación, para el monitoreo de los acervos de carbono azul (en línea con el hito 21.1.11 de la meta nacional 21.1). Responsable: conabio.",
+          'descripcion': "Para 2026, se actualiza el mapa de distribución de manglares en México, incorporando las tendencias de verdor de la vegetación, para el monitoreo de los acervos de carbono azul (en línea con el hito 21.1.11 de la meta nacional 21.1).",
         },
         {
           'codigo': '8.2.4',
           'periodo': '2026',
-          'descripcion': "Para 2026, se publica la Guía de Monitoreo de Áreas de Restauración de Manglar: un enfoque espaciotemporal. Responsable: conabio.",
+          'descripcion': "Para 2026, se publica la Guía de Monitoreo de Áreas de Restauración de Manglar: un enfoque espaciotemporal.",
         },
         {
           'codigo': '8.2.5',
           'periodo': '2026',
-          'descripcion': "Para 2026, se publica el Programa Especial de Cambio Climático (pecc) con líneas de acción específicas para reducir emisiones a través de soluciones basadas en la naturaleza (SbN). Responsable: semarnat-dgpac; coadyuvantes: inecc y toda la administración pública federal.",
+          'descripcion': "Para 2026, se publica el Programa Especial de Cambio Climático (pecc) con líneas de acción específicas para reducir emisiones a través de soluciones basadas en la naturaleza (SbN).",
         },
         {
           'codigo': '8.2.6',
           'periodo': '2027',
-          'descripcion': "Para 2027, se cuenta con una propuesta metodológica para el monitoreo de manglares, incluyendo su cobertura geográfica y principales atributos dasométricos con el propósito de determinar acervos de carbono. Responsable: conafor; coadyuvantes: conabio e inecc.",
+          'descripcion': "Para 2027, se cuenta con una propuesta metodológica para el monitoreo de manglares, incluyendo su cobertura geográfica y principales atributos dasométricos con el propósito de determinar acervos de carbono.",
         },
         {
           'codigo': '8.2.7',
           'periodo': '2030',
-          'descripcion': "Para 2030, se diseñan mecanismos de compensación y neutralización de emisiones de los sectores productivos que contribuyan a la implementación del Programa Nacional de Restauración Ambiental (en línea con la C. 7.4.1de la ndc 3.0). Responsables: inecc, semarnat-dgpac y semarnat-dgra.",
+          'descripcion': "Para 2030, se diseñan mecanismos de compensación y neutralización de emisiones de los sectores productivos que contribuyan a la implementación del Programa Nacional de Restauración Ambiental (en línea con la C. 7.4.1de la ndc 3.0).",
         },
         {
           'codigo': '8.2.8',
           'periodo': '2030',
-          'descripcion': "Para 2030, se cuenta con la Estrategia Nacional de Carbono Azul, en línea con la estrategia 4.4. de la Política Nacional para el Manejo Sustentable de Mares y Costas de México (pnmsmcm), así como con la C.4.3. del eje C del componente de adaptación de la ndc 3.0. Responsables: semarnat-dgpac, semarnat-dgcgmc, conafor e inecc; coadyuvantes: conabio y semar.",
+          'descripcion': "Para 2030, se cuenta con la Estrategia Nacional de Carbono Azul, en línea con la estrategia 4.4. de la Política Nacional para el Manejo Sustentable de Mares y Costas de México (pnmsmcm), así como con la C.4.3. del eje C del componente de adaptación de la ndc 3.0.",
         },
         {
           'codigo': '8.2.9',
           'periodo': '2030',
-          'descripcion': "Para 2030, se encuentra publicada la información de sitios de humedales costeros con datos publicados sobre carbono orgánico, a través del Sistema de Monitoreo de Humedales en México (simoh-mx), en línea con el subhito 21.1.1.10 de la meta nacional 21.1 y con la línea C.2.4. del componente de Adaptación de la ndc 3.0. Responsable: conabio.",
+          'descripcion': "Para 2030, se encuentra publicada la información de sitios de humedales costeros con datos publicados sobre carbono orgánico, a través del Sistema de Monitoreo de Humedales en México (simoh-mx), en línea con el subhito 21.1.1.10 de la meta nacional 21.1 y con la línea C.2.4. del componente de Adaptación de la ndc 3.0.",
         },
       ];
       for (var i = 0; i < hitos82.length; i++) {
@@ -2043,12 +2150,12 @@ class ContenidoSeed {
         {
           'codigo': '9.0.1',
           'periodo': '2025',
-          'descripcion': "Para 2025, se crea un grupo para la coordinación y seguimiento de la meta, integrado con los enlaces que se designe por cada una de las dependencias identificadas como participantes en esta meta, en el marco de sus atribuciones y especies de atención. Responsable: conabio-ac cites convocarán a las primeras dos sesiones para que se pueda establecer el liderazgo del hito.",
+          'descripcion': "Para 2025, se crea un grupo para la coordinación y seguimiento de la meta, integrado con los enlaces que se designe por cada una de las dependencias identificadas como participantes en esta meta, en el marco de sus atribuciones y especies de atención.",
         },
         {
           'codigo': '9.0.2',
           'periodo': '2026',
-          'descripcion': "Para 2026, se identifican criterios para seleccionar las especies o grupos de especies silvestres nativas cuyas cadenas de valor requieren ser fortalecidas. Responsable: imipas; coadyuvantes: conapesca, semarnat-dgvs, semarnat-dggfsoe, conabio-carb y conafor.",
+          'descripcion': "Para 2026, se identifican criterios para seleccionar las especies o grupos de especies silvestres nativas cuyas cadenas de valor requieren ser fortalecidas.",
         },
         {
           'codigo': '9.0.3',
@@ -2058,17 +2165,17 @@ class ContenidoSeed {
         {
           'codigo': '9.0.4',
           'periodo': '2027',
-          'descripcion': "Para 2027, se implementan los planes de trabajo para el fortalecimiento de las cadenas de valor. Responsables: semarnat-dgvs, semarnat-dggfsoe, conabio-ac cites, conafor, conapesca e imipas.",
+          'descripcion': "Para 2027, se implementan los planes de trabajo para el fortalecimiento de las cadenas de valor.",
         },
         {
           'codigo': '9.0.5',
           'periodo': '2027',
-          'descripcion': "Para 2027, se incentivan los centros de producción sustentable como las unidades de manejo para la conservación de la vida silvestre (uma), los predios o instalaciones que manejan vida silvestre (pimvs), los predios bajo manejo forestal, los centros de almacenamiento y transformación de materias primas forestales (cat), upas, entre otros. Responsables: semarnat-dgvs y semarnat-dggfsoe.",
+          'descripcion': "Para 2027, se incentivan los centros de producción sustentable como las unidades de manejo para la conservación de la vida silvestre (uma), los predios o instalaciones que manejan vida silvestre (pimvs), los predios bajo manejo forestal, los centros de almacenamiento y transformación de materias primas forestales (cat), upas, entre otros.",
         },
         {
           'codigo': '9.0.6',
           'periodo': '2027',
-          'descripcion': "Para 2027, se realiza el seguimiento y evaluación a los planes de fortalecimiento de las cadenas de valor, con periodicidad bianual. Responsables: instituciones con atribuciones en las especies de la cadena de valor.",
+          'descripcion': "Para 2027, se realiza el seguimiento y evaluación a los planes de fortalecimiento de las cadenas de valor, con periodicidad bianual.",
         },
         {
           'codigo': '9.0.7',
@@ -2096,27 +2203,28 @@ class ContenidoSeed {
         {
           'codigo': '10.1.1',
           'periodo': '2025',
-          'descripcion': "Para 2025, se impulsa la producción sustentable en Unidades de Producción. Responsable: agricultura-cgpag.",
+          'descripcion':
+              "Para 2025, se impulsa la producción sustentable en Unidades de Producción.",
         },
         {
           'codigo': '10.1.2',
           'periodo': '2025',
-          'descripcion': "Para 2025, se promueve la conservación y el manejo sustentable de los suelos. Responsables: agricultura-cgiyta, agriculturacgsyrc e inifap con apoyo del cimmyt y colpos.",
+          'descripcion': "Para 2025, se promueve la conservación y el manejo sustentable de los suelos.",
         },
         {
           'codigo': '10.1.3',
           'periodo': '2026',
-          'descripcion': "Para 2026, se cuenta con una estrategia nacional para impulsar la transición agroecológica a través de las escuelas de campo (eca). Responsable: agricultura-cgiyta.",
+          'descripcion': "Para 2026, se cuenta con una estrategia nacional para impulsar la transición agroecológica a través de las escuelas de campo (eca).",
         },
         {
           'codigo': '10.1.4',
           'periodo': '2026',
-          'descripcion': "Para 2026, se incrementarán el número de productores en las eca que implementan prácticas agroecológicas. Responsable: agricultura-cgiyta.",
+          'descripcion': "Para 2026, se incrementarán el número de productores en las eca que implementan prácticas agroecológicas.",
         },
         {
           'codigo': '10.1.5',
           'periodo': '2027',
-          'descripcion': "Para 2027, se implementarán en las uni-dades de producción agrícolas alternativas al uso del fuego y reporte de incendios. Responsables: agricultura-cgsyrc, agricultura-cgiyta y agricultura-cgot.",
+          'descripcion': "Para 2027, se implementarán en las uni-dades de producción agrícolas alternativas al uso del fuego y reporte de incendios.",
         },
       ];
       for (var i = 0; i < hitos101.length; i++) {
@@ -2139,32 +2247,32 @@ class ContenidoSeed {
         {
           'codigo': '10.2.1',
           'periodo': '2025',
-          'descripcion': "Para 2025, se establece una estimación de una línea base sobre las upp que lleven a cabo alguna práctica sustentable. Responsable: agricultura-cgpag.",
+          'descripcion': "Para 2025, se establece una estimación de una línea base sobre las upp que lleven a cabo alguna práctica sustentable.",
         },
         {
           'codigo': '10.2.2',
           'periodo': '2025',
-          'descripcion': "Para 2025, se fortalece la colaboración entre la Secretaría de Agricultura y Desarrollo Rural (agricultura) y la Comisión Nacional Forestal (conafor) con la finalidad de impulsar sistemas silvopastoriles sustentables en México, promoviendo esquemas de cooperación técnica y prácticas libres de deforestación. Responsables: agricultura y conafor.",
+          'descripcion': "Para 2025, se fortalece la colaboración entre la Secretaría de Agricultura y Desarrollo Rural (agricultura) y la Comisión Nacional Forestal (conafor) con la finalidad de impulsar sistemas silvopastoriles sustentables en México, promoviendo esquemas de cooperación técnica y prácticas libres de deforestación.",
         },
         {
           'codigo': '10.2.3',
           'periodo': '2026',
-          'descripcion': "Para 2026, se definen criterios y prácticas que permitan considerar a las Unidades de Producción Pecuarias (upp) como sustentables con la biodiversidad, incorporando alternativas productivas al uso del fuego para prevenir incendios en actividades agropecuarias. Responsable: agricultura-cgpag.",
+          'descripcion': "Para 2026, se definen criterios y prácticas que permitan considerar a las Unidades de Producción Pecuarias (upp) como sustentables con la biodiversidad, incorporando alternativas productivas al uso del fuego para prevenir incendios en actividades agropecuarias.",
         },
         {
           'codigo': '10.2.4',
           'periodo': '2026',
-          'descripcion': "Para 2026, se fortalece el sistema de monitoreo y vigilancia (trazabilidad) de la ganadería bovina para la producción libre de deforestación. Responsables: agricultura, senasica, semarnat, conafor y profepa.",
+          'descripcion': "Para 2026, se fortalece el sistema de monitoreo y vigilancia (trazabilidad) de la ganadería bovina para la producción libre de deforestación.",
         },
         {
           'codigo': '10.2.5',
           'periodo': '2027',
-          'descripcion': "Para 2027, se incrementan las upp con prácticas pecuarias sustentables. Responsables: agricultura-cgpag y agricultura-cgsyrc.",
+          'descripcion': "Para 2027, se incrementan las upp con prácticas pecuarias sustentables.",
         },
         {
           'codigo': '10.2.6',
           'periodo': '2028',
-          'descripcion': "Para el 2028, se contará con un Inventario Nacional de la Biodiversidad de las tierras de uso ganadero para la planeación y toma de decisiones que promuevan la conservación de la biodiversidad. Responsable: agricultura.",
+          'descripcion': "Para el 2028, se contará con un Inventario Nacional de la Biodiversidad de las tierras de uso ganadero para la planeación y toma de decisiones que promuevan la conservación de la biodiversidad.",
         },
       ];
       for (var i = 0; i < hitos102.length; i++) {
@@ -2187,57 +2295,57 @@ class ContenidoSeed {
         {
           'codigo': '10.3.1',
           'periodo': '2024–2030',
-          'descripcion': "Entre 2024 y 2030, se realizan Censos de Unidades Acuícolas en al menos diez cuerpos de agua con cultivos acuícolas. Responsable: conapesca.",
+          'descripcion': "Entre 2024 y 2030, se realizan Censos de Unidades Acuícolas en al menos diez cuerpos de agua con cultivos acuícolas.",
         },
         {
           'codigo': '10.3.2',
           'periodo': '2024–2030',
-          'descripcion': "Entre 2024 y 2030, se realizan al menos diez estudios de capacidad de carga acuícola en embalses con pesquerías acuaculturales y/o cultivos acuícolas, y/o cuerpos de agua con unidades de producción acuícola (sujeto a disponibilidad presupuestal). Responsable: imipas.",
+          'descripcion': "Entre 2024 y 2030, se realizan al menos diez estudios de capacidad de carga acuícola en embalses con pesquerías acuaculturales y/o cultivos acuícolas, y/o cuerpos de agua con unidades de producción acuícola (sujeto a disponibilidad presupuestal).",
         },
         {
           'codigo': '10.3.3',
           'periodo': '2025–2030',
-          'descripcion': "A partir de 2025, se otorga apoyo a productores acuícolas mediante capacitación, a través del Programa de Asistencia Técnica Autogestiva, promoviendo la adopción de prácticas sustentables (en total, 640 productores como mínimo al 2030). Responsable: conapesca.",
+          'descripcion': "A partir de 2025, se otorga apoyo a productores acuícolas mediante capacitación, a través del Programa de Asistencia Técnica Autogestiva, promoviendo la adopción de prácticas sustentables (en total, 640 productores como mínimo al 2030).",
         },
         {
           'codigo': '10.3.4',
           'periodo': '2030',
-          'descripcion': "Para 2030, se promueven al menos cuatro planes de manejo acuícola sustentable. Responsable: imipas.",
+          'descripcion': "Para 2030, se promueven al menos cuatro planes de manejo acuícola sustentable.",
         },
         {
           'codigo': '10.3.5',
           'periodo': '2030',
-          'descripcion': "Para 2030, se regularizarán al menos el 50% de las unidades acuícolas que se censaron sin título acuícola, en al menos diez cuerpos de agua con cultivo acuícola. Responsable: conapesca.",
+          'descripcion': "Para 2030, se regularizarán al menos el 50% de las unidades acuícolas que se censaron sin título acuícola, en al menos diez cuerpos de agua con cultivo acuícola.",
         },
         {
           'codigo': '10.3.6',
           'periodo': '2030',
-          'descripcion': "Para 2030, se han publicado 120 nuevas fichas o actualizaciones de fichas existentes de especies, artes de cultivo y estudios de capacidad de carga, en la Carta Nacional Acuícola. Responsable: imipas.",
+          'descripcion': "Para 2030, se han publicado 120 nuevas fichas o actualizaciones de fichas existentes de especies, artes de cultivo y estudios de capacidad de carga, en la Carta Nacional Acuícola.",
         },
         {
           'codigo': '10.3.7',
           'periodo': '2030',
-          'descripcion': "Para 2030, se han emitido al menos un nuevo instrumento normativo (por ejemplo, Normas Oficiales Mexicanas -nom-) sobre el monitoreo y seguimiento (trazabilidad) y mejora de la sustentabilidad en acuacultura. Responsable: conapesca.",
+          'descripcion': "Para 2030, se han emitido al menos un nuevo instrumento normativo (por ejemplo, Normas Oficiales Mexicanas -nom-) sobre el monitoreo y seguimiento (trazabilidad) y mejora de la sustentabilidad en acuacultura.",
         },
         {
           'codigo': '10.3.8',
           'periodo': '2030',
-          'descripcion': "Para 2030, se han impartido capacitaciones en temas de buenas prácticas acuícolas a 24 productores de por lo menos 24 unidades de producción acuícola (upa). Responsable: imipas.",
+          'descripcion': "Para 2030, se han impartido capacitaciones en temas de buenas prácticas acuícolas a 24 productores de por lo menos 24 unidades de producción acuícola (upa).",
         },
         {
           'codigo': '10.3.9',
           'periodo': '2030',
-          'descripcion': "Para 2030, se han realizado transferencias tecnológicas para la producción acuícola a por lo menos 24 upa. Responsable: imipas.",
+          'descripcion': "Para 2030, se han realizado transferencias tecnológicas para la producción acuícola a por lo menos 24 upa.",
         },
         {
           'codigo': '10.3.10',
           'periodo': '2030',
-          'descripcion': "Para 2030, se han realizado al menos 12 proyectos de investigación sobre especies nativas en acuacultura sustentable y/o regenerativa. Responsable: imipas.",
+          'descripcion': "Para 2030, se han realizado al menos 12 proyectos de investigación sobre especies nativas en acuacultura sustentable y/o regenerativa.",
         },
         {
           'codigo': '10.3.11',
           'periodo': '2030',
-          'descripcion': "Para 2030, se incrementa, a través de las Escuelas de Campo Acuícola, las unidades de producción que llevan a cabo mejores prácticas acuícolas sustentables. Responsable: imipas.",
+          'descripcion': "Para 2030, se incrementa, a través de las Escuelas de Campo Acuícola, las unidades de producción que llevan a cabo mejores prácticas acuícolas sustentables.",
         },
       ];
       for (var i = 0; i < hitos103.length; i++) {
@@ -2260,32 +2368,32 @@ class ContenidoSeed {
         {
           'codigo': '10.4.1',
           'periodo': '2025 en adelante',
-          'descripcion': "A partir del 2025, se promueve el fortalecimiento de proyectos de mejora pesquera (fip, por sus siglas en inglés), mediante alianzas estratégicas entre diferentes actores, con la finalidad de mejorar la explotación y manejo de especies marinas, de tal forma que se pueda encaminar hacia la sustentabilidad. Responsable: imipas y conapesca.",
+          'descripcion': "A partir del 2025, se promueve el fortalecimiento de proyectos de mejora pesquera (fip, por sus siglas en inglés), mediante alianzas estratégicas entre diferentes actores, con la finalidad de mejorar la explotación y manejo de especies marinas, de tal forma que se pueda encaminar hacia la sustentabilidad.",
         },
         {
           'codigo': '10.4.2',
           'periodo': '2026',
-          'descripcion': "Para 2026, se promueve la actualización de las fichas técnicas de la Carta Nacional Pesquera, que así lo requieran, así como la adición de nuevas fichas de recursos específicos, para fortalecerla como un instrumento que contenga el diagnóstico y evaluación integral de la actividad pesquera, así como de los indicadores sobre la disponibilidad y conservación de los recursos pesqueros, en aguas de jurisdicción federal. Responsable: imipas; coadyuvante: conabio-carb.",
+          'descripcion': "Para 2026, se promueve la actualización de las fichas técnicas de la Carta Nacional Pesquera, que así lo requieran, así como la adición de nuevas fichas de recursos específicos, para fortalecerla como un instrumento que contenga el diagnóstico y evaluación integral de la actividad pesquera, así como de los indicadores sobre la disponibilidad y conservación de los recursos pesqueros, en aguas de jurisdicción federal.",
         },
         {
           'codigo': '10.4.3',
           'periodo': '2027',
-          'descripcion': "Para 2027, se han actualizado o publicado nuevos acuerdos regulatorios de vedas, cuotas de captura o de temas específicos, para cumplir con el marco regulatorio pesquero internacional. Responsable: conapesca.",
+          'descripcion': "Para 2027, se han actualizado o publicado nuevos acuerdos regulatorios de vedas, cuotas de captura o de temas específicos, para cumplir con el marco regulatorio pesquero internacional.",
         },
         {
           'codigo': '10.4.4',
           'periodo': '2029',
-          'descripcion': "Para 2029, se han actualizado las Normas Oficiales Mexicanas (nom) y se han publicado al menos tres nuevas nom para regular el aprovechamiento sustentable de recursos pesqueros de México. Responsable: conapesca.",
+          'descripcion': "Para 2029, se han actualizado las Normas Oficiales Mexicanas (nom) y se han publicado al menos tres nuevas nom para regular el aprovechamiento sustentable de recursos pesqueros de México.",
         },
         {
           'codigo': '10.4.5',
           'periodo': '2030',
-          'descripcion': "Para 2030, México cuenta con al menos 15 nuevos acuerdos de Zonas de Refugio Pesquero (zrp) decretadas en el territorio nacional, en al menos tres estados diferentes a los ya vigentes, mismos que promueven la recuperación de los recursos acuáticos de interés comercial, la restauración de ecosistemas, el fortalecimiento de la gobernanza y la mitigación del cambio climático. Responsable: conapesca.",
+          'descripcion': "Para 2030, México cuenta con al menos 15 nuevos acuerdos de Zonas de Refugio Pesquero (zrp) decretadas en el territorio nacional, en al menos tres estados diferentes a los ya vigentes, mismos que promueven la recuperación de los recursos acuáticos de interés comercial, la restauración de ecosistemas, el fortalecimiento de la gobernanza y la mitigación del cambio climático.",
         },
         {
           'codigo': '10.4.6',
           'periodo': '2030',
-          'descripcion': "Al 2030, se publican o actualizan nuevos Planes de Manejo Pesquero (pmp) que promuevan las acciones encaminadas al desarrollo de la actividad pesquera de forma equilibrada, integral y sustentable, basadas en el conocimiento actualizado de los aspectos biológicos, ecológicos, pesqueros, ambientales, económicos, culturales y sociales. Responsable: imipas.",
+          'descripcion': "Al 2030, se publican o actualizan nuevos Planes de Manejo Pesquero (pmp) que promuevan las acciones encaminadas al desarrollo de la actividad pesquera de forma equilibrada, integral y sustentable, basadas en el conocimiento actualizado de los aspectos biológicos, ecológicos, pesqueros, ambientales, económicos, culturales y sociales.",
         },
       ];
       for (var i = 0; i < hitos104.length; i++) {
@@ -2308,42 +2416,42 @@ class ContenidoSeed {
         {
           'codigo': '10.5.1',
           'periodo': '2025',
-          'descripcion': "Para 2025, se ha identificado la superficie susceptible a incorporarse o reincorporarse al manejo forestal sustentable y se comienza a realizar una actualización periódica en los siguientes años. Responsable: conafor; coadyuvantes: semarnat-ucorgt y semarnat-dggfsoe.",
+          'descripcion': "Para 2025, se ha identificado la superficie susceptible a incorporarse o reincorporarse al manejo forestal sustentable y se comienza a realizar una actualización periódica en los siguientes años.",
         },
         {
           'codigo': '10.5.2',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, la Secretaría del Medio Ambiente y Recursos Naturales (semarnat) simplifica los trámites en materia de manejo forestal sustentable para el incremento de la superficie autorizada, a fin de que los resolutivos se otorguen de manera oportuna. Responsables: semarnat-ucorgt y semarnat-dggfsoe.",
+          'descripcion': "Para 2025 y en adelante, la Secretaría del Medio Ambiente y Recursos Naturales (semarnat) simplifica los trámites en materia de manejo forestal sustentable para el incremento de la superficie autorizada, a fin de que los resolutivos se otorguen de manera oportuna.",
         },
         {
           'codigo': '10.5.3',
           'periodo': '2025',
-          'descripcion': "Para 2025, se fortalece el mecanismo de coordinación que facilita la comunicación interinstitucional para agilizar la autorización de programas de manejo para el seguimiento a la política del manejo forestal sustentable. Responsables: semarnat-ucorgt y semarnat-dggfsoe.",
+          'descripcion': "Para 2025, se fortalece el mecanismo de coordinación que facilita la comunicación interinstitucional para agilizar la autorización de programas de manejo para el seguimiento a la política del manejo forestal sustentable.",
         },
         {
           'codigo': '10.5.4',
           'periodo': '2025 en adelante',
-          'descripcion': "Para 2025 y en adelante, se fortalece la gobernanza de las personas dueñas y poseedoras de predios bajo manejo forestal. Responsable: conafor.",
+          'descripcion': "Para 2025 y en adelante, se fortalece la gobernanza de las personas dueñas y poseedoras de predios bajo manejo forestal.",
         },
         {
           'codigo': '10.5.5',
           'periodo': '2025',
-          'descripcion': "Para 2025, se fortalecen los sistemas informáticos que permiten brindar una transparencia proactiva en materia de superficie bajo manejo y producción forestal. Lo anterior para el monitoreo y toma de decisiones en materia de política forestal. Responsable: semarnat-dggfsoe.",
+          'descripcion': "Para 2025, se fortalecen los sistemas informáticos que permiten brindar una transparencia proactiva en materia de superficie bajo manejo y producción forestal. Lo anterior para el monitoreo y toma de decisiones en materia de política forestal.",
         },
         {
           'codigo': '10.5.6',
           'periodo': '2026 en adelante',
-          'descripcion': "Para 2026 y en adelante, se incrementa la participación efectiva de las mujeres en la gestión sustentable de la silvicultura y de los recursos naturales en general. Responsables: conafor y semarnat-dggfsoe; coadyuvantes: ran y mujeres.",
+          'descripcion': "Para 2026 y en adelante, se incrementa la participación efectiva de las mujeres en la gestión sustentable de la silvicultura y de los recursos naturales en general.",
         },
         {
           'codigo': '10.5.7',
           'periodo': '2026 en adelante',
-          'descripcion': "Para 2026 y en adelante, se fortalecen e incrementan las estrategias para fomentar y mejorar los mercados de materias primas y productos forestales maderables y no maderables, con la finalidad de fomentar el consumo de productos forestales provenientes de predios bajo manejo sustentable. Responsable: conafor; coadyuvante: economía.",
+          'descripcion': "Para 2026 y en adelante, se fortalecen e incrementan las estrategias para fomentar y mejorar los mercados de materias primas y productos forestales maderables y no maderables, con la finalidad de fomentar el consumo de productos forestales provenientes de predios bajo manejo sustentable.",
         },
         {
           'codigo': '10.5.8',
           'periodo': '2028',
-          'descripcion': "Para 2028, se cuenta con un Sistema Nacional de Gestión Forestal actualizado y eficiente para la captura, sistematización, georreferenciación y generación de información sobre la superficie, volumen y autorizaciones de aprovechamiento forestal. Responsable: semarnat-dggfsoe.",
+          'descripcion': "Para 2028, se cuenta con un Sistema Nacional de Gestión Forestal actualizado y eficiente para la captura, sistematización, georreferenciación y generación de información sobre la superficie, volumen y autorizaciones de aprovechamiento forestal.",
         },
       ];
       for (var i = 0; i < hitos105.length; i++) {
@@ -2366,12 +2474,12 @@ class ContenidoSeed {
         {
           'codigo': '11.0.1',
           'periodo': '2025–2026 en adelante',
-          'descripcion': "Para 2025–2026 y en adelante, se fortalece la inspección y vigilancia ambiental con enfoque de justicia ambiental en sectores y territorios prioritarios (forestal, minero y costero), y se implementa una metodología para valorar integralmente la biodiversidad y establecer compensaciones socioambientalmente justas. Responsable: profepa.",
+          'descripcion': "Para 2025–2026 y en adelante, se fortalece la inspección y vigilancia ambiental con enfoque de justicia ambiental en sectores y territorios prioritarios (forestal, minero y costero), y se implementa una metodología para valorar integralmente la biodiversidad y establecer compensaciones socioambientalmente justas.",
         },
         {
           'codigo': '11.0.2',
           'periodo': '2030',
-          'descripcion': "Para 2030, México cuenta con al menos 15 nuevos acuerdos de Zonas de Refugio Pesquero (zrp) establecidos en al menos tres estados diferentes a los ya vigentes, mismos que promueven la protección y conservación de los recursos acuáticos de interés comercial, la restauración de los ecosistemas, el fortalecimiento de la gobernanza y la mitigación del cambio climático. Responsable: conapesca.",
+          'descripcion': "Para 2030, México cuenta con al menos 15 nuevos acuerdos de Zonas de Refugio Pesquero (zrp) establecidos en al menos tres estados diferentes a los ya vigentes, mismos que promueven la protección y conservación de los recursos acuáticos de interés comercial, la restauración de los ecosistemas, el fortalecimiento de la gobernanza y la mitigación del cambio climático.",
         },
         {
           'codigo': '11.0.3',
@@ -2391,17 +2499,17 @@ class ContenidoSeed {
         {
           'codigo': '11.0.6',
           'periodo': '2026 en adelante',
-          'descripcion': "Para 2026 en adelante, se fortalecen e incrementan las estrategias de mercado de materias primas y productos forestales maderables y no maderables, con la finalidad de fomentar el consumo de productos forestales bajo manejo sustentable. Responsable: conafor; coadyuvante: economía. Instrumentos de política ambiental (recuperación de ecosistemas)",
+          'descripcion': "Para 2026 en adelante, se fortalecen e incrementan las estrategias de mercado de materias primas y productos forestales maderables y no maderables, con la finalidad de fomentar el consumo de productos forestales bajo manejo sustentable.",
         },
         {
           'codigo': '11.0.7',
           'periodo': '2025 y bienalmente',
-          'descripcion': "Para 2025, y de manera bienal, se actualizan y mejoran las cuentas de los ecosistemas de México para la evaluación, fortalecimiento e integración de criterios de conservación y uso sustentable de la biodiversidad en las políticas de uso territorial de todos los sectores. Responsable: inegi e instituciones de la administración pública federal con instrumentos de política de conservación, uso y restauración de la biodiversidad.",
+          'descripcion': "Para 2025, y de manera bienal, se actualizan y mejoran las cuentas de los ecosistemas de México para la evaluación, fortalecimiento e integración de criterios de conservación y uso sustentable de la biodiversidad en las políticas de uso territorial de todos los sectores.",
         },
         {
           'codigo': '11.0.8',
           'periodo': '2030',
-          'descripcion': "Al 2030, la restauración ambiental se ha convertido en una política pública prioritaria (meta nacional 2.1). Responsable: semarnat.",
+          'descripcion': "Al 2030, la restauración ambiental se ha convertido en una política pública prioritaria (meta nacional 2.1).",
         },
       ];
       for (var i = 0; i < hitos110.length; i++) {
@@ -2449,7 +2557,7 @@ class ContenidoSeed {
         {
           'codigo': '12.0.6',
           'periodo': '2029 en adelante',
-          'descripcion': "Al 2029 y en adelante, se desarrollan acciones de fortalecimiento de capacidades para continuar sumando a gobiernos estatales y municipales al cumplimiento de la nom-003-sedatu-2023, considerando los resultados de la evaluación de avances realizada previamente y, de esta manera, aumentar la superficie y la calidad de áreas verdes y azules.",
+          'descripcion': "Al 2029 y en adelante, se desarrollan acciones de fortalecimiento de capacidades para continuar sumando a gobiernos estatales y municipales al cumplimiento de la nom-003-sedatu-2023, considerando los resultados de la evaluación de avances realizada previamente y, de esta manera, aumentar la superficie y la calidad de áreas verdes y azules. Territorial (dgot)",
         },
       ];
       for (var i = 0; i < hitos120.length; i++) {
@@ -2491,7 +2599,7 @@ class ContenidoSeed {
         {
           'codigo': '13.0.4',
           'periodo': '2025',
-          'descripcion': "Para el 2025, se inicia la consultoría Generación, recopilación y análisis de información para la generación de elementos y recomendaciones para la elaboración del Primer Informe Nacional sobre la implementación del Protocolo de Nagoya en México y su regulación a nivel nacional como parte del proyecto gef 11908 - Apoyo a la preparación del primer informe nacional sobre la aplicación del Protocolo de Nagoya sobre el acceso a los recursos genéticos y la distribución justa y equitativa de los beneficios derivados de su utilización.",
+          'descripcion': "Para el 2025, se inicia la consultoría Generación, recopilación y análisis de información para la generación de elementos y recomendaciones para la elaboración del Primer Informe Nacional sobre la implementación del Protocolo de Nagoya en México y su regulación a nivel nacional 1 Los hitos establecidos para lograr esta meta contribuyen de manera de los derechos de los pueblos indígenas hasta la implementación ción con las autoridades competentes. Representan un enfoque integral la conservación de la biodiversidad en México.",
         },
         {
           'codigo': '13.0.5',
@@ -2574,12 +2682,12 @@ class ContenidoSeed {
         {
           'codigo': '14.1.1',
           'periodo': '2025',
-          'descripcion': "Para 2025, se establece un mecanismo intersectorial para dar seguimiento y coordinar las acciones de integración de la biodiversidad. Responsable: semarnat, con el apoyo de conabio.",
+          'descripcion': "Para 2025, se establece un mecanismo intersectorial para dar seguimiento y coordinar las acciones de integración de la biodiversidad.",
         },
         {
           'codigo': '14.1.2',
           'periodo': '2024-2026',
-          'descripcion': "Para 2024-2026, el Plan Nacional de Desarrollo y los programas derivados de este, conforme a lo dispuesto en la Ley de Planeación, incluyen una visión estratégica y transversal sobre la valoración, conservación, uso sustentable y restauración de la biodiversidad, para el cumplimiento del Marco Mundial de Biodiversidad Kunming-Montreal. Responsables: dependencias de la administración pública federal a cargo de políticas que impactan en la biodiversidad.",
+          'descripcion': "Para 2024-2026, el Plan Nacional de Desarrollo y los programas derivados de este, conforme a lo dispuesto en la Ley de Planeación, incluyen una visión estratégica y transversal sobre la valoración, conservación, uso sustentable y restauración de la biodiversidad, para el cumplimiento del Marco Mundial de Biodiversidad Kunming-Montreal.",
         },
         {
           'codigo': '14.1.3',
@@ -2589,7 +2697,7 @@ class ContenidoSeed {
         {
           'codigo': '14.1.4',
           'periodo': '2025',
-          'descripcion': "Para 2025, México revisa y actualiza las actividades en materia de soluciones basadas en la naturaleza y la conservación de la biodiversidad en el sistema financiero (AT.2), dentro de la Estrategia de Movilización de Financiamiento Sostenible (emfs). Responsable: shcp.",
+          'descripcion': "Para 2025, México revisa y actualiza las actividades en materia de soluciones basadas en la naturaleza y la conservación de la biodiversidad en el sistema financiero (AT.2), dentro de la Estrategia de Movilización de Financiamiento Sostenible (emfs).",
         },
         {
           'codigo': '14.1.5',
@@ -2694,32 +2802,32 @@ class ContenidoSeed {
         {
           'codigo': '15.0.1',
           'periodo': '2026',
-          'descripcion': "Para 2026, México cuenta con una hoja de ruta para el sector privado financiero y no financiero, que proponga métricas, metodologías e indicadores relevantes para evaluar los impactos, dependencias, riesgos de pérdida de biodiversidad. Responsables: shcp para el sector privado financiero; economía para el sector privado no financiero.",
+          'descripcion': "Para 2026, México cuenta con una hoja de ruta para el sector privado financiero y no financiero, que proponga métricas, metodologías e indicadores relevantes para evaluar los impactos, dependencias, riesgos de pérdida de biodiversidad.",
         },
         {
           'codigo': '15.0.2',
           'periodo': '2026',
-          'descripcion': "Para 2026, México integra el objetivo de biodiversidad en la Taxonomía Sostenible de México para orientar la movilización de capitales del sector privado financiero y no financiero hacia actividades con impactos positivos en la conservación y uso sustentable de la biodiversidad. Responsables: shcp para el sector privado financiero; economía para el sector privado no financiero.",
+          'descripcion': "Para 2026, México integra el objetivo de biodiversidad en la Taxonomía Sostenible de México para orientar la movilización de capitales del sector privado financiero y no financiero hacia actividades con impactos positivos en la conservación y uso sustentable de la biodiversidad.",
         },
         {
           'codigo': '15.0.3',
           'periodo': '2028',
-          'descripcion': "Para 2028, México ha desarrollado un programa piloto para la adopción de la Taxonomía Sostenible incluyendo el objetivo de biodiversidad y los instrumentos necesarios para su implementación, y se han realizado los ajustes necesarios para su institucionalización. Responsable: shcp.",
+          'descripcion': "Para 2028, México ha desarrollado un programa piloto para la adopción de la Taxonomía Sostenible incluyendo el objetivo de biodiversidad y los instrumentos necesarios para su implementación, y se han realizado los ajustes necesarios para su institucionalización.",
         },
         {
           'codigo': '15.0.4',
           'periodo': '2028',
-          'descripcion': "Para 2028, México cuenta con una hoja de ruta para generar instrumentos que regulen la revelación de información proveniente del sector privado financiero y no financiero sobre sus impactos, dependencias, riesgos y oportunidades. Responsables: shcp para el sector privado financiero; economía para el sector privado no financiero.",
+          'descripcion': "Para 2028, México cuenta con una hoja de ruta para generar instrumentos que regulen la revelación de información proveniente del sector privado financiero y no financiero sobre sus impactos, dependencias, riesgos y oportunidades.",
         },
         {
           'codigo': '15.0.5',
           'periodo': '2029',
-          'descripcion': "Para el año 2029, México cuenta con una evaluación clara de estrategias de mitigación de riesgos asociados a la biodiversidad por parte del sector privado financiero y no financiero. Responsables: shcp para el sector privado financiero; economía para el sector privado no financiero.",
+          'descripcion': "Para el año 2029, México cuenta con una evaluación clara de estrategias de mitigación de riesgos asociados a la biodiversidad por parte del sector privado financiero y no financiero.",
         },
         {
           'codigo': '15.0.6',
           'periodo': '2030',
-          'descripcion': "Para el año 2030, México implementa una regulación para que el sector privado financiero y no financiero identifiquen, evalúen, y revelen información relacionada con los impactos, dependencias, riesgos y oportunidades relacionados con la biodiversidad. Responsables: shcp y comisiones para el sector privado financiero; economía para el sector privado no financiero.",
+          'descripcion': "Para el año 2030, México implementa una regulación para que el sector privado financiero y no financiero identifiquen, evalúen, y revelen información relacionada con los impactos, dependencias, riesgos y oportunidades relacionados con la biodiversidad.",
         },
       ];
       for (var i = 0; i < hitos150.length; i++) {
@@ -2756,17 +2864,17 @@ class ContenidoSeed {
         {
           'codigo': '16.0.3',
           'periodo': '2025',
-          'descripcion': "Al 2025, se consolida e implementa una estrategia nacional de capacitación dirigida a la población interesada sobre alimentación regional adecuada y sustentable, basada en las Guías Alimentarias, mediante una carta descriptiva replicable creada en 2024 para realizar los talleres de capacitación, en coordinación con las unidades responsables de programas presupuestarios relacionados con el derecho a la alimentación. Responsable: salud-dgpsp.",
+          'descripcion': "Al 2025, se consolida e implementa una estrategia nacional de capacitación dirigida a la población interesada sobre alimentación regional adecuada y sustentable, basada en las Guías Alimentarias, mediante una carta descriptiva replicable creada en 2024 para realizar los talleres de capacitación, en coordinación con las unidades responsables de programas presupuestarios relacionados con el derecho a la alimentación.",
         },
         {
           'codigo': '16.0.4',
           'periodo': '2025',
-          'descripcion': "Al 2025, se publica el curso de capacitación para la población en general sobre las recomendaciones de las Guías Alimentarias. Responsable: salud; coadyuvante: insp.",
+          'descripcion': "Al 2025, se publica el curso de capacitación para la población en general sobre las recomendaciones de las Guías Alimentarias.",
         },
         {
           'codigo': '16.0.5',
           'periodo': '2025',
-          'descripcion': "Al 2025, se capacitan a promotores de salud en una alimentación regional adecuada y sustentable basada en las guías alimentarias. Responsable: salud-dgpsp.",
+          'descripcion': "Al 2025, se capacitan a promotores de salud en una alimentación regional adecuada y sustentable basada en las guías alimentarias.",
         },
         {
           'codigo': '16.0.6',
@@ -2776,32 +2884,32 @@ class ContenidoSeed {
         {
           'codigo': '16.0.7',
           'periodo': '2025',
-          'descripcion': "Al 2025, se realizan intervenciones de promoción de la salud a través de la implementación de estrategias educativas para fomentar estilos de vida saludables en la población mexicana, con énfasis en información sobre la adopción de una alimentación regional adecuada y sustentable basada en las Guías Alimentarias. Responsable: salud-dgpsp.",
+          'descripcion': "Al 2025, se realizan intervenciones de promoción de la salud a través de la implementación de estrategias educativas para fomentar estilos de vida saludables en la población mexicana, con énfasis en información sobre la adopción de una alimentación regional adecuada y sustentable basada en las Guías Alimentarias.",
         },
         {
           'codigo': '16.0.8',
           'periodo': '2025',
-          'descripcion': "Al 2025, se certifican entornos laborales como saludables en los cuales se da énfasis a fomentar una alimentación regional saludable y sustentable entre la población trabajadora, basada en las recomendaciones de las Guías Alimentarias. Responsable: salud-dgpsp.",
+          'descripcion': "Al 2025, se certifican entornos laborales como saludables en los cuales se da énfasis a fomentar una alimentación regional saludable y sustentable entre la población trabajadora, basada en las recomendaciones de las Guías Alimentarias.",
         },
         {
           'codigo': '16.0.9',
           'periodo': '2025',
-          'descripcion': "Al 2025, se implementan campañas sobre la alimentación regional adecuada y sustentable dirigida a los diferentes grupos de población, basada en las Guías Alimentarias y con participación de los servicios estatales de salud. Responsable: salud-dgpsp.",
+          'descripcion': "Al 2025, se implementan campañas sobre la alimentación regional adecuada y sustentable dirigida a los diferentes grupos de población, basada en las Guías Alimentarias y con participación de los servicios estatales de salud.",
         },
         {
           'codigo': '16.0.10',
           'periodo': '2025',
-          'descripcion': "Al 2025, se actualizan y generan materiales educativos dirigidos a diferentes grupos de la población con enfoque de alimentación regional adecuada y sustentable, basados en las recomendaciones de las Guías Alimentarias. Responsable: salud-dgpsp.",
+          'descripcion': "Al 2025, se actualizan y generan materiales educativos dirigidos a diferentes grupos de la población con enfoque de alimentación regional adecuada y sustentable, basados en las recomendaciones de las Guías Alimentarias.",
         },
         {
           'codigo': '16.0.11',
           'periodo': '2025',
-          'descripcion': "Al 2025, se implementa en las escuelas los Lineamientos generales a que deberán sujetarse la preparación, la distribución y el expendio de los alimentos y bebidas preparados, procesados y a granel, así como el fomento de los estilos de vida saludables en alimentación dentro de toda escuela del Sistema Educativo Nacional, con enfoque para promover en la comunidad educativa el consumo de una alimentación regional adecuada y sustentable. Responsables: sep y salud-dgpsp.",
+          'descripcion': "Al 2025, se implementa en las escuelas los Lineamientos generales a que deberán sujetarse la preparación, la distribución y el expendio de los alimentos y bebidas preparados, procesados y a granel, así como el fomento de los estilos de vida saludables en alimentación dentro de toda escuela del Sistema Educativo Nacional, con enfoque para promover en la comunidad educativa el consumo de una alimentación regional adecuada y sustentable.",
         },
         {
           'codigo': '16.0.12',
           'periodo': '2026',
-          'descripcion': "Al 2026, se realiza la vinculación con programas presupuestarios de la administración pública federal para impulsar la implementación de acciones que promuevan la alimentación saludable y sustentable entre la población mexicana. Responsable: salud-dgpsp.",
+          'descripcion': "Al 2026, se realiza la vinculación con programas presupuestarios de la administración pública federal para impulsar la implementación de acciones que promuevan la alimentación saludable y sustentable entre la población mexicana.",
         },
       ];
       for (var i = 0; i < hitos160.length; i++) {
@@ -2905,17 +3013,17 @@ class ContenidoSeed {
         {
           'codigo': '18.0.1',
           'periodo': '2025',
-          'descripcion': "Para 2025, se fortalecen las capacidades de la administración pública federal sobre la importancia de la biodiversidad y los efectos negativos de las subvenciones e incentivos perjudiciales. Responsables: semarnat, con el apoyo técnico de la conafor, conanp y conabio.",
+          'descripcion': "Para 2025, se fortalecen las capacidades de la administración pública federal sobre la importancia de la biodiversidad y los efectos negativos de las subvenciones e incentivos perjudiciales.",
         },
         {
           'codigo': '18.0.2',
           'periodo': '2025-2026',
-          'descripcion': "Para 2025-2026, se identifican, evalúan y priorizan los incentivos y subsidios que proporcionan las instituciones de la administración pública federal con potencial negativo en la biodiversidad, en las convocatorias, reglas de operación, modalidades y definición de programas, con la finalidad de realizar recomendaciones de cambios pertinentes que eviten o minimicen dichos impactos (en línea con el hito 14.1.5 de la meta nacional 14.1). Responsables: conabio con el apoyo técnico de biofin.",
+          'descripcion': "Para 2025-2026, se identifican, evalúan y priorizan los incentivos y subsidios que proporcionan las instituciones de la administración pública federal con potencial negativo en la biodiversidad, en las convocatorias, reglas de operación, modalidades y definición de programas, con la finalidad de realizar recomendaciones de cambios pertinentes que eviten o minimicen dichos impactos (en línea con el hito 14.1.5 de la meta nacional 14.1).",
         },
         {
           'codigo': '18.0.3',
           'periodo': '2026-2027',
-          'descripcion': "Para 2026-2027, se identifican, evalúan y priorizan los tipos de incentivos y subsidios positivos, otorgados por las instituciones de la administración pública federal (en línea con el hito 14.1.5 de la meta nacional 14.1). Responsables: conabio y con el apoyo técnico de biofin.",
+          'descripcion': "Para 2026-2027, se identifican, evalúan y priorizan los tipos de incentivos y subsidios positivos, otorgados por las instituciones de la administración pública federal (en línea con el hito 14.1.5 de la meta nacional 14.1).",
         },
         {
           'codigo': '18.0.4',
@@ -2925,12 +3033,12 @@ class ContenidoSeed {
         {
           'codigo': '18.0.5',
           'periodo': '2026',
-          'descripcion': "Para 2026, se promueve el incremento de los montos de los incentivos positivos a la biodiversidad, así como la diversificación de los mismos y se incrementa el número de personas beneficiarias. Responsables: agricultura, conafor y conanp.",
+          'descripcion': "Para 2026, se promueve el incremento de los montos de los incentivos positivos a la biodiversidad, así como la diversificación de los mismos y se incrementa el número de personas beneficiarias.",
         },
         {
           'codigo': '18.0.6',
           'periodo': '2030',
-          'descripcion': "Para 2030, se cuenta con una propuesta interinstitucional para la transición gradual hacia subsidios con beneficios para la biodiversidad, basada en estudios técnicos, evaluaciones socioeconómicas y procesos participativos con los sectores afectados. Responsables: toda la administración pública federal con la coordinación de shcp.",
+          'descripcion': "Para 2030, se cuenta con una propuesta interinstitucional para la transición gradual hacia subsidios con beneficios para la biodiversidad, basada en estudios técnicos, evaluaciones socioeconómicas y procesos participativos con los sectores afectados.",
         },
       ];
       for (var i = 0; i < hitos180.length; i++) {
@@ -2953,37 +3061,37 @@ class ContenidoSeed {
         {
           'codigo': '19.1.1',
           'periodo': '2026',
-          'descripcion': "Para 2026, México identifica el monto movilizado y la brecha de financiamiento internacional para la biodiversidad. Responsables: semarnat-ucai, shcp y sre-amexcid, con apoyo del inecc y en conjunto con la administración pública federal.",
+          'descripcion': "Para 2026, México identifica el monto movilizado y la brecha de financiamiento internacional para la biodiversidad.",
         },
         {
           'codigo': '19.1.2',
           'periodo': '2026',
-          'descripcion': "Para 2026, se realiza un diagnóstico que incluya el mapeo de actores y fuentes de financiamiento nacional e internacional, privadas y de filantropía, para el logro de la meta, que incluye el mecanismo de recopilación de información. Responsables: semarnat-ucai, con apoyo de biofin, shcp y sre-amexcid.",
+          'descripcion': "Para 2026, se realiza un diagnóstico que incluya el mapeo de actores y fuentes de financiamiento nacional e internacional, privadas y de filantropía, para el logro de la meta, que incluye el mecanismo de recopilación de información.",
         },
         {
           'codigo': '19.1.3',
           'periodo': '2025',
-          'descripcion': "Para 2025, se cuenta con el costeo de la implementación de las metas nacionales alineadas al Marco Mundial de Biodiversidad Kunming-Montreal, incluyendo costos unitarios para restauración, omec, anp y para la transición agroecológica (federal, y metodología para identificación de brechas para la realización por parte de gobiernos subnacionales). Responsables: conabio, con apoyo de biofin.",
+          'descripcion': "Para 2025, se cuenta con el costeo de la implementación de las metas nacionales alineadas al Marco Mundial de Biodiversidad Kunming-Montreal, incluyendo costos unitarios para restauración, omec, anp y para la transición agroecológica (federal, y metodología para identificación de brechas para la realización por parte de gobiernos subnacionales).",
         },
         {
           'codigo': '19.1.4',
           'periodo': '2025',
-          'descripcion': "Para 2025, México revisa y actualiza las actividades en materia de soluciones basadas en la naturaleza y la conservación de la biodiversidad en el sistema financiero (AT.2), dentro de la Estrategia de Movilización de Financiamiento Sostenible (emfs), con el fin de movilizar recursos hacia acciones que permitan la consecución de las metas nacionales en línea con el Marco Mundial de Biodiversidad Kunming-Montreal (en línea con el hito 14.1.4 de la meta nacional 14.1). Responsable: shcp.",
+          'descripcion': "Para 2025, México revisa y actualiza las actividades en materia de soluciones basadas en la naturaleza y la conservación de la biodiversidad en el sistema financiero (AT.2), dentro de la Estrategia de Movilización de Financiamiento Sostenible (emfs), con el fin de movilizar recursos hacia acciones que permitan la consecución de las metas nacionales en línea con el Marco Mundial de Biodiversidad Kunming-Montreal (en línea con el hito 14.1.4 de la meta nacional 14.1).",
         },
         {
           'codigo': '19.1.5',
           'periodo': '2026',
-          'descripcion': "Para 2026, se implementan acciones para el fortalecimiento de las capacidades del personal de la administración pública federal encargado de gestionar y movilizar recursos de diferentes fuentes internacionales. Responsables: semarnat-ucai, shcp y sre-amexcid, con el apoyo de conabio y biofin.",
+          'descripcion': "Para 2026, se implementan acciones para el fortalecimiento de las capacidades del personal de la administración pública federal encargado de gestionar y movilizar recursos de diferentes fuentes internacionales.",
         },
         {
           'codigo': '19.1.6',
           'periodo': '2028',
-          'descripcion': "Para 2028, se actualiza la Estrategia de Movilización de Financiamiento Sostenible, identificando nuevos instrumentos y mecanismos financieros internacionales relativos a la biodiversidad. Responsable: shcp con colaboración de semarnat, entre otros.",
+          'descripcion': "Para 2028, se actualiza la Estrategia de Movilización de Financiamiento Sostenible, identificando nuevos instrumentos y mecanismos financieros internacionales relativos a la biodiversidad.",
         },
         {
           'codigo': '19.1.7',
           'periodo': '2028',
-          'descripcion': "Para 2028, el Gobierno de México, a través de la Secretaría de Hacienda y Crédito Público (shcp), utiliza nuevos instrumentos, fuentes de financiamiento y/o mecanismos financieros que incidan en el logro de la meta. Responsable: shcp.",
+          'descripcion': "Para 2028, el Gobierno de México, a través de la Secretaría de Hacienda y Crédito Público (shcp), utiliza nuevos instrumentos, fuentes de financiamiento y/o mecanismos financieros que incidan en el logro de la meta.",
         },
       ];
       for (var i = 0; i < hitos191.length; i++) {
@@ -3006,17 +3114,17 @@ class ContenidoSeed {
         {
           'codigo': '19.2.1',
           'periodo': '2025',
-          'descripcion': "Para 2025, se conoce la brecha de financiamiento para el cumplimiento de las metas nacionales. Responsables: semarnat-ucai, semarnat-dgpeea y conabio con apoyo de biofin.",
+          'descripcion': "Para 2025, se conoce la brecha de financiamiento para el cumplimiento de las metas nacionales.",
         },
         {
           'codigo': '19.2.2',
           'periodo': '2025',
-          'descripcion': "Para 2025, México revisa y actualiza las actividades en materia de soluciones basadas en la naturaleza y la conservación de la biodiversidad en el sistema financiero (AT.2), dentro de la Estrategia de Movilización de Financiamiento Sostenible (emfs), con el propósito de contribuir a la reducción de la brecha financiera (en línea con el hito 14.1.14 de la meta nacional 14.1). Responsable: shcp.",
+          'descripcion': "Para 2025, México revisa y actualiza las actividades en materia de soluciones basadas en la naturaleza y la conservación de la biodiversidad en el sistema financiero (AT.2), dentro de la Estrategia de Movilización de Financiamiento Sostenible (emfs), con el propósito de contribuir a la reducción de la brecha financiera (en línea con el hito 14.1.14 de la meta nacional 14.1).",
         },
         {
           'codigo': '19.2.3',
           'periodo': '2028',
-          'descripcion': "Para 2028, el Gobierno de México, a través de la Secretaría de Hacienda y Crédito Público (shcp), publica una actualización de la Acción Transversal 2 (AT.2) de la Estrategia de Movilización de Financiamiento Sostenible, relativos a la biodiversidad (en línea con el hito 19.1.6 de la meta nacional 19.1). Responsable: shcp.",
+          'descripcion': "Para 2028, el Gobierno de México, a través de la Secretaría de Hacienda y Crédito Público (shcp), publica una actualización de la Acción Transversal 2 (AT.2) de la Estrategia de Movilización de Financiamiento Sostenible, relativos a la biodiversidad (en línea con el hito 19.1.6 de la meta nacional 19.1).",
         },
       ];
       for (var i = 0; i < hitos192.length; i++) {
@@ -3107,7 +3215,7 @@ class ContenidoSeed {
         {
           'codigo': '20.1.3',
           'periodo': '2026',
-          'descripcion': "Para 2026, se implementan cursos en materia de conservación y uso sustentable de la biodiversidad para la administración pública federal y actores estratégicos para la educación ambiental, a través de la plataforma de cursos en línea del Centro de Educación y Capacitación para el Desarrollo Sustentable (cecadesu). Responsable: semarnat-cecadesu.",
+          'descripcion': "Para 2026, se implementan cursos en materia de conservación y uso sustentable de la biodiversidad para la administración pública federal y actores estratégicos para la educación ambiental, a través de la plataforma de cursos en línea del Centro de Educación y Capacitación para el Desarrollo Sustentable (cecadesu).",
         },
         {
           'codigo': '20.1.4',
@@ -3186,7 +3294,7 @@ class ContenidoSeed {
         {
           'codigo': '21.1.1',
           'periodo': '2030',
-          'descripcion': "Para 2030, se consolida el Sistema Nacional de Información para la Biodiversidad (snib) como un acervo público, accesible, actualizado y confiable, tomando en cuenta los principios fair1 (Findable, Accessible, Interoperable and Reusable) y crea2 (Collective Benefit, Authority to control, Responsability and Ethics), en concordancia con los Acuerdos de Escazú, considerando lo siguiente:",
+          'descripcion': "Para 2030, se consolida el Sistema Nacional de Información para la Biodiversidad (snib) como un acervo público, accesible, actualizado y confiable, tomando en cuenta los principios fair¹ (Findable, Accessible, Interoperable and Reusable) y crea² (Collective Benefit, Authority to control, Responsability and Ethics), en concordancia con los Acuerdos de Escazú, considerando lo siguiente:",
         },
         {
           'codigo': '21.1.2',
@@ -3311,14 +3419,14 @@ class ContenidoSeed {
       await insertarSubhito(
         codigo: '21.1.3.1',
         hito: '21.1.3',
-        descripcion: "A partir de 2026, se cuenta con un ecosistema digital gestionado por el Centro de Educación y Capacitación para el Desarrollo Sustentable (cecadesu) a través del cual se difunden materiales dirigidos a diversos sectores de la sociedad para fortalecer la participación en la conservación y el uso sustentable de la biodiversidad. Responsable: semarnat-cecadesu.",
+        descripcion: "A partir de 2026, se cuenta con un ecosistema digital gestionado por el Centro de Educación y Capacitación para el Desarrollo Sustentable (cecadesu) a través del cual se difunden materiales dirigidos a diversos sectores de la sociedad para fortalecer la participación en la conservación y el uso sustentable de la biodiversidad.",
         orden: 1,
         referenciaOrigenId: ref104,
       );
       await insertarSubhito(
         codigo: '21.1.3.2',
         hito: '21.1.3',
-        descripcion: "A partir de 2026, se desarrollan y promueven proyectos y actividades de divulgación y educación ambiental para fortalecer la conciencia y cultura públicas sobre la conservación de la biodiversidad. Responsable: semarnat-cecadesu.",
+        descripcion: "A partir de 2026, se desarrollan y promueven proyectos y actividades de divulgación y educación ambiental para fortalecer la conciencia y cultura públicas sobre la conservación de la biodiversidad.",
         orden: 2,
         referenciaOrigenId: ref104,
       );
@@ -3331,12 +3439,12 @@ class ContenidoSeed {
         {
           'codigo': '22.0.1',
           'periodo': '2025',
-          'descripcion': "Para 2025, se cuenta con una hoja de ruta con acciones, metas, responsabilidades y calendarios de trabajo, por cada derecho de acceso a la información, a la participación pública y a la justicia, así como para la atención de las personas defensoras de los derechos humanos en asuntos ambientales. Responsable: sre.",
+          'descripcion': "Para 2025, se cuenta con una hoja de ruta con acciones, metas, responsabilidades y calendarios de trabajo, por cada derecho de acceso a la información, a la participación pública y a la justicia, así como para la atención de las personas defensoras de los derechos humanos en asuntos ambientales.",
         },
         {
           'codigo': '22.0.2',
           'periodo': '2025',
-          'descripcion': "Para 2025, se implementa un programa de capacitación para el fortalecimiento de las capacidades de la administración pública federal en los tres derechos de acceso del Acuerdo de Escazú. Responsable: Grupo de trabajo interinstitucional del Acuerdo de Escazú.",
+          'descripcion': "Para 2025, se implementa un programa de capacitación para el fortalecimiento de las capacidades de la administración pública federal en los tres derechos de acceso del Acuerdo de Escazú.",
         },
         {
           'codigo': '22.0.3',
@@ -3378,52 +3486,52 @@ class ContenidoSeed {
         {
           'codigo': '23.0.1',
           'periodo': '2025',
-          'descripcion': "Para 2025, el sector ambiental establece un comité coordinador de género con la finalidad de reforzar la transversalidad del enfoque de género en los programas y políticas del sector ambiental. Responsable: semarnat-ucppvsdh; coadyuvante: mujeres.",
+          'descripcion': "Para 2025, el sector ambiental establece un comité coordinador de género con la finalidad de reforzar la transversalidad del enfoque de género en los programas y políticas del sector ambiental.",
         },
         {
           'codigo': '23.0.2',
           'periodo': '2026',
-          'descripcion': "Para 2026, las instituciones del sector ambiental de la administración pública federal identifican las brechas de desigualdad y barreras en el ejercicio de los derechos de acceso, uso, aprovechamiento y beneficio de las mujeres a los recursos naturales y a su participación en las acciones de conservación, toma de decisiones. vigilancia y uso sustentable de la biodiversidad. Responsable: semarnat; coadyuvantes: dependencias de la administración pública federal del sector ambiental.",
+          'descripcion': "Para 2026, las instituciones del sector ambiental de la administración pública federal identifican las brechas de desigualdad y barreras en el ejercicio de los derechos de acceso, uso, aprovechamiento y beneficio de las mujeres a los recursos naturales y a su participación en las acciones de conservación, toma de decisiones. vigilancia y uso sustentable de la biodiversidad.",
         },
         {
           'codigo': '23.0.3',
           'periodo': '2024 en adelante',
-          'descripcion': "Para 2024 y en adelante, la Procuraduría Federal de Protección al Ambiente (profepa), y en sus 32 oficinas de representación, implementa acciones para incentivar la participación de las mujeres, en toda su diversidad, dentro de los Comités de Vigilancia Ambiental Participativa (cvap) de recursos naturales. Responsable: profepa.",
+          'descripcion': "Para 2024 y en adelante, la Procuraduría Federal de Protección al Ambiente (profepa), y en sus 32 oficinas de representación, implementa acciones para incentivar la participación de las mujeres, en toda su diversidad, dentro de los Comités de Vigilancia Ambiental Participativa (cvap) de recursos naturales.",
         },
         {
           'codigo': '23.0.4',
           'periodo': '2024 en adelante',
-          'descripcion': "Para 2024 y en adelante, el acceso de las mujeres a la titularidad de la tierra y acceso a los recursos naturales se ha incrementado. Responsables: ran y pa.",
+          'descripcion': "Para 2024 y en adelante, el acceso de las mujeres a la titularidad de la tierra y acceso a los recursos naturales se ha incrementado.",
         },
         {
           'codigo': '23.0.5',
           'periodo': '2024',
-          'descripcion': "Para 2024, la Comisión Nacional de Áreas Naturales Protegidas (conanp) cuenta con una metodología que permite, desde la perspectiva de género, evaluar la brecha salarial, la participación, distribución de beneficios y toma de decisiones entre hombres y mujeres en las iniciativas productivas comunitarias que apoya. Promueve su difusión, conocimiento y aplicación. Responsable: conanp.",
+          'descripcion': "Para 2024, la Comisión Nacional de Áreas Naturales Protegidas (conanp) cuenta con una metodología que permite, desde la perspectiva de género, evaluar la brecha salarial, la participación, distribución de beneficios y toma de decisiones entre hombres y mujeres en las iniciativas productivas comunitarias que apoya. Promueve su difusión, conocimiento y aplicación.",
         },
         {
           'codigo': '23.0.6',
           'periodo': '2025',
-          'descripcion': "Para 2025, las instituciones del sector ambiental de la administración pública federal, en el marco de sus atribuciones y programas, identifican y ejecutan acciones estratégicas para disminuir las brechas de desigualdad y las barreras en el ejercicio de los derechos de acceso, uso, aprovechamiento y beneficio de las mujeres a los recursos naturales y a su participación en los mecanismos de conservación, vigilancia y uso sustentable de la biodiversidad. Responsable: semarnat; coadyuvantes: dependencias de la administración pública federal del sector ambiental y mujeres.",
+          'descripcion': "Para 2025, las instituciones del sector ambiental de la administración pública federal, en el marco de sus atribuciones y programas, identifican y ejecutan acciones estratégicas para disminuir las brechas de desigualdad y las barreras en el ejercicio de los derechos de acceso, uso, aprovechamiento y beneficio de las mujeres a los recursos naturales y a su participación en los mecanismos de conservación, vigilancia y uso sustentable de la biodiversidad.",
         },
         {
           'codigo': '23.0.7',
           'periodo': '2025',
-          'descripcion': "Para 2025, las instituciones del sector ambiental de la administración pública federal dan continuidad y refuerzan la incorporación de la perspectiva de género en sus acciones conforme a la normatividad aplicable, así como en los programas sociales y políticas públicas. Responsable: semarnat; coadyuvantes: dependencias de la administración pública federal del sector ambiental y mujeres.",
+          'descripcion': "Para 2025, las instituciones del sector ambiental de la administración pública federal dan continuidad y refuerzan la incorporación de la perspectiva de género en sus acciones conforme a la normatividad aplicable, así como en los programas sociales y políticas públicas.",
         },
         {
           'codigo': '23.0.8',
           'periodo': '2025',
-          'descripcion': "Para 2025, se identifica el número de mujeres que forman parte de los mecanismos de participación del sector ambiental y otros de la administración pública federal asociados a medio ambiente, en el marco de la implementación del Acuerdo de Escazú. Responsable: semarnat; coadyuvantes: dependencias de la administración pública federal del sector ambiental.",
+          'descripcion': "Para 2025, se identifica el número de mujeres que forman parte de los mecanismos de participación del sector ambiental y otros de la administración pública federal asociados a medio ambiente, en el marco de la implementación del Acuerdo de Escazú.",
         },
         {
           'codigo': '23.0.9',
           'periodo': '2026',
-          'descripcion': "Para 2026, la Secretaría de Medio Ambiente y Recursos Naturales (semarnat), diseñará una propuesta de lineamientos para asegurar la participación plena y efectiva de las mujeres en toda su diversidad en los mecanismos de participación ciudadana para la toma de decisiones respecto al acceso, control, uso y beneficio de los recursos naturales. Responsable: semarnat; coadyuvantes: dependencias de la administración pública federal del sector ambiental y mujeres.",
+          'descripcion': "Para 2026, la Secretaría de Medio Ambiente y Recursos Naturales (semarnat), diseñará una propuesta de lineamientos para asegurar la participación plena y efectiva de las mujeres en toda su diversidad en los mecanismos de participación ciudadana para la toma de decisiones respecto al acceso, control, uso y beneficio de los recursos naturales.",
         },
         {
           'codigo': '23.0.10',
           'periodo': '2027',
-          'descripcion': "Para 2027, las instituciones de la administración pública federal establecen metas e indicadores para el monitoreo y seguimiento de las acciones de promoción y fortalecimiento de la participación plena y efectiva de las mujeres en las intervenciones territoriales de las políticas públicas, los programas, actividades institucionales, mecanismos, las acciones y estrategias. Responsables: semarnat y conabio; coadyuvante: mujeres.",
+          'descripcion': "Para 2027, las instituciones de la administración pública federal establecen metas e indicadores para el monitoreo y seguimiento de las acciones de promoción y fortalecimiento de la participación plena y efectiva de las mujeres en las intervenciones territoriales de las políticas públicas, los programas, actividades institucionales, mecanismos, las acciones y estrategias.",
         },
       ];
       for (var i = 0; i < hitos230.length; i++) {
@@ -3444,29 +3552,64 @@ class ContenidoSeed {
       // -------------------------------------------------------------------
       final subhitosComplementarios = <Map<String, String>>[
         {
+          'codigo': '2.3.1.1',
+          'hito': '2.3.1',
+          'descripcion': 'Para 2030, en el marco del Programa Nacional de Restauración Ambiental (pnra), se restauran 15 mil hectáreas de manglares, equivalentes a 30% de los manglares con procesos de degradación en México, contribuyendo a la recuperación de su cobertura y sus servicios ecosistémicos.',
+        },
+        {
           'codigo': '8.1.12.1',
           'hito': '8.1.12',
-          'descripcion': "Para 2027, se cuenta con un análisis que permita identificar las anp federales con mayor riesgo actual y futuro ante el cambio climático. Responsable: conanp; coadyuvantes: inecc y conabio.",
+          'descripcion': 'Para 2027, se cuenta con un análisis que permita identificar las anp federales con mayor riesgo actual y futuro ante el cambio climático. Responsable: conanp; coadyuvantes: inecc y conabio.',
         },
         {
           'codigo': '8.1.12.2',
           'hito': '8.1.12',
-          'descripcion': "Para 2027, se contará con una guía para la evaluación de riesgos ante el cambio climático y diseño de medidas de adaptación para personal de anp federales, en donde se contemple la gobernanza de las medidas, su financiamiento e indicadores de avance e impacto. Responsable: conanp.",
+          'descripcion': 'Para 2027, se contará con una guía para la evaluación de riesgos ante el cambio climático y diseño de medidas de adaptación para personal de anp federales, en donde se contemple la gobernanza de las medidas, su financiamiento e indicadores de avance e impacto. Responsable: conanp.',
         },
         {
           'codigo': '8.1.12.3',
           'hito': '8.1.12',
-          'descripcion': "Para 2028, las anp federales con mayor riesgo a nivel nacional ante el cambio climático contarán con evaluaciones de riesgos específicos (para ecosistemas, comunidades locales y medios de vida) ante el cambio climático. Responsable: conanp.",
+          'descripcion': 'Para 2028, las anp federales con mayor riesgo a nivel nacional ante el cambio climático contarán con evaluaciones de riesgos específicos (para ecosistemas, comunidades locales y medios de vida) ante el cambio climático. Responsable: conanp.',
         },
         {
           'codigo': '8.1.12.4',
           'hito': '8.1.12',
-          'descripcion': "Para 2030, se han implementado o estarán implementando, medidas de adaptación en anp federales y sus zonas de influencia con alto riesgo ante el cambio climático a nivel nacional, derivadas de evaluaciones de riesgo específicas, las cuales contarán con mecanismos para asegurar su ejecución en la escala y temporalidad adecuada, con enfoque de género, para tener un impacto significativo en la reducción del riesgo de los ecosistemas, las comunidades y sus medios de vida, en especial en las anp que abarquen localidades de alta vulnerabilidad al cambio climático. Responsable: conanp; coadyuvantes: inecc y conabio.",
+          'descripcion': 'Para 2030, se han implementado o estarán implementando, medidas de adaptación en anp federales y sus zonas de influencia con alto riesgo ante el cambio climático a nivel nacional, derivadas de evaluaciones de riesgo específicas, las cuales contarán con mecanismos para asegurar su ejecución en la escala y temporalidad adecuada, con enfoque de género, para tener un impacto significativo en la reducción del riesgo de los ecosistemas, las comunidades y sus medios de vida, en especial en las anp que abarquen localidades de alta vulnerabilidad al cambio climático. Responsable: conanp; coadyuvantes: inecc y conabio.',
         },
         {
           'codigo': '8.1.12.5',
           'hito': '8.1.12',
-          'descripcion': "Para 2030, se cuenta con un sistema de seguimiento con enfoque de género del progreso respecto a los indicadores de avance e impacto respecto al cambio climático relacionados con las medidas de adaptación implementadas en anp. Responsable: conanp.",
+          'descripcion': 'Para 2030, se cuenta con un sistema de seguimiento con enfoque de género del progreso respecto a los indicadores de avance e impacto respecto al cambio climático relacionados con las medidas de adaptación implementadas en anp. Responsable: conanp.',
+        },
+        {
+          'codigo': '14.1.3.1',
+          'hito': '14.1.3',
+          'descripcion': 'Para 2025, todos los sectores gubernamentales que formulan e implementan políticas públicas que impactan directa o indirectamente a la diversidad biológica han realizado sus diagnósticos para identificar riesgos, impactos, dependencias y oportunidades en la conservación y uso sustentable de la biodiversidad.',
+        },
+        {
+          'codigo': '14.1.3.2',
+          'hito': '14.1.3',
+          'descripcion': 'Para 2027, todos los sectores gubernamentales que formulan e implementan políticas públicas que impactan directa o indirectamente a la biodiversidad han integrado en sus herramientas de planeación, políticas y programas, consideraciones de conservación y uso sustentable de la biodiversidad.',
+        },
+        {
+          'codigo': '21.1.2.1',
+          'hito': '21.1.2',
+          'descripcion': 'Para 2029, los datos alojados y publicados por el snib cumplirán con los principios de datos fair, con el fin de potenciar la investigación, la innovación y la toma de decisiones informada, permitiendo su fácil acceso y uso por parte de cualquier persona, sin importar su formación o recursos.',
+        },
+        {
+          'codigo': '21.1.2.2',
+          'hito': '21.1.2',
+          'descripcion': 'Para 2029, los datos del snib se complementarán con principios crea, según corresponda, enfocados en asegurar que los datos sobre agrobiodiversidad y uso de las especies, principalmente se hagan considerando estos principios para promover el fortalecimiento de la gobernanza en las comunidades con respeto a sus derechos y autonomía, en concordancia con los Acuerdos de Escazú.',
+        },
+        {
+          'codigo': '21.1.3.1',
+          'hito': '21.1.3',
+          'descripcion': 'A partir de 2026, se cuenta con un ecosistema digital gestionado por el Centro de Educación y Capacitación para el Desarrollo Sustentable (cecadesu) a través del cual se difunden materiales dirigidos a diversos sectores de la sociedad para fortalecer la participación en la conservación y el uso sustentable de la biodiversidad. Responsable: semarnat-cecadesu.',
+        },
+        {
+          'codigo': '21.1.3.2',
+          'hito': '21.1.3',
+          'descripcion': 'A partir de 2026, se desarrollan y promueven proyectos y actividades de divulgación y educación ambiental para fortalecer la conciencia y cultura públicas sobre la conservación de la biodiversidad. Responsable: semarnat-cecadesu.',
         },
       ];
 
@@ -3940,22 +4083,22 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'asea',
         meta: '2.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'asea',
         meta: '7.5',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'asea',
         meta: '8.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'asea',
         meta: '23.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'bienestar',
@@ -4000,42 +4143,42 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'cjf',
         meta: '22.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'cnpa',
         meta: '10.4',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'cnpi',
         meta: '22.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'ciconmar',
         meta: '7.5',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'cofepris',
         meta: '7.2',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'cofepris',
         meta: '7.4',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'cofepris',
         meta: '7.5',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'cofepris',
         meta: '13.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'conabio',
@@ -4220,11 +4363,6 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'conabio-deeb',
         meta: '23.0',
-        tipo: 'COORDINADORA',
-      );
-      await insertarParticipacionSeed(
-        institucion: 'conabio-deeb',
-        meta: '19.2',
         tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
@@ -4495,12 +4633,12 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'conuee',
         meta: '7.3',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'conuee',
         meta: '7.4',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'economia',
@@ -4555,12 +4693,12 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'gt-adapt',
         meta: '8.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'gt-redd+',
         meta: '1.4',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'imipas',
@@ -4625,42 +4763,42 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'impi',
         meta: '13.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'imta',
         meta: '2.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'imta',
         meta: '2.2',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'imta',
         meta: '5.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'imta',
         meta: '7.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'imta',
         meta: '7.5',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'imta',
         meta: '8.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'imta',
         meta: '23.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'inecc',
@@ -4710,17 +4848,17 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'inegi',
         meta: '2.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'inegi',
         meta: '11.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'inegi',
         meta: '21.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'inifap',
@@ -4735,47 +4873,47 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'inpi',
         meta: '2.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'inpi',
         meta: '21.2',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'inpi',
         meta: '22.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'insp',
         meta: '16.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'mujeres',
         meta: '8.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'mujeres',
         meta: '10.5',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'mujeres',
         meta: '23.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'pa',
         meta: '1.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'pa',
         meta: '1.4',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'pa',
@@ -4790,77 +4928,77 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'profepa',
         meta: '1.4',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'profepa',
         meta: '2.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'profepa',
         meta: '4.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'profepa',
         meta: '5.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'profepa',
         meta: '6.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'profepa',
         meta: '7.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'profepa',
         meta: '7.2',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'profepa',
         meta: '7.3',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'profepa',
         meta: '7.4',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'profepa',
         meta: '7.5',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'profepa',
         meta: '8.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'profepa',
         meta: '10.2',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'profepa',
         meta: '11.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'profepa',
         meta: '17.2',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'profepa',
         meta: '23.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'ran',
@@ -4875,12 +5013,12 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'ran',
         meta: '10.5',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'ran',
         meta: '23.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'salud',
@@ -4910,12 +5048,12 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'secihti',
         meta: '13.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'secihti',
         meta: '17.2',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'sectur',
@@ -5005,22 +5143,22 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'semarnat',
         meta: '7.5',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat',
         meta: '14.2',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat',
         meta: '23.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat-cecadesu',
         meta: '6.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat-cecadesu',
@@ -5070,22 +5208,22 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'semarnat-dgcgmc',
         meta: '8.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat-dgcgmc',
         meta: '8.2',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat-dgcgmc',
         meta: '17.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat-dgcgmc',
         meta: '17.2',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat-dggfsoe',
@@ -5165,7 +5303,7 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'semarnat-dggimar',
         meta: '7.2',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat-dgielgca',
@@ -5180,12 +5318,12 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'semarnat-dgira',
         meta: '8.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat-dgit',
         meta: '5.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat-dgpac',
@@ -5219,6 +5357,11 @@ class ContenidoSeed {
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat-dgpeea',
+        meta: '15.0',
+        tipo: 'COORDINADORA',
+      );
+      await insertarParticipacionSeed(
+        institucion: 'semarnat-dgpeea',
         meta: '18.0',
         tipo: 'COORDINADORA',
       );
@@ -5230,7 +5373,7 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'semarnat-dgpeea',
         meta: '15.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat-dgra',
@@ -5255,17 +5398,17 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'semarnat-dgra',
         meta: '8.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat-dgra',
         meta: '8.2',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat-dgra',
         meta: '21.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat-dgvs',
@@ -5310,12 +5453,12 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'semarnat-dgzfmtac',
         meta: '2.3',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat-dgzfmtac',
         meta: '7.5',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat-ucai',
@@ -5330,12 +5473,12 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'semarnat-ucaj',
         meta: '2.3',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat-ucorgt',
         meta: '10.5',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat-ucppvsdh',
@@ -5355,67 +5498,67 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'senasica',
         meta: '2.2',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'senasica',
         meta: '5.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'senasica',
         meta: '6.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'senasica',
         meta: '7.2',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'senasica',
         meta: '10.2',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'senasica',
         meta: '17.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'sener',
         meta: '1.2',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'sener',
         meta: '1.3',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'sener',
         meta: '7.3',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'sener',
         meta: '7.4',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'sep',
         meta: '7.4',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'sep',
         meta: '16.0',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'sep',
         meta: '21.1',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'shcp',
@@ -5455,7 +5598,7 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'sict',
         meta: '1.2',
-        tipo: 'COORDINADORA',
+        tipo: 'COADYUVANTE',
       );
       await insertarParticipacionSeed(
         institucion: 'sre',

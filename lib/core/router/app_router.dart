@@ -7,6 +7,7 @@ import 'package:metas_nacionales/features/home/home_page.dart';
 import 'package:metas_nacionales/features/instituciones/instituciones_page.dart';
 import 'package:metas_nacionales/features/instituciones/institucion_detail_page.dart';
 import 'package:metas_nacionales/features/metas/meta_detail_page.dart';
+import 'package:metas_nacionales/features/metas/meta_global_detail.dart';
 import 'package:metas_nacionales/features/metas/metas_page.dart';
 
 final appRouter = GoRouter(
@@ -45,6 +46,17 @@ final appRouter = GoRouter(
             state.pathParameters['codigo']!;
 
         return MetaDetailPage(
+          codigo: codigo,
+        );
+      },
+    ),
+    GoRoute(
+      path: '/metas-globales/:codigo',
+      builder: (context, state) {
+        final codigo =
+            state.pathParameters['codigo']!;
+
+        return MetaGlobalDetailPage(
           codigo: codigo,
         );
       },

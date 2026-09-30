@@ -6,6 +6,22 @@ import 'package:metas_nacionales/core/providers/metas_nacionales_provider.dart';
 import 'package:metas_nacionales/data/database/app_database.dart';
 import 'package:metas_nacionales/data/repositories/metas_nacionales_repository.dart';
 
+
+Color _colorPorPilar(String nombre) {
+  switch (nombre.toLowerCase().trim()) {
+    case 'conservar':
+      return const Color(0xFF94A65B);
+    case 'evitar':
+      return const Color(0xFF7C1716);
+    case 'salvaguardar':
+      return const Color(0xFF4A6E7D);
+    case 'actuar':
+      return const Color(0xFFEA5E25);
+    default:
+      return const Color(0xFF641C34);
+  }
+}
+
 class InstitucionDetailPage extends ConsumerWidget {
   const InstitucionDetailPage({
     super.key,
@@ -95,7 +111,7 @@ class _InstitucionContent extends ConsumerWidget {
         );
 
     final nombreCorto =
-        institucion.nombreCorto?.trim();
+        institucion.nombreCorto?.trim().toUpperCase();
 
     final tieneNombreCorto =
         nombreCorto != null &&
@@ -423,8 +439,7 @@ class _ParticipationGroup extends StatelessWidget {
   }
 }
 
-class _MetaInstitutionItem
-    extends StatelessWidget {
+class _MetaInstitutionItem extends ConsumerWidget {
   const _MetaInstitutionItem({
     required this.item,
     required this.color,
@@ -434,12 +449,54 @@ class _MetaInstitutionItem
   final Color color;
 
   static const Color _text = Color(0xFF2E2E2E);
-  static const Color _muted = Color(0xFF6B6B6B);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final meta = item.meta;
 
+    final repositoryAsync =
+        ref.watch(metasNacionalesRepositoryProvider);
+
+    return repositoryAsync.when(
+      loading: () => _buildItem(
+        context,
+        meta,
+        color,
+      ),
+      error: (error, stack) => _buildItem(
+        context,
+        meta,
+        color,
+      ),
+      data: (repository) {
+        return FutureBuilder<MetaNacionalDetalle?>(
+          future: repository.obtenerDetalleMetaNacional(
+            meta.codigo,
+          ),
+          builder: (context, snapshot) {
+            final metaColor =
+                snapshot.hasData && snapshot.data != null
+                    ? _colorPorPilar(
+                        snapshot.data!.eje.nombre,
+                      )
+                    : color;
+
+            return _buildItem(
+              context,
+              meta,
+              metaColor,
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildItem(
+    BuildContext context,
+    MetasNacionale meta,
+    Color metaColor,
+  ) {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: () {
@@ -457,7 +514,7 @@ class _MetaInstitutionItem
               height: 42,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: color.withValues(
+                color: metaColor.withValues(
                   alpha: 0.10,
                 ),
                 borderRadius:
@@ -466,7 +523,7 @@ class _MetaInstitutionItem
               child: Text(
                 meta.codigo,
                 style: TextStyle(
-                  color: color,
+                  color: metaColor,
                   fontSize: 12,
                   fontWeight: FontWeight.w800,
                 ),
@@ -485,9 +542,9 @@ class _MetaInstitutionItem
               ),
             ),
             const SizedBox(width: 8),
-            const Icon(
+            Icon(
               Icons.chevron_right_rounded,
-              color: _muted,
+              color: metaColor,
               size: 21,
             ),
           ],

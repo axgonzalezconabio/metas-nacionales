@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class HomePage extends StatelessWidget {
+import 'package:metas_nacionales/core/providers/metas_nacionales_provider.dart';
+
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   static const Color vino = Color(0xFF641C34);
@@ -12,7 +15,19 @@ class HomePage extends StatelessWidget {
   static const Color actuar = Color(0xFFEA5E25);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+    WidgetRef ref,
+  ) {
+    final totalHitosAsync =
+        ref.watch(totalHitosProvider);
+
+    final totalHitos = totalHitosAsync.when(
+      data: (total) => total.toString(),
+      loading: () => '...',
+      error: (error, stack) => '—',
+    );
+
     return Scaffold(
       backgroundColor: const Color(0xFFF7F7F4),
       body: SafeArea(
@@ -29,22 +44,32 @@ class HomePage extends StatelessWidget {
             // ---------------------------------------------------------
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 24, 20, 8),
+                padding: const EdgeInsets.fromLTRB(
+                  20,
+                  24,
+                  20,
+                  8,
+                ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
                   children: [
+                    
+
                     Text(
-                      'Metas Nacionales de Biodiversidad',
+                      'Metas Nacionales',
                       style: Theme.of(context)
                           .textTheme
-                          .headlineMedium
+                          .titleLarge
                           ?.copyWith(
                             fontWeight: FontWeight.w800,
                             color: const Color(0xFF252525),
                             height: 1.1,
                           ),
                     ),
+
                     const SizedBox(height: 8),
+
                     Text(
                       'Marco Mundial de Biodiversidad '
                       'Kunming-Montreal en México',
@@ -56,7 +81,9 @@ class HomePage extends StatelessWidget {
                             height: 1.35,
                           ),
                     ),
+
                     const SizedBox(height: 12),
+
                     Text(
                       'Consulta las metas nacionales y la información '
                       'relacionada con su implementación.',
@@ -68,8 +95,12 @@ class HomePage extends StatelessWidget {
                             height: 1.45,
                           ),
                     ),
+
                     const SizedBox(height: 18),
-                    const _SummaryRow(),
+
+                    _SummaryRow(
+                      totalHitos: totalHitos,
+                    ),
                   ],
                 ),
               ),
@@ -80,7 +111,12 @@ class HomePage extends StatelessWidget {
             // ---------------------------------------------------------
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 18, 20, 24),
+                padding: const EdgeInsets.fromLTRB(
+                  20,
+                  18,
+                  20,
+                  24,
+                ),
                 child: _SearchButton(
                   onTap: () => context.push('/buscar'),
                 ),
@@ -88,14 +124,22 @@ class HomePage extends StatelessWidget {
             ),
 
             // ---------------------------------------------------------
-            // EJES
+            // PILARES
             // ---------------------------------------------------------
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 14),
+                padding: const EdgeInsets.fromLTRB(
+                  20,
+                  0,
+                  20,
+                  14,
+                ),
                 child: Text(
-                  'Explora por eje',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  'Explora por pilar',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(
                         fontWeight: FontWeight.w800,
                         color: const Color(0xFF252525),
                       ),
@@ -104,44 +148,64 @@ class HomePage extends StatelessWidget {
             ),
 
             SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+              ),
               sliver: SliverList(
                 delegate: SliverChildListDelegate(
                   [
-                    _AxisCard(
+                    _PillarCard(
                       title: 'Conservar',
                       description:
                           'Conservación y restauración de la biodiversidad.',
                       color: conservar,
-                      icon: Icons.eco_outlined,
-                      onTap: () => context.push('/ejes/Conservar'),
+                      imagePath:
+                          'assets/pilares/CONSERVAR.png',
+                      onTap: () => context.push(
+                        '/ejes/Conservar',
+                      ),
                     ),
+
                     const SizedBox(height: 12),
-                    _AxisCard(
+
+                    _PillarCard(
                       title: 'Evitar',
                       description:
                           'Prevención y reducción de impactos sobre la biodiversidad.',
                       color: evitar,
-                      icon: Icons.shield_outlined,
-                      onTap: () => context.push('/ejes/Evitar'),
+                      imagePath:
+                          'assets/pilares/EVITAR.png',
+                      onTap: () => context.push(
+                        '/ejes/Evitar',
+                      ),
                     ),
+
                     const SizedBox(height: 12),
-                    _AxisCard(
+
+                    _PillarCard(
                       title: 'Salvaguardar',
                       description:
                           'Protección de la biodiversidad y sus beneficios.',
                       color: salvaguardar,
-                      icon: Icons.water_drop_outlined,
-                      onTap: () => context.push('/ejes/Salvaguardar'),
+                      imagePath:
+                          'assets/pilares/SALVAGUARDAR.png',
+                      onTap: () => context.push(
+                        '/ejes/Salvaguardar',
+                      ),
                     ),
+
                     const SizedBox(height: 12),
-                    _AxisCard(
+
+                    _PillarCard(
                       title: 'Actuar',
                       description:
                           'Acciones, capacidades y participación para la biodiversidad.',
                       color: actuar,
-                      icon: Icons.auto_awesome_outlined,
-                      onTap: () => context.push('/ejes/Actuar'),
+                      imagePath:
+                          'assets/pilares/ACTUAR.png',
+                      onTap: () => context.push(
+                        '/ejes/Actuar',
+                      ),
                     ),
                   ],
                 ),
@@ -153,10 +217,18 @@ class HomePage extends StatelessWidget {
             // ---------------------------------------------------------
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 28, 20, 12),
+                padding: const EdgeInsets.fromLTRB(
+                  20,
+                  28,
+                  20,
+                  12,
+                ),
                 child: Text(
                   'Consulta',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(
                         fontWeight: FontWeight.w800,
                         color: const Color(0xFF252525),
                       ),
@@ -165,7 +237,12 @@ class HomePage extends StatelessWidget {
             ),
 
             SliverPadding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
+              padding: const EdgeInsets.fromLTRB(
+                20,
+                0,
+                20,
+                32,
+              ),
               sliver: SliverToBoxAdapter(
                 child: Row(
                   children: [
@@ -174,16 +251,23 @@ class HomePage extends StatelessWidget {
                         icon: Icons.flag_outlined,
                         title: 'Metas',
                         color: vino,
-                        onTap: () => context.push('/metas'),
+                        onTap: () => context.push(
+                          '/metas',
+                        ),
                       ),
                     ),
+
                     const SizedBox(width: 12),
+
                     Expanded(
                       child: _SecondaryCard(
-                        icon: Icons.account_balance_outlined,
+                        icon:
+                            Icons.account_balance_outlined,
                         title: 'Instituciones',
                         color: vino,
-                        onTap: () => context.push('/instituciones'),
+                        onTap: () => context.push(
+                          '/instituciones',
+                        ),
                       ),
                     ),
                   ],
@@ -196,12 +280,20 @@ class HomePage extends StatelessWidget {
             // ---------------------------------------------------------
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
+                padding: const EdgeInsets.fromLTRB(
+                  20,
+                  0,
+                  20,
+                  28,
+                ),
                 child: Center(
                   child: Text(
-                    'Metas Nacionales de Biodiversidad · México',
+                    'ENBIOMEX 2.0 · Metas Nacionales · México',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(
                           color: const Color(0xFF999999),
                         ),
                   ),
@@ -220,7 +312,11 @@ class HomePage extends StatelessWidget {
 // =====================================================================
 
 class _SummaryRow extends StatelessWidget {
-  const _SummaryRow();
+  const _SummaryRow({
+    required this.totalHitos,
+  });
+
+  final String totalHitos;
 
   @override
   Widget build(BuildContext context) {
@@ -228,22 +324,26 @@ class _SummaryRow extends StatelessWidget {
       children: [
         const Expanded(
           child: _SummaryItem(
+            value: '4',
+            label: 'Pilares de acción',
+          ),
+        ),
+
+        const SizedBox(width: 10),
+
+        const Expanded(
+          child: _SummaryItem(
             value: '47',
             label: 'Metas nacionales',
           ),
         ),
+
         const SizedBox(width: 10),
-        const Expanded(
+
+        Expanded(
           child: _SummaryItem(
-            value: '4',
-            label: 'Ejes de acción',
-          ),
-        ),
-        const SizedBox(width: 10),
-        const Expanded(
-          child: _SummaryItem(
-            value: '2030',
-            label: 'Horizonte',
+            value: totalHitos,
+            label: 'Hitos',
           ),
         ),
       ],
@@ -284,7 +384,9 @@ class _SummaryItem extends StatelessWidget {
               fontWeight: FontWeight.w800,
             ),
           ),
+
           const SizedBox(height: 3),
+
           Text(
             label,
             textAlign: TextAlign.center,
@@ -314,7 +416,12 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 18, 20, 22),
+      padding: const EdgeInsets.fromLTRB(
+        20,
+        18,
+        20,
+        22,
+      ),
       decoration: BoxDecoration(
         color: vino,
         borderRadius: const BorderRadius.vertical(
@@ -327,8 +434,11 @@ class _Header extends StatelessWidget {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.14),
-              borderRadius: BorderRadius.circular(16),
+              color: Colors.white.withValues(
+                alpha: 0.14,
+              ),
+              borderRadius:
+                  BorderRadius.circular(16),
             ),
             child: const Icon(
               Icons.eco,
@@ -336,25 +446,28 @@ class _Header extends StatelessWidget {
               size: 28,
             ),
           ),
+
           const SizedBox(width: 14),
+
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment:
+                  CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Biodiversidad',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  'ENBIOMEX 2.0',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w800,
                       ),
                 ),
+
                 const SizedBox(height: 2),
-                Text(
-                  'Metas Nacionales · México',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.white.withValues(alpha: 0.78),
-                      ),
-                ),
+
+               
               ],
             ),
           ),
@@ -389,7 +502,8 @@ class _SearchButton extends StatelessWidget {
             vertical: 15,
           ),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
+            borderRadius:
+                BorderRadius.circular(18),
             border: Border.all(
               color: const Color(0xFFE5E5E0),
             ),
@@ -400,15 +514,22 @@ class _SearchButton extends StatelessWidget {
                 Icons.search,
                 color: Color(0xFF777777),
               ),
+
               const SizedBox(width: 12),
+
               Expanded(
                 child: Text(
                   'Buscar metas nacionales',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: const Color(0xFF777777),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(
+                        color:
+                            const Color(0xFF777777),
                       ),
                 ),
               ),
+
               const Icon(
                 Icons.arrow_forward_ios,
                 size: 15,
@@ -423,22 +544,22 @@ class _SearchButton extends StatelessWidget {
 }
 
 // =====================================================================
-// TARJETA DE EJE
+// TARJETA DE PILAR
 // =====================================================================
 
-class _AxisCard extends StatelessWidget {
-  const _AxisCard({
+class _PillarCard extends StatelessWidget {
+  const _PillarCard({
     required this.title,
     required this.description,
     required this.color,
-    required this.icon,
+    required this.imagePath,
     required this.onTap,
   });
 
   final String title;
   final String description;
   final Color color;
-  final IconData icon;
+  final String imagePath;
   final VoidCallback onTap;
 
   @override
@@ -452,7 +573,8 @@ class _AxisCard extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius:
+                BorderRadius.circular(20),
             border: Border.all(
               color: const Color(0xFFE7E7E2),
             ),
@@ -462,43 +584,75 @@ class _AxisCard extends StatelessWidget {
               Container(
                 width: 54,
                 height: 54,
+                padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(16),
+                  color: color.withValues(
+                    alpha: 0.10,
+                  ),
+                  borderRadius:
+                      BorderRadius.circular(16),
                 ),
-                child: Icon(
-                  icon,
-                  color: color,
-                  size: 28,
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.contain,
+                  errorBuilder:
+                      (
+                        context,
+                        error,
+                        stackTrace,
+                      ) {
+                    return Icon(
+                      Icons.eco_outlined,
+                      color: color,
+                      size: 28,
+                    );
+                  },
                 ),
               ),
+
               const SizedBox(width: 15),
+
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
                   children: [
                     Text(
                       title,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w800,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(
+                            fontWeight:
+                                FontWeight.w800,
                             color: color,
                           ),
                     ),
+
                     const SizedBox(height: 4),
+
                     Text(
                       description,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: const Color(0xFF707070),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(
+                            color:
+                                const Color(0xFF707070),
                             height: 1.35,
                           ),
                     ),
                   ],
                 ),
               ),
+
               const SizedBox(width: 8),
+
               Icon(
                 Icons.chevron_right,
-                color: color.withValues(alpha: 0.75),
+                color: color.withValues(
+                  alpha: 0.75,
+                ),
               ),
             ],
           ),
@@ -539,7 +693,8 @@ class _SecondaryCard extends StatelessWidget {
             vertical: 18,
           ),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
+            borderRadius:
+                BorderRadius.circular(18),
             border: Border.all(
               color: const Color(0xFFE7E7E2),
             ),
@@ -551,13 +706,20 @@ class _SecondaryCard extends StatelessWidget {
                 color: color,
                 size: 28,
               ),
+
               const SizedBox(height: 9),
+
               Text(
                 title,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: const Color(0xFF333333),
-                      fontWeight: FontWeight.w700,
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge
+                    ?.copyWith(
+                      color:
+                          const Color(0xFF333333),
+                      fontWeight:
+                          FontWeight.w700,
                     ),
               ),
             ],

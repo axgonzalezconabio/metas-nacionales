@@ -15,6 +15,18 @@ class MetaNacionalDetalle {
   final ReferenciasOrigenData? referenciaOrigen;
 }
 
+class MetaGlobalDetalle {
+  const MetaGlobalDetalle({
+    required this.metaGlobal,
+    required this.eje,
+    required this.metasNacionales,
+  });
+
+  final MetasGlobale metaGlobal;
+  final Eje eje;
+  final List<MetasNacionale> metasNacionales;
+}
+
 class MetaNacionalConEje {
   const MetaNacionalConEje({
     required this.meta,
@@ -218,6 +230,86 @@ class MetasNacionalesRepository {
     );
   }
 
+  Future<List<MetasGlobale>> obtenerMetasGlobales() {
+    final consulta =
+        _database.select(_database.metasGlobales);
+
+    consulta.orderBy([
+      (metaGlobal) => OrderingTerm(
+        expression: metaGlobal.orden,
+      ),
+    ]);
+
+    return consulta.get();
+  }
+
+  Future<MetasGlobale?> obtenerMetaGlobalPorCodigo(
+    String codigo,
+  ) {
+    return (_database.select(_database.metasGlobales)
+          ..where(
+            (metaGlobal) =>
+                metaGlobal.codigo.equals(codigo),
+          ))
+        .getSingleOrNull();
+  }
+
+  Future<MetaGlobalDetalle?> obtenerDetalleMetaGlobal(
+    String codigo,
+  ) async {
+    final consulta =
+        _database.select(_database.metasGlobales).join([
+      innerJoin(
+        _database.ejes,
+        _database.ejes.id.equalsExp(
+          _database.metasGlobales.ejeId,
+        ),
+      ),
+    ]);
+
+    consulta.where(
+      _database.metasGlobales.codigo.equals(codigo),
+    );
+
+    final resultado =
+        await consulta.getSingleOrNull();
+
+    if (resultado == null) {
+      return null;
+    }
+
+    final metaGlobal = resultado.readTable(
+      _database.metasGlobales,
+    );
+
+    final eje = resultado.readTable(
+      _database.ejes,
+    );
+
+    final metasNacionales =
+        await (_database.select(
+          _database.metasNacionales,
+        )
+              ..where(
+                (meta) =>
+                    meta.metaGlobalId.equals(
+                  metaGlobal.id,
+                ),
+              )
+              ..orderBy([
+                (meta) => OrderingTerm(
+                      expression: meta.orden,
+                    ),
+              ]))
+            .get();
+
+    return MetaGlobalDetalle(
+      metaGlobal: metaGlobal,
+      eje: eje,
+      metasNacionales: metasNacionales,
+    );
+  }
+
   Future<List<Hito>> obtenerHitosPorMetaNacional(
     int metaNacionalId,
   ) {
@@ -244,12 +336,12 @@ class MetasNacionalesRepository {
             (subhito) =>
                 subhito.hitoId.equals(hitoId),
           )
-          ..orderBy([
-            (subhito) => OrderingTerm(
-                  expression: subhito.orden,
-                ),
-          ]))
-        .get();
+            ..orderBy([
+          (subhito) => OrderingTerm(
+            expression: subhito.orden,
+          ),
+        ]))
+      .get();
   }
 
   Future<List<InstitucionParticipante>>
@@ -276,6 +368,46 @@ class MetasNacionalesRepository {
           .participacionesInstitucionales
           .metaNacionalId
           .equals(metaNacionalId),
+    );
+
+    final resultados = await consulta.get();
+
+    return resultados.map((fila) {
+      return InstitucionParticipante(
+        institucion: fila.readTable(
+          _database.instituciones,
+        ),
+        participacion: fila.readTable(
+          _database.participacionesInstitucionales,
+        ),
+      );
+    }).toList();
+  }
+
+  Future<List<InstitucionParticipante>>
+      obtenerInstitucionesPorHito(
+    int hitoId,
+  ) async {
+    final consulta = _database
+        .select(
+          _database.participacionesInstitucionales,
+        )
+        .join([
+      innerJoin(
+        _database.instituciones,
+        _database.instituciones.id.equalsExp(
+          _database
+              .participacionesInstitucionales
+              .institucionId,
+        ),
+      ),
+    ]);
+
+    consulta.where(
+      _database
+          .participacionesInstitucionales
+          .hitoId
+          .equals(hitoId),
     );
 
     final resultados = await consulta.get();
@@ -342,47 +474,48 @@ class MetasNacionalesRepository {
 
   Future<List<InstitucionMetaParticipacion>>
       obtenerMetasPorInstitucion(
-    int institucionId,
-  ) async {
-    final consulta = _database
-        .select(
-          _database.participacionesInstitucionales,
-        )
-        .join([
-      innerJoin(
-        _database.metasNacionales,
-        _database.metasNacionales.id.equalsExp(
+        int institucionId,
+      ) async {
+        final consulta = _database
+            .select(
+              _database.participacionesInstitucionales,
+            )
+            .join([
+          innerJoin(
+            _database.metasNacionales,
+            _database.metasNacionales.id.equalsExp(
+              _database
+                  .participacionesInstitucionales
+                  .metaNacionalId,
+            ),
+          ),
+        ]);
+
+        consulta.where(
           _database
               .participacionesInstitucionales
-              .metaNacionalId,
-        ),
-      ),
-    ]);
+              .institucionId
+              .equals(institucionId),
+        );
 
-    consulta.where(
-      _database
-          .participacionesInstitucionales
-          .institucionId
-          .equals(institucionId),
-    );
+        consulta.orderBy([
+          OrderingTerm(
+            expression: _database.metasNacionales.orden,
+          ),
+        ]);
 
-    consulta.orderBy([
-      OrderingTerm(
-        expression: _database.metasNacionales.orden,
-      ),
-    ]);
+        final resultados = await consulta.get();
 
-    final resultados = await consulta.get();
-
-    return resultados.map((fila) {
-      return InstitucionMetaParticipacion(
-        meta: fila.readTable(
-          _database.metasNacionales,
-        ),
-        participacion: fila.readTable(
-          _database.participacionesInstitucionales,
-        ),
-      );
-    }).toList();
-  }
-}
+        return resultados.map((fila) {
+          return InstitucionMetaParticipacion(
+            meta: fila.readTable(
+              _database.metasNacionales,
+            ),
+            participacion: fila.readTable(
+              _database
+                  .participacionesInstitucionales,
+            ),
+          );
+        }).toList();
+      }
+    }

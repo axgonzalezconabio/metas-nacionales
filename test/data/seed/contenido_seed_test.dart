@@ -59,7 +59,7 @@ void main() {
       expect(codigos.length, 23);
 
       for (var i = 1; i <= 23; i++) {
-        expect(codigos.contains(i.toString()), isTrue);
+        expect(codigos.contains('$i.0'), isTrue);
       }
     });
 

@@ -291,7 +291,7 @@ class _InstitucionCard extends StatelessWidget {
     final institucion = resumen.institucion;
 
     final nombreCorto =
-        institucion.nombreCorto?.trim();
+    institucion.nombreCorto?.trim().toUpperCase();
 
     final tieneNombreCorto =
         nombreCorto != null &&

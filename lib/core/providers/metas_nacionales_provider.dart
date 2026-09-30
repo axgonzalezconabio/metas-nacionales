@@ -133,3 +133,37 @@ final metasPorInstitucionProvider =
     );
   },
 );
+
+final totalHitosProvider =
+    FutureProvider<int>((ref) async {
+  final metas =
+      await ref.watch(
+        metasNacionalesProvider.future,
+      );
+
+  final repository =
+      await ref.watch(
+        metasNacionalesRepositoryProvider.future,
+      );
+
+  final cantidades =
+      await Future.wait(
+    metas.map(
+      (meta) async {
+        final hitos =
+            await repository
+                .obtenerHitosPorMetaNacional(
+          meta.id,
+        );
+
+        return hitos.length;
+      },
+    ),
+  );
+  
+
+  return cantidades.fold<int>(
+    0,
+    (total, cantidad) => total + cantidad,
+  );
+});
