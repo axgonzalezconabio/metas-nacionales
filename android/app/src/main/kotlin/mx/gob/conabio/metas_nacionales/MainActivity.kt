@@ -1,4 +1,4 @@
-package mx.gob.conabio.metas_nacionales
+package mx.gob.conabio.enbiomex2026
 
 import io.flutter.embedding.android.FlutterActivity
 

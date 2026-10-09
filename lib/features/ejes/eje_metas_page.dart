@@ -17,7 +17,7 @@ class EjeMetasPage extends ConsumerWidget {
   static const _wine = Color(0xFF641C34);
 
   Color get _ejeColor {
-    switch (ejeNombre.toLowerCase()) {
+    switch (ejeNombre.toLowerCase().trim()) {
       case 'conservar':
         return const Color(0xFF94A65B);
       case 'evitar':
@@ -31,9 +31,25 @@ class EjeMetasPage extends ConsumerWidget {
     }
   }
 
+  String get _ejeImagen {
+    switch (ejeNombre.toLowerCase().trim()) {
+      case 'conservar':
+        return 'assets/pilares/CONSERVAR.png';
+      case 'evitar':
+        return 'assets/pilares/EVITAR.png';
+      case 'salvaguardar':
+        return 'assets/pilares/SALVAGUARDAR.png';
+      case 'actuar':
+        return 'assets/pilares/ACTUAR.png';
+      default:
+        return '';
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final color = _ejeColor;
+    final imagen = _ejeImagen;
     final metasAsync = ref.watch(metasPorEjeProvider(ejeNombre));
 
     return Scaffold(
@@ -53,6 +69,36 @@ class EjeMetasPage extends ConsumerWidget {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(20, 24, 20, 32),
           children: [
+            // Imagen del pilar
+            if (imagen.isNotEmpty)
+              Container(
+                width: double.infinity,
+                height: 190,
+                margin: const EdgeInsets.only(bottom: 24),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: color.withValues(alpha: 0.15),
+                  ),
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Image.asset(
+                    imagen,
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Icon(
+                        Icons.image_not_supported_outlined,
+                        size: 50,
+                        color: color.withValues(alpha: 0.45),
+                      );
+                    },
+                  ),
+                ),
+              ),
+
             Text(
               'Metas nacionales',
               style: const TextStyle(
@@ -63,6 +109,7 @@ class EjeMetasPage extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 10),
+
             Text(
               'Consulta las metas nacionales que forman parte del eje '
               '$ejeNombre.',
@@ -73,7 +120,7 @@ class EjeMetasPage extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 26),
-            
+
             metasAsync.when(
               loading: () => const Padding(
                 padding: EdgeInsets.only(top: 30),
@@ -200,7 +247,7 @@ class _MetaCard extends StatelessWidget {
                       Text(
                         nombre,
                         style: const TextStyle(
-                          color:  Color(0xFF2E2E2E),
+                          color: Color(0xFF2E2E2E),
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
                           height: 1.3,
