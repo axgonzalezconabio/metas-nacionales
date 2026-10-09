@@ -9,17 +9,14 @@ class InstitucionesPage extends ConsumerStatefulWidget {
   const InstitucionesPage({super.key});
 
   @override
-  ConsumerState<InstitucionesPage> createState() =>
-      _InstitucionesPageState();
+  ConsumerState<InstitucionesPage> createState() => _InstitucionesPageState();
 }
 
-class _InstitucionesPageState
-    extends ConsumerState<InstitucionesPage> {
+class _InstitucionesPageState extends ConsumerState<InstitucionesPage> {
   static const Color _wine = Color(0xFF641C34);
   static const Color _background = Color(0xFFF6F5F1);
 
-  final TextEditingController _searchController =
-      TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   String _searchText = '';
 
@@ -29,8 +26,7 @@ class _InstitucionesPageState
 
     _searchController.addListener(() {
       setState(() {
-        _searchText =
-            _searchController.text.trim().toLowerCase();
+        _searchText = _searchController.text.trim().toLowerCase();
       });
     });
   }
@@ -43,8 +39,7 @@ class _InstitucionesPageState
 
   @override
   Widget build(BuildContext context) {
-    final institucionesAsync =
-        ref.watch(institucionesProvider);
+    final institucionesAsync = ref.watch(institucionesProvider);
 
     return Scaffold(
       backgroundColor: _background,
@@ -54,15 +49,11 @@ class _InstitucionesPageState
         elevation: 0,
         title: const Text(
           'Instituciones',
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w700),
         ),
       ),
       body: institucionesAsync.when(
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => const _ErrorView(),
         data: (instituciones) {
           final filtradas = instituciones.where((item) {
@@ -72,19 +63,13 @@ class _InstitucionesPageState
 
             final institucion = item.institucion;
 
-            final nombre =
-                institucion.nombre.toLowerCase();
+            final nombre = institucion.nombre.toLowerCase();
 
-            final nombreCorto =
-                (institucion.nombreCorto ?? '')
-                    .toLowerCase();
+            final nombreCorto = (institucion.nombreCorto ?? '').toLowerCase();
 
-            final tipo =
-                (institucion.tipo ?? '').toLowerCase();
+            final tipo = (institucion.tipo ?? '').toLowerCase();
 
-            final descripcion =
-                (institucion.descripcion ?? '')
-                    .toLowerCase();
+            final descripcion = (institucion.descripcion ?? '').toLowerCase();
 
             return nombre.contains(_searchText) ||
                 nombreCorto.contains(_searchText) ||
@@ -102,9 +87,7 @@ class _InstitucionesPageState
               Expanded(
                 child: filtradas.isEmpty
                     ? const _EmptyView()
-                    : _InstitucionesList(
-                        instituciones: filtradas,
-                      ),
+                    : _InstitucionesList(instituciones: filtradas),
               ),
             ],
           );
@@ -130,63 +113,42 @@ class _SearchHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mostrandoResultados =
-        controller.text.trim().isNotEmpty;
+    final mostrandoResultados = controller.text.trim().isNotEmpty;
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(
-        20,
-        20,
-        20,
-        12,
-      ),
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 900,
-          ),
+          constraints: const BoxConstraints(maxWidth: 900),
           child: Column(
             children: [
               TextField(
                 controller: controller,
                 decoration: InputDecoration(
-                  hintText:
-                      'Buscar institución...',
-                  prefixIcon: const Icon(
-                    Icons.search_rounded,
-                  ),
-                  suffixIcon:
-                      controller.text.trim().isNotEmpty
-                          ? IconButton(
-                              tooltip: 'Limpiar búsqueda',
-                              onPressed: () {
-                                controller.clear();
-                              },
-                              icon: const Icon(
-                                Icons.close_rounded,
-                              ),
-                            )
-                          : null,
+                  hintText: 'Buscar institución...',
+                  prefixIcon: const Icon(Icons.search_rounded),
+                  suffixIcon: controller.text.trim().isNotEmpty
+                      ? IconButton(
+                          tooltip: 'Limpiar búsqueda',
+                          onPressed: () {
+                            controller.clear();
+                          },
+                          icon: const Icon(Icons.close_rounded),
+                        )
+                      : null,
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(16),
                     borderSide: BorderSide.none,
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(16),
                     borderSide: BorderSide.none,
                   ),
-                  focusedBorder:
-                      OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(16),
-                    borderSide: const BorderSide(
-                      color: _wine,
-                      width: 1.5,
-                    ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: const BorderSide(color: _wine, width: 1.5),
                   ),
                 ),
               ),
@@ -213,9 +175,7 @@ class _SearchHeader extends StatelessWidget {
 }
 
 class _InstitucionesList extends StatelessWidget {
-  const _InstitucionesList({
-    required this.instituciones,
-  });
+  const _InstitucionesList({required this.instituciones});
 
   final List<InstitucionResumen> instituciones;
 
@@ -228,46 +188,30 @@ class _InstitucionesList extends StatelessWidget {
         final columnas = ancho >= 1100
             ? 3
             : ancho >= 700
-                ? 2
-                : 1;
+            ? 2
+            : 1;
 
         if (columnas == 1) {
           return ListView.builder(
-            padding: const EdgeInsets.fromLTRB(
-              20,
-              4,
-              20,
-              32,
-            ),
+            padding: const EdgeInsets.fromLTRB(20, 4, 20, 32),
             itemCount: instituciones.length,
             itemBuilder: (context, index) {
-              return _InstitucionCard(
-                resumen: instituciones[index],
-              );
+              return _InstitucionCard(resumen: instituciones[index]);
             },
           );
         }
 
         return GridView.builder(
-          padding: const EdgeInsets.fromLTRB(
-            20,
-            4,
-            20,
-            32,
-          ),
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(
+          padding: const EdgeInsets.fromLTRB(20, 4, 20, 32),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: columnas,
             crossAxisSpacing: 16,
             mainAxisSpacing: 16,
-            childAspectRatio:
-                columnas == 2 ? 1.55 : 1.45,
+            childAspectRatio: columnas == 2 ? 1.55 : 1.45,
           ),
           itemCount: instituciones.length,
           itemBuilder: (context, index) {
-            return _InstitucionCard(
-              resumen: instituciones[index],
-            );
+            return _InstitucionCard(resumen: instituciones[index]);
           },
         );
       },
@@ -276,9 +220,7 @@ class _InstitucionesList extends StatelessWidget {
 }
 
 class _InstitucionCard extends StatelessWidget {
-  const _InstitucionCard({
-    required this.resumen,
-  });
+  const _InstitucionCard({required this.resumen});
 
   final InstitucionResumen resumen;
 
@@ -290,17 +232,13 @@ class _InstitucionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final institucion = resumen.institucion;
 
-    final nombreCorto =
-    institucion.nombreCorto?.trim().toUpperCase();
+    final nombreCorto = institucion.nombreCorto?.trim().toUpperCase();
 
-    final tieneNombreCorto =
-        nombreCorto != null &&
-        nombreCorto.isNotEmpty;
+    final tieneNombreCorto = nombreCorto != null && nombreCorto.isNotEmpty;
 
     final tipo = institucion.tipo?.trim();
 
-    final tieneTipo =
-        tipo != null && tipo.isNotEmpty;
+    final tieneTipo = tipo != null && tipo.isNotEmpty;
 
     return Card(
       margin: const EdgeInsets.only(bottom: 14),
@@ -308,34 +246,24 @@ class _InstitucionCard extends StatelessWidget {
       color: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18),
-        side: BorderSide(
-          color: Colors.black.withValues(
-            alpha: 0.05,
-          ),
-        ),
+        side: BorderSide(color: Colors.black.withValues(alpha: 0.05)),
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(18),
         onTap: () {
-          context.push(
-            '/instituciones/${institucion.id}',
-          );
+          context.push('/instituciones/${institucion.id}');
         },
         child: Padding(
           padding: const EdgeInsets.all(18),
           child: Row(
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: _wine.withValues(
-                    alpha: 0.10,
-                  ),
-                  borderRadius:
-                      BorderRadius.circular(14),
+                  color: _wine.withValues(alpha: 0.10),
+                  borderRadius: BorderRadius.circular(14),
                 ),
                 child: const Icon(
                   Icons.account_balance_rounded,
@@ -346,15 +274,11 @@ class _InstitucionCard extends StatelessWidget {
               const SizedBox(width: 14),
               Expanded(
                 child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (tieneNombreCorto)
                       Padding(
-                        padding:
-                            const EdgeInsets.only(
-                          bottom: 4,
-                        ),
+                        padding: const EdgeInsets.only(bottom: 4),
                         child: Text(
                           nombreCorto,
                           style: const TextStyle(
@@ -378,20 +302,13 @@ class _InstitucionCard extends StatelessWidget {
                       const SizedBox(height: 7),
                       Text(
                         tipo,
-                        style: const TextStyle(
-                          color: _muted,
-                          fontSize: 13,
-                        ),
+                        style: const TextStyle(color: _muted, fontSize: 13),
                       ),
                     ],
                     const SizedBox(height: 12),
                     Row(
                       children: [
-                        const Icon(
-                          Icons.link_rounded,
-                          size: 16,
-                          color: _muted,
-                        ),
+                        const Icon(Icons.link_rounded, size: 16, color: _muted),
                         const SizedBox(width: 5),
                         Text(
                           '${resumen.totalParticipaciones} '
@@ -408,10 +325,7 @@ class _InstitucionCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              const Icon(
-                Icons.chevron_right_rounded,
-                color: _muted,
-              ),
+              const Icon(Icons.chevron_right_rounded, color: _muted),
             ],
           ),
         ),
@@ -432,16 +346,13 @@ class _EmptyView extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(
-          mainAxisAlignment:
-              MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
               width: 72,
               height: 72,
               decoration: BoxDecoration(
-                color: _wine.withValues(
-                  alpha: 0.08,
-                ),
+                color: _wine.withValues(alpha: 0.08),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -454,19 +365,13 @@ class _EmptyView extends StatelessWidget {
             const Text(
               'No se encontraron instituciones',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.w700,
-              ),
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 8),
             const Text(
               'Prueba con otro nombre o sigla.',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: _muted,
-                fontSize: 14,
-              ),
+              style: TextStyle(color: _muted, fontSize: 14),
             ),
           ],
         ),
@@ -486,9 +391,7 @@ class _ErrorView extends StatelessWidget {
         child: Text(
           'No fue posible cargar las instituciones.',
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 16,
-          ),
+          style: TextStyle(fontSize: 16),
         ),
       ),
     );

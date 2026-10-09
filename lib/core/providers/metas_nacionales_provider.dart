@@ -6,164 +6,106 @@ import 'package:metas_nacionales/data/repositories/metas_nacionales_repository.d
 
 final metasNacionalesRepositoryProvider =
     FutureProvider<MetasNacionalesRepository>((ref) async {
-  final database = await ref.watch(
-    databaseProvider.future,
-  );
+      final database = await ref.watch(databaseProvider.future);
 
-  return MetasNacionalesRepository(database);
-});
+      return MetasNacionalesRepository(database);
+    });
 
-final metasNacionalesProvider =
-    FutureProvider((ref) async {
-  final repository =
-      await ref.watch(
-        metasNacionalesRepositoryProvider.future,
-      );
+final metasNacionalesProvider = FutureProvider((ref) async {
+  final repository = await ref.watch(metasNacionalesRepositoryProvider.future);
 
   return repository.obtenerMetasNacionales();
 });
 
-final metasNacionalesConEjeProvider =
-    FutureProvider<List<MetaNacionalConEje>>(
-  (ref) async {
-    final repository =
-        await ref.watch(
-          metasNacionalesRepositoryProvider.future,
-        );
+final metasNacionalesConEjeProvider = FutureProvider<List<MetaNacionalConEje>>((
+  ref,
+) async {
+  final repository = await ref.watch(metasNacionalesRepositoryProvider.future);
 
-    return repository.obtenerMetasNacionalesConEje();
-  },
-);
+  return repository.obtenerMetasNacionalesConEje();
+});
 
-final metasPorEjeProvider =
-    FutureProvider.family<List<MetasNacionale>, String>(
+final metasPorEjeProvider = FutureProvider.family<List<MetasNacionale>, String>(
   (ref, ejeNombre) async {
-    final repository =
-        await ref.watch(
-          metasNacionalesRepositoryProvider.future,
-        );
+    final repository = await ref.watch(
+      metasNacionalesRepositoryProvider.future,
+    );
 
     return repository.obtenerMetasPorEje(ejeNombre);
   },
 );
 
-final hitosPorMetaProvider =
-    FutureProvider.family<List<Hito>, int>(
-  (ref, metaNacionalId) async {
-    final repository =
-        await ref.watch(
-          metasNacionalesRepositoryProvider.future,
-        );
+final hitosPorMetaProvider = FutureProvider.family<List<Hito>, int>((
+  ref,
+  metaNacionalId,
+) async {
+  final repository = await ref.watch(metasNacionalesRepositoryProvider.future);
 
-    return repository.obtenerHitosPorMetaNacional(
-      metaNacionalId,
-    );
-  },
-);
+  return repository.obtenerHitosPorMetaNacional(metaNacionalId);
+});
 
-final subhitosPorHitoProvider =
-    FutureProvider.family<List<Subhito>, int>(
-  (ref, hitoId) async {
-    final repository =
-        await ref.watch(
-          metasNacionalesRepositoryProvider.future,
-        );
+final subhitosPorHitoProvider = FutureProvider.family<List<Subhito>, int>((
+  ref,
+  hitoId,
+) async {
+  final repository = await ref.watch(metasNacionalesRepositoryProvider.future);
 
-    return repository.obtenerSubhitosPorHito(
-      hitoId,
-    );
-  },
-);
+  return repository.obtenerSubhitosPorHito(hitoId);
+});
 
 final institucionesPorMetaProvider =
-    FutureProvider.family<
-        List<InstitucionParticipante>,
-        int>(
-  (ref, metaNacionalId) async {
-    final repository =
-        await ref.watch(
-          metasNacionalesRepositoryProvider.future,
-        );
-
-    return repository
-        .obtenerInstitucionesPorMetaNacional(
+    FutureProvider.family<List<InstitucionParticipante>, int>((
+      ref,
       metaNacionalId,
-    );
-  },
-);
-
-final institucionesProvider =
-    FutureProvider<List<InstitucionResumen>>(
-  (ref) async {
-    final repository =
-        await ref.watch(
-          metasNacionalesRepositoryProvider.future,
-        );
-
-    return repository.obtenerInstituciones();
-  },
-);
-
-final institucionPorIdProvider =
-    FutureProvider.family<Institucione?, int>(
-  (ref, institucionId) async {
-    final repository =
-        await ref.watch(
-          metasNacionalesRepositoryProvider.future,
-        );
-
-    return repository.obtenerInstitucionPorId(
-      institucionId,
-    );
-  },
-);
-
-final metasPorInstitucionProvider =
-    FutureProvider.family<
-        List<InstitucionMetaParticipacion>,
-        int>(
-  (ref, institucionId) async {
-    final repository =
-        await ref.watch(
-          metasNacionalesRepositoryProvider.future,
-        );
-
-    return repository.obtenerMetasPorInstitucion(
-      institucionId,
-    );
-  },
-);
-
-final totalHitosProvider =
-    FutureProvider<int>((ref) async {
-  final metas =
-      await ref.watch(
-        metasNacionalesProvider.future,
-      );
-
-  final repository =
-      await ref.watch(
+    ) async {
+      final repository = await ref.watch(
         metasNacionalesRepositoryProvider.future,
       );
 
-  final cantidades =
-      await Future.wait(
-    metas.map(
-      (meta) async {
-        final hitos =
-            await repository
-                .obtenerHitosPorMetaNacional(
-          meta.id,
-        );
+      return repository.obtenerInstitucionesPorMetaNacional(metaNacionalId);
+    });
 
-        return hitos.length;
-      },
-    ),
-  );
-  
+final institucionesProvider = FutureProvider<List<InstitucionResumen>>((
+  ref,
+) async {
+  final repository = await ref.watch(metasNacionalesRepositoryProvider.future);
 
-  return cantidades.fold<int>(
-    0,
-    (total, cantidad) => total + cantidad,
+  return repository.obtenerInstituciones();
+});
+
+final institucionPorIdProvider = FutureProvider.family<Institucione?, int>((
+  ref,
+  institucionId,
+) async {
+  final repository = await ref.watch(metasNacionalesRepositoryProvider.future);
+
+  return repository.obtenerInstitucionPorId(institucionId);
+});
+
+final metasPorInstitucionProvider =
+    FutureProvider.family<List<InstitucionMetaParticipacion>, int>((
+      ref,
+      institucionId,
+    ) async {
+      final repository = await ref.watch(
+        metasNacionalesRepositoryProvider.future,
+      );
+
+      return repository.obtenerMetasPorInstitucion(institucionId);
+    });
+
+final totalHitosProvider = FutureProvider<int>((ref) async {
+  final metas = await ref.watch(metasNacionalesProvider.future);
+
+  final repository = await ref.watch(metasNacionalesRepositoryProvider.future);
+
+  final cantidades = await Future.wait(
+    metas.map((meta) async {
+      final hitos = await repository.obtenerHitosPorMetaNacional(meta.id);
+
+      return hitos.length;
+    }),
   );
+
+  return cantidades.fold<int>(0, (total, cantidad) => total + cantidad);
 });

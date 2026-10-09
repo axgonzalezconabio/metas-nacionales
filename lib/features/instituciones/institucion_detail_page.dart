@@ -6,7 +6,6 @@ import 'package:metas_nacionales/core/providers/metas_nacionales_provider.dart';
 import 'package:metas_nacionales/data/database/app_database.dart';
 import 'package:metas_nacionales/data/repositories/metas_nacionales_repository.dart';
 
-
 Color _colorPorPilar(String nombre) {
   switch (nombre.toLowerCase().trim()) {
     case 'conservar':
@@ -23,10 +22,7 @@ Color _colorPorPilar(String nombre) {
 }
 
 class InstitucionDetailPage extends ConsumerWidget {
-  const InstitucionDetailPage({
-    super.key,
-    required this.id,
-  });
+  const InstitucionDetailPage({super.key, required this.id});
 
   final int id;
 
@@ -34,12 +30,8 @@ class InstitucionDetailPage extends ConsumerWidget {
   static const Color _background = Color(0xFFF6F5F1);
 
   @override
-  Widget build(
-    BuildContext context,
-    WidgetRef ref,
-  ) {
-    final institucionAsync =
-        ref.watch(institucionPorIdProvider(id));
+  Widget build(BuildContext context, WidgetRef ref) {
+    final institucionAsync = ref.watch(institucionPorIdProvider(id));
 
     return Scaffold(
       backgroundColor: _background,
@@ -49,15 +41,11 @@ class InstitucionDetailPage extends ConsumerWidget {
         elevation: 0,
         title: const Text(
           'Institución',
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w700),
         ),
       ),
       body: institucionAsync.when(
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => const Center(
           child: Padding(
             padding: EdgeInsets.all(24),
@@ -80,9 +68,7 @@ class InstitucionDetailPage extends ConsumerWidget {
             );
           }
 
-          return _InstitucionContent(
-            institucion: institucion,
-          );
+          return _InstitucionContent(institucion: institucion);
         },
       ),
     );
@@ -90,67 +76,43 @@ class InstitucionDetailPage extends ConsumerWidget {
 }
 
 class _InstitucionContent extends ConsumerWidget {
-  const _InstitucionContent({
-    required this.institucion,
-  });
+  const _InstitucionContent({required this.institucion});
 
   final Institucione institucion;
 
   static const Color _text = Color(0xFF2E2E2E);
 
   @override
-  Widget build(
-    BuildContext context,
-    WidgetRef ref,
-  ) {
-    final participacionesAsync =
-        ref.watch(
-          metasPorInstitucionProvider(
-            institucion.id,
-          ),
-        );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final participacionesAsync = ref.watch(
+      metasPorInstitucionProvider(institucion.id),
+    );
 
-    final nombreCorto =
-        institucion.nombreCorto?.trim().toUpperCase();
+    final nombreCorto = institucion.nombreCorto?.trim().toUpperCase();
 
-    final tieneNombreCorto =
-        nombreCorto != null &&
-        nombreCorto.isNotEmpty;
+    final tieneNombreCorto = nombreCorto != null && nombreCorto.isNotEmpty;
 
     final tipo = institucion.tipo?.trim();
 
-    final tieneTipo =
-        tipo != null && tipo.isNotEmpty;
+    final tieneTipo = tipo != null && tipo.isNotEmpty;
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(
-        20,
-        20,
-        20,
-        32,
-      ),
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 900,
-          ),
+          constraints: const BoxConstraints(maxWidth: 900),
           child: Column(
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _InstitutionHeader(
                 institucion: institucion,
                 nombreCorto: nombreCorto,
-                tieneNombreCorto:
-                    tieneNombreCorto,
+                tieneNombreCorto: tieneNombreCorto,
                 tipo: tipo,
                 tieneTipo: tieneTipo,
               ),
               const SizedBox(height: 18),
-              if (institucion.descripcion
-                      ?.trim()
-                      .isNotEmpty ==
-                  true)
+              if (institucion.descripcion?.trim().isNotEmpty == true)
                 _SectionCard(
                   title: 'Descripción',
                   icon: Icons.description_outlined,
@@ -166,12 +128,10 @@ class _InstitucionContent extends ConsumerWidget {
               const SizedBox(height: 18),
               participacionesAsync.when(
                 loading: () => const _LoadingSection(),
-                error: (error, stack) =>
-                    const _ErrorSection(),
+                error: (error, stack) => const _ErrorSection(),
                 data: (participaciones) {
                   return _ParticipacionesSection(
-                    participaciones:
-                        participaciones,
+                    participaciones: participaciones,
                   );
                 },
               ),
@@ -210,25 +170,17 @@ class _InstitutionHeader extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(
-          color: Colors.black.withValues(
-            alpha: 0.05,
-          ),
-        ),
+        border: Border.all(color: Colors.black.withValues(alpha: 0.05)),
       ),
       child: Row(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             width: 58,
             height: 58,
             decoration: BoxDecoration(
-              color: _wine.withValues(
-                alpha: 0.10,
-              ),
-              borderRadius:
-                  BorderRadius.circular(17),
+              color: _wine.withValues(alpha: 0.10),
+              borderRadius: BorderRadius.circular(17),
             ),
             child: const Icon(
               Icons.account_balance_rounded,
@@ -239,8 +191,7 @@ class _InstitutionHeader extends StatelessWidget {
           const SizedBox(width: 16),
           Expanded(
             child: Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (tieneNombreCorto)
                   Text(
@@ -266,10 +217,7 @@ class _InstitutionHeader extends StatelessWidget {
                   const SizedBox(height: 8),
                   Text(
                     tipo!,
-                    style: const TextStyle(
-                      color: _muted,
-                      fontSize: 14,
-                    ),
+                    style: const TextStyle(color: _muted, fontSize: 14),
                   ),
                 ],
               ],
@@ -282,28 +230,21 @@ class _InstitutionHeader extends StatelessWidget {
 }
 
 class _ParticipacionesSection extends StatelessWidget {
-  const _ParticipacionesSection({
-    required this.participaciones,
-  });
+  const _ParticipacionesSection({required this.participaciones});
 
-  final List<InstitucionMetaParticipacion>
-      participaciones;
+  final List<InstitucionMetaParticipacion> participaciones;
 
   static const Color _wine = Color(0xFF641C34);
-  static const Color _coordinadora =
-      Color(0xFF4A6E7D);
-  static const Color _coadyuvante =
-      Color(0xFF94A65B);
-  static const Color _muted =
-      Color(0xFF6B6B6B);
+  static const Color _coordinadora = Color(0xFF4A6E7D);
+  static const Color _coadyuvante = Color(0xFF94A65B);
+  static const Color _muted = Color(0xFF6B6B6B);
 
   @override
   Widget build(BuildContext context) {
     final coordinadoras = participaciones
         .where(
           (item) =>
-              item.participacion.tipoParticipacion
-                  .toUpperCase() ==
+              item.participacion.tipoParticipacion.toUpperCase() ==
               'COORDINADORA',
         )
         .toList();
@@ -311,8 +252,7 @@ class _ParticipacionesSection extends StatelessWidget {
     final coadyuvantes = participaciones
         .where(
           (item) =>
-              item.participacion.tipoParticipacion
-                  .toUpperCase() ==
+              item.participacion.tipoParticipacion.toUpperCase() ==
               'COADYUVANTE',
         )
         .toList();
@@ -323,10 +263,7 @@ class _ParticipacionesSection extends StatelessWidget {
         icon: Icons.link_rounded,
         child: const Text(
           'Esta institución no tiene participaciones registradas.',
-          style: TextStyle(
-            color: _muted,
-            fontSize: 14,
-          ),
+          style: TextStyle(color: _muted, fontSize: 14),
         ),
       );
     }
@@ -340,8 +277,7 @@ class _ParticipacionesSection extends StatelessWidget {
             color: _coordinadora,
             metas: coordinadoras,
           ),
-        if (coordinadoras.isNotEmpty &&
-            coadyuvantes.isNotEmpty)
+        if (coordinadoras.isNotEmpty && coadyuvantes.isNotEmpty)
           const SizedBox(height: 18),
         if (coadyuvantes.isNotEmpty)
           _ParticipationGroup(
@@ -350,17 +286,13 @@ class _ParticipacionesSection extends StatelessWidget {
             color: _coadyuvante,
             metas: coadyuvantes,
           ),
-        if (coordinadoras.isEmpty &&
-            coadyuvantes.isEmpty)
+        if (coordinadoras.isEmpty && coadyuvantes.isEmpty)
           _SectionCard(
             title: 'Participación',
             icon: Icons.link_rounded,
             child: Text(
               'Se encontraron participaciones, pero no tienen un tipo reconocido.',
-              style: TextStyle(
-                color: _muted,
-                fontSize: 14,
-              ),
+              style: TextStyle(color: _muted, fontSize: 14),
             ),
           ),
         const SizedBox(height: 18),
@@ -393,8 +325,7 @@ class _ParticipationGroup extends StatelessWidget {
   final String title;
   final IconData icon;
   final Color color;
-  final List<InstitucionMetaParticipacion>
-      metas;
+  final List<InstitucionMetaParticipacion> metas;
 
   @override
   Widget build(BuildContext context) {
@@ -403,16 +334,10 @@ class _ParticipationGroup extends StatelessWidget {
       icon: icon,
       iconColor: color,
       trailing: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 9,
-          vertical: 4,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
         decoration: BoxDecoration(
-          color: color.withValues(
-            alpha: 0.10,
-          ),
-          borderRadius:
-              BorderRadius.circular(20),
+          color: color.withValues(alpha: 0.10),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
           '${metas.length}',
@@ -426,12 +351,8 @@ class _ParticipationGroup extends StatelessWidget {
       child: Column(
         children: [
           for (var i = 0; i < metas.length; i++) ...[
-            _MetaInstitutionItem(
-              item: metas[i],
-              color: color,
-            ),
-            if (i < metas.length - 1)
-              const Divider(height: 1),
+            _MetaInstitutionItem(item: metas[i], color: color),
+            if (i < metas.length - 1) const Divider(height: 1),
           ],
         ],
       ),
@@ -440,10 +361,7 @@ class _ParticipationGroup extends StatelessWidget {
 }
 
 class _MetaInstitutionItem extends ConsumerWidget {
-  const _MetaInstitutionItem({
-    required this.item,
-    required this.color,
-  });
+  const _MetaInstitutionItem({required this.item, required this.color});
 
   final InstitucionMetaParticipacion item;
   final Color color;
@@ -454,38 +372,20 @@ class _MetaInstitutionItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final meta = item.meta;
 
-    final repositoryAsync =
-        ref.watch(metasNacionalesRepositoryProvider);
+    final repositoryAsync = ref.watch(metasNacionalesRepositoryProvider);
 
     return repositoryAsync.when(
-      loading: () => _buildItem(
-        context,
-        meta,
-        color,
-      ),
-      error: (error, stack) => _buildItem(
-        context,
-        meta,
-        color,
-      ),
+      loading: () => _buildItem(context, meta, color),
+      error: (error, stack) => _buildItem(context, meta, color),
       data: (repository) {
         return FutureBuilder<MetaNacionalDetalle?>(
-          future: repository.obtenerDetalleMetaNacional(
-            meta.codigo,
-          ),
+          future: repository.obtenerDetalleMetaNacional(meta.codigo),
           builder: (context, snapshot) {
-            final metaColor =
-                snapshot.hasData && snapshot.data != null
-                    ? _colorPorPilar(
-                        snapshot.data!.eje.nombre,
-                      )
-                    : color;
+            final metaColor = snapshot.hasData && snapshot.data != null
+                ? _colorPorPilar(snapshot.data!.eje.nombre)
+                : color;
 
-            return _buildItem(
-              context,
-              meta,
-              metaColor,
-            );
+            return _buildItem(context, meta, metaColor);
           },
         );
       },
@@ -503,10 +403,7 @@ class _MetaInstitutionItem extends ConsumerWidget {
         context.push('/metas/${meta.codigo}');
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 13,
-          horizontal: 4,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 4),
         child: Row(
           children: [
             Container(
@@ -514,11 +411,8 @@ class _MetaInstitutionItem extends ConsumerWidget {
               height: 42,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: metaColor.withValues(
-                  alpha: 0.10,
-                ),
-                borderRadius:
-                    BorderRadius.circular(12),
+                color: metaColor.withValues(alpha: 0.10),
+                borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
                 meta.codigo,
@@ -542,11 +436,7 @@ class _MetaInstitutionItem extends ConsumerWidget {
               ),
             ),
             const SizedBox(width: 8),
-            Icon(
-              Icons.chevron_right_rounded,
-              color: metaColor,
-              size: 21,
-            ),
+            Icon(Icons.chevron_right_rounded, color: metaColor, size: 21),
           ],
         ),
       ),
@@ -581,23 +471,14 @@ class _SectionCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(
-          color: Colors.black.withValues(
-            alpha: 0.05,
-          ),
-        ),
+        border: Border.all(color: Colors.black.withValues(alpha: 0.05)),
       ),
       child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(
-                icon,
-                color: color,
-                size: 21,
-              ),
+              Icon(icon, color: color, size: 21),
               const SizedBox(width: 9),
               Expanded(
                 child: Text(
@@ -609,9 +490,7 @@ class _SectionCard extends StatelessWidget {
                   ),
                 ),
               ),
-              if (trailing != null) ...[
-                trailing!,
-              ],
+              if (trailing != null) ...[trailing!],
             ],
           ),
           const SizedBox(height: 14),
@@ -628,12 +507,8 @@ class _LoadingSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: 24,
-      ),
-      child: Center(
-        child: CircularProgressIndicator(),
-      ),
+      padding: EdgeInsets.symmetric(vertical: 24),
+      child: Center(child: CircularProgressIndicator()),
     );
   }
 }

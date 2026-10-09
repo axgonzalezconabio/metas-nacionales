@@ -13,75 +13,45 @@ import 'package:metas_nacionales/features/metas/metas_page.dart';
 final appRouter = GoRouter(
   initialLocation: '/',
   routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) =>
-          const HomePage(),
-    ),
-    GoRoute(
-      path: '/ejes',
-      builder: (context, state) =>
-          const EjesPage(),
-    ),
+    GoRoute(path: '/', builder: (context, state) => const HomePage()),
+    GoRoute(path: '/ejes', builder: (context, state) => const EjesPage()),
     GoRoute(
       path: '/ejes/:ejeNombre',
       builder: (context, state) {
-        final ejeNombre =
-            state.pathParameters['ejeNombre']!;
+        final ejeNombre = state.pathParameters['ejeNombre']!;
 
-        return EjeMetasPage(
-          ejeNombre: ejeNombre,
-        );
+        return EjeMetasPage(ejeNombre: ejeNombre);
       },
     ),
-    GoRoute(
-      path: '/metas',
-      builder: (context, state) =>
-          const MetasPage(),
-    ),
+    GoRoute(path: '/metas', builder: (context, state) => const MetasPage()),
     GoRoute(
       path: '/metas/:codigo',
       builder: (context, state) {
-        final codigo =
-            state.pathParameters['codigo']!;
+        final codigo = state.pathParameters['codigo']!;
 
-        return MetaDetailPage(
-          codigo: codigo,
-        );
+        return MetaDetailPage(codigo: codigo);
       },
     ),
     GoRoute(
       path: '/metas-globales/:codigo',
       builder: (context, state) {
-        final codigo =
-            state.pathParameters['codigo']!;
+        final codigo = state.pathParameters['codigo']!;
 
-        return MetaGlobalDetailPage(
-          codigo: codigo,
-        );
+        return MetaGlobalDetailPage(codigo: codigo);
       },
     ),
     GoRoute(
       path: '/instituciones',
-      builder: (context, state) =>
-          const InstitucionesPage(),
+      builder: (context, state) => const InstitucionesPage(),
     ),
     GoRoute(
       path: '/instituciones/:id',
       builder: (context, state) {
-        final id = int.parse(
-          state.pathParameters['id']!,
-        );
+        final id = int.parse(state.pathParameters['id']!);
 
-        return InstitucionDetailPage(
-          id: id,
-        );
+        return InstitucionDetailPage(id: id);
       },
     ),
-    GoRoute(
-      path: '/buscar',
-      builder: (context, state) =>
-          const BusquedaPage(),
-    ),
+    GoRoute(path: '/buscar', builder: (context, state) => const BusquedaPage()),
   ],
 );

@@ -11,8 +11,7 @@ class EjesPage extends StatelessWidget {
   static const _ejes = [
     _EjeData(
       nombre: 'Conservar',
-      descripcion:
-          'Conservar y restaurar la biodiversidad, los ecosistemas y sus servicios.',
+      descripcion: 'Conservar y restaurar la biodiversidad, los ecosistemas y sus servicios.',
       color: Color(0xFF94A65B),
       icon: Icons.forest_rounded,
     ),
@@ -25,15 +24,13 @@ class EjesPage extends StatelessWidget {
     ),
     _EjeData(
       nombre: 'Salvaguardar',
-      descripcion:
-          'Fortalecer las condiciones para proteger la biodiversidad y el bienestar.',
+      descripcion: 'Fortalecer las condiciones para proteger la biodiversidad y el bienestar.',
       color: Color(0xFF4A6E7D),
       icon: Icons.eco_rounded,
     ),
     _EjeData(
       nombre: 'Actuar',
-      descripcion:
-          'Impulsar acciones, capacidades y mecanismos para alcanzar las metas.',
+      descripcion: 'Impulsar acciones, capacidades y mecanismos para alcanzar las metas.',
       color: Color(0xFFEA5E25),
       icon: Icons.groups_rounded,
     ),
@@ -49,9 +46,7 @@ class EjesPage extends StatelessWidget {
         elevation: 0,
         title: const Text(
           'Ejes de acción',
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w700),
         ),
       ),
       body: SafeArea(
@@ -63,9 +58,7 @@ class EjesPage extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(20, 24, 20, 32),
               child: Center(
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    maxWidth: 1000,
-                  ),
+                  constraints: const BoxConstraints(maxWidth: 1000),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -99,11 +92,11 @@ class EjesPage extends StatelessWidget {
                           itemCount: _ejes.length,
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 18,
-                            mainAxisSpacing: 18,
-                            childAspectRatio: 1.65,
-                          ),
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 18,
+                                mainAxisSpacing: 18,
+                                childAspectRatio: 1.65,
+                              ),
                           itemBuilder: (context, index) {
                             return _EjeCard(
                               eje: _ejes[index],
@@ -140,10 +133,7 @@ class EjesPage extends StatelessWidget {
 }
 
 class _EjeCard extends StatelessWidget {
-  const _EjeCard({
-    required this.eje,
-    required this.onTap,
-  });
+  const _EjeCard({required this.eje, required this.onTap});
 
   final _EjeData eje;
   final VoidCallback onTap;
@@ -159,9 +149,7 @@ class _EjeCard extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(22),
-            border: Border.all(
-              color: eje.color.withValues(alpha: 0.16),
-            ),
+            border: Border.all(color: eje.color.withValues(alpha: 0.16)),
           ),
           child: Stack(
             children: [
@@ -188,11 +176,7 @@ class _EjeCard extends StatelessWidget {
                         color: eje.color.withValues(alpha: 0.13),
                         borderRadius: BorderRadius.circular(17),
                       ),
-                      child: Icon(
-                        eje.icon,
-                        color: eje.color,
-                        size: 30,
-                      ),
+                      child: Icon(eje.icon, color: eje.color, size: 30),
                     ),
                     const SizedBox(width: 18),
                     Expanded(

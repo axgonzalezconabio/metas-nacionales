@@ -10,8 +10,7 @@ class ContenidoSeed {
           .into(database.publicaciones)
           .insert(
             PublicacionesCompanion.insert(
-              nombre:
-                  'Metas Nacionales para la implementación del Marco Mundial de Biodiversidad Kunming-Montreal en México',
+              nombre: 'Metas Nacionales para la implementación del Marco Mundial de Biodiversidad Kunming-Montreal en México',
               edicion: const Value('Primera edición'),
               anio: const Value(2026),
               descripcion: const Value(
@@ -21,7 +20,9 @@ class ContenidoSeed {
           );
 
       // Ejes oficiales
-      await database.into(database.ejes).insert(
+      await database
+          .into(database.ejes)
+          .insert(
             EjesCompanion.insert(
               nombre: 'Conservar',
               descripcion: const Value(
@@ -32,7 +33,9 @@ class ContenidoSeed {
             ),
           );
 
-      await database.into(database.ejes).insert(
+      await database
+          .into(database.ejes)
+          .insert(
             EjesCompanion.insert(
               nombre: 'Evitar',
               descripcion: const Value(
@@ -43,7 +46,9 @@ class ContenidoSeed {
             ),
           );
 
-      await database.into(database.ejes).insert(
+      await database
+          .into(database.ejes)
+          .insert(
             EjesCompanion.insert(
               nombre: 'Salvaguardar',
               descripcion: const Value(
@@ -54,7 +59,9 @@ class ContenidoSeed {
             ),
           );
 
-      await database.into(database.ejes).insert(
+      await database
+          .into(database.ejes)
+          .insert(
             EjesCompanion.insert(
               nombre: 'Actuar',
               descripcion: const Value(

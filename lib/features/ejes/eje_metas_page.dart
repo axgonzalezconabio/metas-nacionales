@@ -5,10 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:metas_nacionales/core/providers/metas_nacionales_provider.dart';
 
 class EjeMetasPage extends ConsumerWidget {
-  const EjeMetasPage({
-    super.key,
-    required this.ejeNombre,
-  });
+  const EjeMetasPage({super.key, required this.ejeNombre});
 
   final String ejeNombre;
 
@@ -59,10 +56,8 @@ class EjeMetasPage extends ConsumerWidget {
         foregroundColor: Colors.white,
         elevation: 0,
         title: Text(
-          ejeNombre,
-          style: const TextStyle(
-            fontWeight: FontWeight.w700,
-          ),
+          'Pilar $ejeNombre',
+          style: const TextStyle(fontWeight: FontWeight.w700),
         ),
       ),
       body: SafeArea(
@@ -78,9 +73,7 @@ class EjeMetasPage extends ConsumerWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: color.withValues(alpha: 0.15),
-                  ),
+                  border: Border.all(color: color.withValues(alpha: 0.15)),
                 ),
                 clipBehavior: Clip.antiAlias,
                 child: Padding(
@@ -111,7 +104,7 @@ class EjeMetasPage extends ConsumerWidget {
             const SizedBox(height: 10),
 
             Text(
-              'Consulta las metas nacionales que forman parte del eje '
+              'Consulta las metas nacionales que forman parte del pilar '
               '$ejeNombre.',
               style: TextStyle(
                 fontSize: 15.5,
@@ -124,9 +117,7 @@ class EjeMetasPage extends ConsumerWidget {
             metasAsync.when(
               loading: () => const Padding(
                 padding: EdgeInsets.only(top: 30),
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
+                child: Center(child: CircularProgressIndicator()),
               ),
               error: (error, stackTrace) => Padding(
                 padding: const EdgeInsets.only(top: 30),
@@ -147,7 +138,7 @@ class EjeMetasPage extends ConsumerWidget {
                     padding: const EdgeInsets.only(top: 30),
                     child: Center(
                       child: Text(
-                        'No hay metas registradas para este eje.',
+                        'No hay metas registradas para este pilar.',
                         style: TextStyle(
                           color: Colors.black.withValues(alpha: 0.60),
                           fontSize: 15,
@@ -207,9 +198,7 @@ class _MetaCard extends StatelessWidget {
             padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: color.withValues(alpha: 0.14),
-              ),
+              border: Border.all(color: color.withValues(alpha: 0.14)),
             ),
             child: Row(
               children: [

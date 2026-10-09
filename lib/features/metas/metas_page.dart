@@ -9,13 +9,11 @@ class MetasPage extends ConsumerStatefulWidget {
   const MetasPage({super.key});
 
   @override
-  ConsumerState<MetasPage> createState() =>
-      _MetasPageState();
+  ConsumerState<MetasPage> createState() => _MetasPageState();
 }
 
 class _MetasPageState extends ConsumerState<MetasPage> {
-  final TextEditingController _searchController =
-      TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   String _busqueda = '';
 
@@ -30,8 +28,7 @@ class _MetasPageState extends ConsumerState<MetasPage> {
 
   @override
   Widget build(BuildContext context) {
-    final metasAsync =
-        ref.watch(metasNacionalesConEjeProvider);
+    final metasAsync = ref.watch(metasNacionalesConEjeProvider);
 
     return Scaffold(
       backgroundColor: _background,
@@ -41,29 +38,22 @@ class _MetasPageState extends ConsumerState<MetasPage> {
         elevation: 0,
         title: const Text(
           'Metas nacionales',
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w700),
         ),
       ),
       body: metasAsync.when(
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stackTrace) => const _MessageState(
-          message:
-              'No fue posible cargar las metas nacionales.',
+          message: 'No fue posible cargar las metas nacionales.',
         ),
         data: (metas) {
           if (metas.isEmpty) {
             return const _MessageState(
-              message:
-                  'No hay metas nacionales disponibles.',
+              message: 'No hay metas nacionales disponibles.',
             );
           }
 
-          final texto =
-              _busqueda.trim().toLowerCase();
+          final texto = _busqueda.trim().toLowerCase();
 
           final metasFiltradas = metas.where((item) {
             if (texto.isEmpty) {
@@ -72,19 +62,10 @@ class _MetasPageState extends ConsumerState<MetasPage> {
 
             final meta = item.meta;
 
-            return meta.codigo
-                    .toLowerCase()
-                    .contains(texto) ||
-                meta.nombre
-                    .toLowerCase()
-                    .contains(texto) ||
-                item.eje.nombre
-                    .toLowerCase()
-                    .contains(texto) ||
-                (meta.descripcion
-                        ?.toLowerCase()
-                        .contains(texto) ??
-                    false);
+            return meta.codigo.toLowerCase().contains(texto) ||
+                meta.nombre.toLowerCase().contains(texto) ||
+                item.eje.nombre.toLowerCase().contains(texto) ||
+                (meta.descripcion?.toLowerCase().contains(texto) ?? false);
           }).toList();
 
           return Column(
@@ -102,9 +83,7 @@ class _MetasPageState extends ConsumerState<MetasPage> {
               Expanded(
                 child: metasFiltradas.isEmpty
                     ? const _EmptySearchState()
-                    : _MetasList(
-                        metas: metasFiltradas,
-                      ),
+                    : _MetasList(metas: metasFiltradas),
               ),
             ],
           );
@@ -136,30 +115,19 @@ class _SearchHeader extends StatelessWidget {
 
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.fromLTRB(
-        20,
-        18,
-        20,
-        16,
-      ),
+      padding: const EdgeInsets.fromLTRB(20, 18, 20, 16),
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 900,
-          ),
+          constraints: const BoxConstraints(maxWidth: 900),
           child: Column(
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextField(
                 controller: controller,
                 onChanged: onChanged,
                 decoration: InputDecoration(
-                  hintText:
-                      'Buscar por código, nombre o descripción...',
-                  prefixIcon: const Icon(
-                    Icons.search_rounded,
-                  ),
+                  hintText: 'Buscar por número, nombre o descripción...',
+                  prefixIcon: const Icon(Icons.search_rounded),
                   suffixIcon: buscando
                       ? IconButton(
                           tooltip: 'Limpiar búsqueda',
@@ -167,43 +135,29 @@ class _SearchHeader extends StatelessWidget {
                             controller.clear();
                             onChanged('');
                           },
-                          icon: const Icon(
-                            Icons.close_rounded,
-                          ),
+                          icon: const Icon(Icons.close_rounded),
                         )
                       : null,
                   filled: true,
-                  fillColor:
-                      const Color(0xFFF6F5F1),
+                  fillColor: const Color(0xFFF6F5F1),
                   border: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(16),
                     borderSide: BorderSide.none,
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(16),
                     borderSide: BorderSide.none,
                   ),
-                  focusedBorder:
-                      OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(16),
-                    borderSide: const BorderSide(
-                      color: _wine,
-                      width: 1.2,
-                    ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: const BorderSide(color: _wine, width: 1.2),
                   ),
                 ),
               ),
               const SizedBox(height: 12),
               Row(
                 children: [
-                  const Icon(
-                    Icons.eco_outlined,
-                    size: 18,
-                    color: _wine,
-                  ),
+                  const Icon(Icons.eco_outlined, size: 18, color: _wine),
                   const SizedBox(width: 7),
                   Text(
                     buscando
@@ -226,9 +180,7 @@ class _SearchHeader extends StatelessWidget {
 }
 
 class _MetasList extends StatelessWidget {
-  const _MetasList({
-    required this.metas,
-  });
+  const _MetasList({required this.metas});
 
   final List<MetaNacionalConEje> metas;
 
@@ -240,14 +192,8 @@ class _MetasList extends StatelessWidget {
 
         if (ancho >= 900) {
           return GridView.builder(
-            padding: const EdgeInsets.fromLTRB(
-              20,
-              20,
-              20,
-              32,
-            ),
-            gridDelegate:
-                const SliverGridDelegateWithMaxCrossAxisExtent(
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 520,
               mainAxisExtent: 190,
               crossAxisSpacing: 14,
@@ -255,27 +201,17 @@ class _MetasList extends StatelessWidget {
             ),
             itemCount: metas.length,
             itemBuilder: (context, index) {
-              return _MetaCard(
-                item: metas[index],
-              );
+              return _MetaCard(item: metas[index]);
             },
           );
         }
 
         return ListView.separated(
-          padding: const EdgeInsets.fromLTRB(
-            16,
-            16,
-            16,
-            32,
-          ),
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
           itemCount: metas.length,
-          separatorBuilder: (_, _) =>
-              const SizedBox(height: 12),
+          separatorBuilder: (_, _) => const SizedBox(height: 12),
           itemBuilder: (context, index) {
-            return _MetaCard(
-              item: metas[index],
-            );
+            return _MetaCard(item: metas[index]);
           },
         );
       },
@@ -284,9 +220,7 @@ class _MetasList extends StatelessWidget {
 }
 
 class _MetaCard extends StatelessWidget {
-  const _MetaCard({
-    required this.item,
-  });
+  const _MetaCard({required this.item});
 
   final MetaNacionalConEje item;
 
@@ -300,8 +234,7 @@ class _MetaCard extends StatelessWidget {
     final ejeColor = _colorEje(eje.nombre);
 
     final descripcion = meta.descripcion?.trim();
-    final tieneDescripcion =
-        descripcion != null && descripcion.isNotEmpty;
+    final tieneDescripcion = descripcion != null && descripcion.isNotEmpty;
 
     return Material(
       color: Colors.white,
@@ -315,26 +248,18 @@ class _MetaCard extends StatelessWidget {
           padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
-            border: Border.all(
-              color: Colors.black.withValues(
-                alpha: 0.05,
-              ),
-            ),
+            border: Border.all(color: Colors.black.withValues(alpha: 0.05)),
           ),
           child: Row(
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: 52,
                 height: 52,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: ejeColor.withValues(
-                    alpha: 0.12,
-                  ),
-                  borderRadius:
-                      BorderRadius.circular(15),
+                  color: ejeColor.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(15),
                 ),
                 child: Text(
                   meta.codigo,
@@ -349,8 +274,7 @@ class _MetaCard extends StatelessWidget {
               const SizedBox(width: 14),
               Expanded(
                 child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       eje.nombre,
@@ -365,8 +289,7 @@ class _MetaCard extends StatelessWidget {
                     Text(
                       meta.nombre,
                       maxLines: 3,
-                      overflow:
-                          TextOverflow.ellipsis,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         color: _text,
                         fontSize: 15.5,
@@ -379,8 +302,7 @@ class _MetaCard extends StatelessWidget {
                       Text(
                         descripcion,
                         maxLines: 2,
-                        overflow:
-                            TextOverflow.ellipsis,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           color: _muted,
                           fontSize: 12.5,
@@ -392,11 +314,7 @@ class _MetaCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 6),
-              const Icon(
-                Icons.chevron_right_rounded,
-                color: _muted,
-                size: 22,
-              ),
+              const Icon(Icons.chevron_right_rounded, color: _muted, size: 22),
             ],
           ),
         ),
@@ -438,9 +356,7 @@ class _EmptySearchState extends StatelessWidget {
               width: 64,
               height: 64,
               decoration: BoxDecoration(
-                color: _wine.withValues(
-                  alpha: 0.08,
-                ),
+                color: _wine.withValues(alpha: 0.08),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -452,19 +368,13 @@ class _EmptySearchState extends StatelessWidget {
             const SizedBox(height: 16),
             const Text(
               'No encontramos metas',
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.w800,
-              ),
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
             ),
             const SizedBox(height: 6),
             const Text(
-              'Prueba con otro código, nombre o término.',
+              'Prueba con otro número, nombre o término.',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: _muted,
-                fontSize: 14,
-              ),
+              style: TextStyle(color: _muted, fontSize: 14),
             ),
           ],
         ),
@@ -474,9 +384,7 @@ class _EmptySearchState extends StatelessWidget {
 }
 
 class _MessageState extends StatelessWidget {
-  const _MessageState({
-    required this.message,
-  });
+  const _MessageState({required this.message});
 
   final String message;
 
@@ -490,10 +398,7 @@ class _MessageState extends StatelessWidget {
         child: Text(
           message,
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: _text,
-            fontSize: 16,
-          ),
+          style: const TextStyle(color: _text, fontSize: 16),
         ),
       ),
     );

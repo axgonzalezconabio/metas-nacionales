@@ -31,7 +31,7 @@ class ContenidoSeed {
 
       final ejeIds = <String, int>{};
       final metaGlobalIds = <String, int>{};
-      final metaNacionalIds = <String, int>{};  
+      final metaNacionalIds = <String, int>{};
 
       Future<int> insertarEje({
         required String nombre,
@@ -184,140 +184,119 @@ class ContenidoSeed {
       const metasGlobales = <String, Map<String, String>>{
         '1': {
           'nombre': 'Planificación espacial',
-          'descripcion':
-              'Garantizar que todas las zonas estén sujetas a planificación espacial participativa integrada que tenga en cuenta la biodiversidad y/o procesos de gestión eficaces que aborden el cambio en el uso de la tierra y los océanos, a fin de que la pérdida de zonas de suma importancia para la biodiversidad, incluidos los ecosistemas de gran integridad ecológica, se acerque a cero para 2030, respetando al mismo tiempo los derechos de los pueblos indígenas y las comunidades locales.',
+          'descripcion': 'Garantizar que todas las zonas estén sujetas a planificación espacial participativa integrada que tenga en cuenta la biodiversidad y/o procesos de gestión eficaces que aborden el cambio en el uso de la tierra y los océanos, a fin de que la pérdida de zonas de suma importancia para la biodiversidad, incluidos los ecosistemas de gran integridad ecológica, se acerque a cero para 2030, respetando al mismo tiempo los derechos de los pueblos indígenas y las comunidades locales.',
           'eje': 'Conservar',
         },
         '2': {
           'nombre': 'Restauración de ecosistemas',
-          'descripcion':
-              'Garantizar que para 2030 al menos un 30 % de las zonas de ecosistemas terrestres, de aguas continentales y costeros y marinos degradados estén siendo objeto de una restauración efectiva, con el fin de mejorar la biodiversidad y las funciones y los servicios de los ecosistemas y la integridad y conectividad ecológicas.',
+          'descripcion': 'Garantizar que para 2030 al menos un 30 % de las zonas de ecosistemas terrestres, de aguas continentales y costeros y marinos degradados estén siendo objeto de una restauración efectiva, con el fin de mejorar la biodiversidad y las funciones y los servicios de los ecosistemas y la integridad y conectividad ecológicas.',
           'eje': 'Conservar',
         },
         '3': {
           'nombre': 'Conservación de áreas',
-          'descripcion':
-              'Garantizar y hacer posible que, para 2030, al menos un 30 % de las zonas terrestres y de aguas continentales y de las zonas marinas y costeras, especialmente las zonas de particular importancia para la biodiversidad y las funciones y los servicios de los ecosistemas, se conserven y gestionen eficazmente mediante sistemas de áreas protegidas ecológicamente representativos, bien conectados y gobernados equitativamente y otras medidas de conservación eficaces basadas en áreas, reconociendo, cuando proceda, los territorios indígenas y tradicionales, y que estén integradas a los paisajes terrestres, marinos y oceánicos más amplios, garantizando al mismo tiempo que toda utilización sostenible, cuando proceda en dichas zonas, sea plenamente coherente con la obtención de resultados de conservación, reconociendo y respetando los derechos de los pueblos indígenas y las comunidades locales, incluidos aquellos relativos a sus territorios tradicionales.',
+          'descripcion': 'Garantizar y hacer posible que, para 2030, al menos un 30 % de las zonas terrestres y de aguas continentales y de las zonas marinas y costeras, especialmente las zonas de particular importancia para la biodiversidad y las funciones y los servicios de los ecosistemas, se conserven y gestionen eficazmente mediante sistemas de áreas protegidas ecológicamente representativos, bien conectados y gobernados equitativamente y otras medidas de conservación eficaces basadas en áreas, reconociendo, cuando proceda, los territorios indígenas y tradicionales, y que estén integradas a los paisajes terrestres, marinos y oceánicos más amplios, garantizando al mismo tiempo que toda utilización sostenible, cuando proceda en dichas zonas, sea plenamente coherente con la obtención de resultados de conservación, reconociendo y respetando los derechos de los pueblos indígenas y las comunidades locales, incluidos aquellos relativos a sus territorios tradicionales.',
           'eje': 'Conservar',
         },
         '4': {
           'nombre': 'Detener la extinción de especies',
-          'descripcion':
-              'Garantizar que se adopten con urgencia medidas de gestión para detener la extinción de especies amenazadas conocidas y para la recuperación y conservación de las especies, en particular, las especies amenazadas, a fin de reducir significativamente el riesgo de extinción, así como de mantener y restaurar la diversidad genética entre las poblaciones de especies autóctonas, silvestres y domesticadas y dentro de ellas a fin de preservar su potencial de adaptación, entre otras cosas, mediante prácticas sostenibles de gestión y conservación in situ y ex situ, y gestionar eficazmente las interacciones entre los seres humanos y la fauna y flora silvestres, con miras a reducir al mínimo los conflictos entre los seres humanos y las especies silvestres en favor de la coexistencia.',
+          'descripcion': 'Garantizar que se adopten con urgencia medidas de gestión para detener la extinción de especies amenazadas conocidas y para la recuperación y conservación de las especies, en particular, las especies amenazadas, a fin de reducir significativamente el riesgo de extinción, así como de mantener y restaurar la diversidad genética entre las poblaciones de especies autóctonas, silvestres y domesticadas y dentro de ellas a fin de preservar su potencial de adaptación, entre otras cosas, mediante prácticas sostenibles de gestión y conservación in situ y ex situ, y gestionar eficazmente las interacciones entre los seres humanos y la fauna y flora silvestres, con miras a reducir al mínimo los conflictos entre los seres humanos y las especies silvestres en favor de la coexistencia.',
           'eje': 'Conservar',
         },
         '5': {
           'nombre': 'Uso y comercio de especies',
-          'descripcion':
-              'Garantizar que el uso, la recolección y el comercio de especies silvestres sea sostenible, seguro y lícito, previniendo la sobreexplotación, minimizando los impactos sobre las especies no buscadas y los ecosistemas, y reduciendo el riesgo de propagación de patógenos, aplicando el enfoque por ecosistemas, al tiempo que se respeta y protege la utilización consuetudinaria sostenible por los pueblos indígenas y las comunidades locales.',
+          'descripcion': 'Garantizar que el uso, la recolección y el comercio de especies silvestres sea sostenible, seguro y lícito, previniendo la sobreexplotación, minimizando los impactos sobre las especies no buscadas y los ecosistemas, y reduciendo el riesgo de propagación de patógenos, aplicando el enfoque por ecosistemas, al tiempo que se respeta y protege la utilización consuetudinaria sostenible por los pueblos indígenas y las comunidades locales.',
           'eje': 'Evitar',
         },
         '6': {
           'nombre': 'Reducción de especies exóticas invasoras (EEI)',
-          'descripcion':
-              'Eliminar, minimizar o reducir las especies exóticas invasoras o mitigar sus impactos en la biodiversidad y los servicios de los ecosistemas mediante la detección y la gestión de las vías de introducción de las especies exóticas, previniendo la introducción y el establecimiento de especies exóticas invasoras prioritarias, reduciendo las tasas de introducción y establecimiento de otras especies exóticas invasoras conocidas o potenciales en al menos un 50% para 2030, y erradicando o controlando las especies exóticas invasoras, en especial en lugares prioritarios, como las islas.',
+          'descripcion': 'Eliminar, minimizar o reducir las especies exóticas invasoras o mitigar sus impactos en la biodiversidad y los servicios de los ecosistemas mediante la detección y la gestión de las vías de introducción de las especies exóticas, previniendo la introducción y el establecimiento de especies exóticas invasoras prioritarias, reduciendo las tasas de introducción y establecimiento de otras especies exóticas invasoras conocidas o potenciales en al menos un 50% para 2030, y erradicando o controlando las especies exóticas invasoras, en especial en lugares prioritarios, como las islas.',
           'eje': 'Evitar',
         },
         '7': {
           'nombre': 'Reducción de la contaminación',
-          'descripcion':
-              'Reducir para 2030 los riesgos de contaminación y el impacto negativo de la contaminación de todas las fuentes a niveles que no sean perjudiciales para la diversidad biológica y las funciones y los servicios de los ecosistemas, considerando los efectos acumulativos, entre otras cosas: a) reduciendo al menos a la mitad el exceso de nutrientes que se liberan al medio ambiente, como por ejemplo mediante un ciclo y un uso más eficientes de los nutrientes; b) reduciendo el riesgo general de los plaguicidas y las sustancias químicas altamente peligrosas al menos a la mitad, incluido mediante la gestión integrada de plagas, basándose en la ciencia, teniendo en cuenta la seguridad alimentaria y los medios de vida; y c) previniendo, reduciendo y procurando eliminar la contaminación por plástico.',
+          'descripcion': 'Reducir para 2030 los riesgos de contaminación y el impacto negativo de la contaminación de todas las fuentes a niveles que no sean perjudiciales para la diversidad biológica y las funciones y los servicios de los ecosistemas, considerando los efectos acumulativos, entre otras cosas: a) reduciendo al menos a la mitad el exceso de nutrientes que se liberan al medio ambiente, como por ejemplo mediante un ciclo y un uso más eficientes de los nutrientes; b) reduciendo el riesgo general de los plaguicidas y las sustancias químicas altamente peligrosas al menos a la mitad, incluido mediante la gestión integrada de plagas, basándose en la ciencia, teniendo en cuenta la seguridad alimentaria y los medios de vida; y c) previniendo, reduciendo y procurando eliminar la contaminación por plástico.',
           'eje': 'Evitar',
         },
         '8': {
           'nombre': 'Reducción de los impactos del cambio climático',
-          'descripcion':
-              'Minimizar el impacto del cambio climático y la acidificación de los océanos en la biodiversidad, y aumentar su resiliencia mediante medidas de mitigación, adaptación y reducción del riesgo de desastres, entre otras cosas por medio de soluciones basadas en la naturaleza y/o enfoques basados en los ecosistemas, al tiempo que se minimizan los impactos negativos y se fomentan los impactos positivos de la acción por el clima en la biodiversidad.',
+          'descripcion': 'Minimizar el impacto del cambio climático y la acidificación de los océanos en la biodiversidad, y aumentar su resiliencia mediante medidas de mitigación, adaptación y reducción del riesgo de desastres, entre otras cosas por medio de soluciones basadas en la naturaleza y/o enfoques basados en los ecosistemas, al tiempo que se minimizan los impactos negativos y se fomentan los impactos positivos de la acción por el clima en la biodiversidad.',
           'eje': 'Evitar',
         },
         '9': {
           'nombre': 'Gestión sustentable de especies silvestres',
-          'descripcion':
-              'Garantizar que la gestión y el uso de especies silvestres sean sostenibles, proporcionando así beneficios sociales, económicos y ambientales para las personas, en especial aquellas que se encuentran en situaciones de vulnerabilidad y aquellas que más dependen de la biodiversidad, entre otras cosas, mediante actividades, productos y servicios sostenibles basados en la biodiversidad que la fortalezcan, y mediante la protección y promoción de la utilización consuetudinaria sostenible por los pueblos indígenas y las comunidades locales.',
+          'descripcion': 'Garantizar que la gestión y el uso de especies silvestres sean sostenibles, proporcionando así beneficios sociales, económicos y ambientales para las personas, en especial aquellas que se encuentran en situaciones de vulnerabilidad y aquellas que más dependen de la biodiversidad, entre otras cosas, mediante actividades, productos y servicios sostenibles basados en la biodiversidad que la fortalezcan, y mediante la protección y promoción de la utilización consuetudinaria sostenible por los pueblos indígenas y las comunidades locales.',
           'eje': 'Salvaguardar',
         },
         '10': {
-          'nombre': 'Integración de la biodiversidad en los sectores productivos',
-          'descripcion':
-              'Garantizar que las superficies dedicadas a la agricultura, la acuicultura, la pesca y la silvicultura se gestionen de manera sostenible, en particular a través de la utilización sostenible de la diversidad biológica, entre otras cosas, mediante un aumento sustancial del empleo de prácticas favorables a la diversidad biológica, tales como enfoques de intensificación sostenible, enfoques agroecológicos y otros enfoques innovadores, contribuyendo a la resiliencia y a la eficiencia y productividad a largo plazo de estos sistemas de producción y a la seguridad alimentaria, conservando y restaurando la diversidad biológica y manteniendo las contribuciones de la naturaleza a las personas, entre ellas las funciones y los servicios de los ecosistemas.',
+          'nombre':
+              'Integración de la biodiversidad en los sectores productivos',
+          'descripcion': 'Garantizar que las superficies dedicadas a la agricultura, la acuicultura, la pesca y la silvicultura se gestionen de manera sostenible, en particular a través de la utilización sostenible de la diversidad biológica, entre otras cosas, mediante un aumento sustancial del empleo de prácticas favorables a la diversidad biológica, tales como enfoques de intensificación sostenible, enfoques agroecológicos y otros enfoques innovadores, contribuyendo a la resiliencia y a la eficiencia y productividad a largo plazo de estos sistemas de producción y a la seguridad alimentaria, conservando y restaurando la diversidad biológica y manteniendo las contribuciones de la naturaleza a las personas, entre ellas las funciones y los servicios de los ecosistemas.',
           'eje': 'Salvaguardar',
         },
         '11': {
           'nombre': 'Contribuciones de la naturaleza',
-          'descripcion':
-              'Restaurar, mantener y mejorar las contribuciones de la naturaleza a las personas, entre ellas las funciones y los servicios de los ecosistemas, tales como la regulación del aire, el agua y el clima, la salud de los suelos, la polinización y la reducción del riesgo de enfermedades, así como la protección frente a peligros y desastres naturales, mediante soluciones basadas en la naturaleza y/o enfoques basados en los ecosistemas en beneficio de todas las personas y la naturaleza.',
+          'descripcion': 'Restaurar, mantener y mejorar las contribuciones de la naturaleza a las personas, entre ellas las funciones y los servicios de los ecosistemas, tales como la regulación del aire, el agua y el clima, la salud de los suelos, la polinización y la reducción del riesgo de enfermedades, así como la protección frente a peligros y desastres naturales, mediante soluciones basadas en la naturaleza y/o enfoques basados en los ecosistemas en beneficio de todas las personas y la naturaleza.',
           'eje': 'Salvaguardar',
         },
         '12': {
           'nombre': 'Mejora de espacios verdes y azules en zonas urbanas',
-          'descripcion':
-              'Aumentar significativamente la superficie, la calidad y la conectividad de los espacios verdes y azules en las zonas urbanas y densamente pobladas, así como el acceso a ellos y los beneficios que se deriven de ellos, de manera sostenible, integrando la conservación y la utilización sostenible de la diversidad biológica, y garantizar una planificación urbana que tenga en cuenta la diversidad biológica, mejorando la diversidad biológica autóctona, la conectividad y la integridad ecológicas y mejorando la salud y el bienestar de los seres humanos y su conexión con la naturaleza, así como contribuyendo a una urbanización inclusiva y sostenible y a la prestación de funciones y servicios de los ecosistemas.',
+          'descripcion': 'Aumentar significativamente la superficie, la calidad y la conectividad de los espacios verdes y azules en las zonas urbanas y densamente pobladas, así como el acceso a ellos y los beneficios que se deriven de ellos, de manera sostenible, integrando la conservación y la utilización sostenible de la diversidad biológica, y garantizar una planificación urbana que tenga en cuenta la diversidad biológica, mejorando la diversidad biológica autóctona, la conectividad y la integridad ecológicas y mejorando la salud y el bienestar de los seres humanos y su conexión con la naturaleza, así como contribuyendo a una urbanización inclusiva y sostenible y a la prestación de funciones y servicios de los ecosistemas.',
           'eje': 'Salvaguardar',
         },
         '13': {
           'nombre': 'Beneficios de los recursos genéticos',
-          'descripcion':
-              'Tomar medidas jurídicas, de políticas, administrativas y de creación de capacidad a todos los niveles, según proceda, con miras a lograr la participación justa y equitativa en los beneficios que se deriven de la utilización de los recursos genéticos y de la información digital sobre secuencias de recursos genéticos, así como de los conocimientos tradicionales asociados a los recursos genéticos, y a lograr que para 2030 se haya propiciado un aumento significativo de los beneficios compartidos, de conformidad con los instrumentos internacionales de acceso y participación en los beneficios aplicables.',
+          'descripcion': 'Tomar medidas jurídicas, de políticas, administrativas y de creación de capacidad a todos los niveles, según proceda, con miras a lograr la participación justa y equitativa en los beneficios que se deriven de la utilización de los recursos genéticos y de la información digital sobre secuencias de recursos genéticos, así como de los conocimientos tradicionales asociados a los recursos genéticos, y a lograr que para 2030 se haya propiciado un aumento significativo de los beneficios compartidos, de conformidad con los instrumentos internacionales de acceso y participación en los beneficios aplicables.',
           'eje': 'Salvaguardar',
         },
         '14': {
           'nombre': 'Integrar la biodiversidad en la toma de decisiones',
-          'descripcion':
-              'Garantizar la integración plena de la biodiversidad y sus múltiples valores en las políticas, los reglamentos, los procesos de planificación y de desarrollo, las estrategias de erradicación de la pobreza, las evaluaciones ambientales estratégicas y las evaluaciones de impacto ambiental y, cuando proceda, las cuentas nacionales, en todos los niveles de gobierno y todos los sectores, en particular aquellos que provocan impactos significativos en la biodiversidad, armonizando progresivamente todas las actividades públicas y privadas pertinentes y las corrientes financieras y fiscales con los objetivos y las metas del presente Marco.',
+          'descripcion': 'Garantizar la integración plena de la biodiversidad y sus múltiples valores en las políticas, los reglamentos, los procesos de planificación y de desarrollo, las estrategias de erradicación de la pobreza, las evaluaciones ambientales estratégicas y las evaluaciones de impacto ambiental y, cuando proceda, las cuentas nacionales, en todos los niveles de gobierno y todos los sectores, en particular aquellos que provocan impactos significativos en la biodiversidad, armonizando progresivamente todas las actividades públicas y privadas pertinentes y las corrientes financieras y fiscales con los objetivos y las metas del presente Marco.',
           'eje': 'Actuar',
         },
         '15': {
-          'nombre': 'Responsabilidad empresarial y financiera en la biodiversidad',
-          'descripcion':
-              'Tomar medidas jurídicas, administrativas o de políticas para alentar y habilitar a las empresas para que, y en particular, en el caso de las empresas transnacionales y las instituciones financieras, garantizar que: a) Hagan periódicamente un seguimiento y una evaluación de sus riesgos, dependencias de la biodiversidad e impactos en ella, y los den a conocer de manera transparente, incluido, en el caso de las grandes empresas y las empresas transnacionales e instituciones financieras, mediante el establecimiento de requisitos a lo largo de sus operaciones, cadenas de suministro y de valor y carteras; b) Proporcionen la información necesaria a los consumidores a fin de promover modalidades de consumo sostenibles; c) Informen sobre el cumplimiento de los reglamentos y medidas de acceso y participación en los beneficios, según proceda; con el fin de reducir progresivamente los impactos negativos en la biodiversidad, aumentar los impactos positivos, reducir los riesgos relacionados con la biodiversidad para las empresas y las instituciones financieras, y promover acciones encaminadas a lograr modalidades de producción sostenibles.',
+          'nombre':
+              'Responsabilidad empresarial y financiera en la biodiversidad',
+          'descripcion': 'Tomar medidas jurídicas, administrativas o de políticas para alentar y habilitar a las empresas para que, y en particular, en el caso de las empresas transnacionales y las instituciones financieras, garantizar que: a) Hagan periódicamente un seguimiento y una evaluación de sus riesgos, dependencias de la biodiversidad e impactos en ella, y los den a conocer de manera transparente, incluido, en el caso de las grandes empresas y las empresas transnacionales e instituciones financieras, mediante el establecimiento de requisitos a lo largo de sus operaciones, cadenas de suministro y de valor y carteras; b) Proporcionen la información necesaria a los consumidores a fin de promover modalidades de consumo sostenibles; c) Informen sobre el cumplimiento de los reglamentos y medidas de acceso y participación en los beneficios, según proceda; con el fin de reducir progresivamente los impactos negativos en la biodiversidad, aumentar los impactos positivos, reducir los riesgos relacionados con la biodiversidad para las empresas y las instituciones financieras, y promover acciones encaminadas a lograr modalidades de producción sostenibles.',
           'eje': 'Actuar',
         },
         '16': {
           'nombre': 'Consumo sustentable',
-          'descripcion':
-              'Garantizar que se aliente y apoye a las personas para que elijan opciones de consumo sostenible, entre otras cosas mediante el establecimiento de marcos de políticas, legislativos o normativos de apoyo, mejorando la enseñanza y el acceso a información pertinente y precisa y alternativas, y, para 2030, reducir la huella mundial del consumo de manera equitativa, entre otras cosas reduciendo a la mitad el desperdicio mundial de alimentos, reduciendo significativamente el consumo excesivo, y reduciendo sustancialmente la generación de desechos, a fin de que todas las personas puedan vivir bien en armonía con la Madre Tierra.',
+          'descripcion': 'Garantizar que se aliente y apoye a las personas para que elijan opciones de consumo sostenible, entre otras cosas mediante el establecimiento de marcos de políticas, legislativos o normativos de apoyo, mejorando la enseñanza y el acceso a información pertinente y precisa y alternativas, y, para 2030, reducir la huella mundial del consumo de manera equitativa, entre otras cosas reduciendo a la mitad el desperdicio mundial de alimentos, reduciendo significativamente el consumo excesivo, y reduciendo sustancialmente la generación de desechos, a fin de que todas las personas puedan vivir bien en armonía con la Madre Tierra.',
           'eje': 'Actuar',
         },
         '17': {
           'nombre': 'Fortalecimiento de la bioseguridad',
-          'descripcion':
-              'En todos los países, establecer y aplicar medidas de seguridad de la biotecnología, y reforzar la capacidad al respecto, tal como se establece en el artículo 8 g) del Convenio sobre la Diversidad Biológica, y medidas para la gestión de la biotecnología y la distribución de sus beneficios, tal como se establece en el artículo 19 del Convenio.',
+          'descripcion': 'En todos los países, establecer y aplicar medidas de seguridad de la biotecnología, y reforzar la capacidad al respecto, tal como se establece en el artículo 8 g) del Convenio sobre la Diversidad Biológica, y medidas para la gestión de la biotecnología y la distribución de sus beneficios, tal como se establece en el artículo 19 del Convenio.',
           'eje': 'Actuar',
         },
         '18': {
           'nombre': 'Incentivos y subsidios',
-          'descripcion':
-              'Identificar para 2025 y eliminar gradualmente o reformar los incentivos, entre ellos los subsidios, perjudiciales para la diversidad biológica, de manera proporcionada, justa, efectiva y equitativa, reduciéndolos sustancial y progresivamente en al menos 500 000 millones de dólares de los Estados Unidos al año para 2030, empezando por los incentivos más perjudiciales, y aumentar los incentivos positivos para la conservación y la utilización sostenible de la diversidad biológica.',
+          'descripcion': 'Identificar para 2025 y eliminar gradualmente o reformar los incentivos, entre ellos los subsidios, perjudiciales para la diversidad biológica, de manera proporcionada, justa, efectiva y equitativa, reduciéndolos sustancial y progresivamente en al menos 500 000 millones de dólares de los Estados Unidos al año para 2030, empezando por los incentivos más perjudiciales, y aumentar los incentivos positivos para la conservación y la utilización sostenible de la diversidad biológica.',
           'eje': 'Actuar',
         },
         '19': {
           'nombre': 'Financiamiento para la biodiversidad',
-          'descripcion':
-              'Aumentar sustancial y progresivamente, de manera eficaz, oportuna y de fácil acceso, el nivel de recursos financieros de todas las fuentes, entre ellos los recursos nacionales, internacionales, públicos y privados, de conformidad con el artículo 20 del Convenio, a fin de implementar las estrategias y planes de acción nacionales en materia de biodiversidad, movilizando al menos 200 000 millones de dólares de los Estados Unidos al año para 2030, entre otras cosas: a) Aumentando el total de recursos financieros internacionales relacionados con la biodiversidad procedentes de los países desarrollados, incluida la asistencia oficial para el desarrollo, y de los países que asuman voluntariamente las obligaciones de las Partes que son países desarrollados, para los países en desarrollo, en particular, los países menos adelantados y los pequeños Estados insulares en desarrollo, así como los países con economías en transición, al menos a 20 000 millones de dólares de los Estados Unidos al año para 2025 y al menos a 30 000 millones de dólares al año para 2030; b) Aumentando significativamente la movilización de recursos nacionales, facilitada mediante la preparación y aplicación de planes nacionales de financiación de la biodiversidad o instrumentos similares de acuerdo con las necesidades, prioridades y circunstancias nacionales; c) Apalancando la financiación privada, promoviendo la financiación combinada, aplicando estrategias de obtención de recursos nuevos y adicionales, y alentando al sector privado a invertir en la biodiversidad, entre otras cosas, mediante fondos de impacto y otros instrumentos; d) Estimulando planes innovadores, como pagos por los servicios de los ecosistemas, bonos verdes, compensaciones y créditos de biodiversidad y mecanismos de participación en los beneficios, con salvaguardias ambientales y sociales; e) Optimizando los beneficios secundarios y las sinergias de la financiación destinada a atender las crisis de la biodiversidad y del clima; f) Reforzando el papel de las acciones colectivas, entre ellas las de los pueblos indígenas y las comunidades locales, las acciones centradas en la Madre Tierra y los enfoques no relacionados con el mercado, incluida la gestión comunitaria de los recursos naturales y la cooperación y solidaridad de la sociedad civil dirigidas a la conservación de la diversidad biológica; g) Reforzando la eficacia, eficiencia y transparencia de la provisión y utilización de los recursos.',
+          'descripcion': 'Aumentar sustancial y progresivamente, de manera eficaz, oportuna y de fácil acceso, el nivel de recursos financieros de todas las fuentes, entre ellos los recursos nacionales, internacionales, públicos y privados, de conformidad con el artículo 20 del Convenio, a fin de implementar las estrategias y planes de acción nacionales en materia de biodiversidad, movilizando al menos 200 000 millones de dólares de los Estados Unidos al año para 2030, entre otras cosas: a) Aumentando el total de recursos financieros internacionales relacionados con la biodiversidad procedentes de los países desarrollados, incluida la asistencia oficial para el desarrollo, y de los países que asuman voluntariamente las obligaciones de las Partes que son países desarrollados, para los países en desarrollo, en particular, los países menos adelantados y los pequeños Estados insulares en desarrollo, así como los países con economías en transición, al menos a 20 000 millones de dólares de los Estados Unidos al año para 2025 y al menos a 30 000 millones de dólares al año para 2030; b) Aumentando significativamente la movilización de recursos nacionales, facilitada mediante la preparación y aplicación de planes nacionales de financiación de la biodiversidad o instrumentos similares de acuerdo con las necesidades, prioridades y circunstancias nacionales; c) Apalancando la financiación privada, promoviendo la financiación combinada, aplicando estrategias de obtención de recursos nuevos y adicionales, y alentando al sector privado a invertir en la biodiversidad, entre otras cosas, mediante fondos de impacto y otros instrumentos; d) Estimulando planes innovadores, como pagos por los servicios de los ecosistemas, bonos verdes, compensaciones y créditos de biodiversidad y mecanismos de participación en los beneficios, con salvaguardias ambientales y sociales; e) Optimizando los beneficios secundarios y las sinergias de la financiación destinada a atender las crisis de la biodiversidad y del clima; f) Reforzando el papel de las acciones colectivas, entre ellas las de los pueblos indígenas y las comunidades locales, las acciones centradas en la Madre Tierra y los enfoques no relacionados con el mercado, incluida la gestión comunitaria de los recursos naturales y la cooperación y solidaridad de la sociedad civil dirigidas a la conservación de la diversidad biológica; g) Reforzando la eficacia, eficiencia y transparencia de la provisión y utilización de los recursos.',
           'eje': 'Actuar',
         },
         '20': {
           'nombre': 'Fortalecimiento de capacidades y cooperación',
-          'descripcion':
-              'Fortalecer la creación y el desarrollo de capacidad, así como el acceso a tecnología y transferencia de tecnología, y promover el desarrollo y el acceso a la innovación y la cooperación científica y técnica, incluido a través de la cooperación Sur-Sur, Norte-Sur y triangular, para satisfacer las necesidades de una implementación eficaz, en particular en los países en desarrollo, promoviendo el desarrollo conjunto de tecnología y programas conjuntos de investigación científica para la conservación y la utilización sostenible de la diversidad biológica y el fortalecimiento de las capacidades de investigación científica y de seguimiento, en forma acorde con el nivel de ambición de los objetivos y las metas del Marco.',
+          'descripcion': 'Fortalecer la creación y el desarrollo de capacidad, así como el acceso a tecnología y transferencia de tecnología, y promover el desarrollo y el acceso a la innovación y la cooperación científica y técnica, incluido a través de la cooperación Sur-Sur, Norte-Sur y triangular, para satisfacer las necesidades de una implementación eficaz, en particular en los países en desarrollo, promoviendo el desarrollo conjunto de tecnología y programas conjuntos de investigación científica para la conservación y la utilización sostenible de la diversidad biológica y el fortalecimiento de las capacidades de investigación científica y de seguimiento, en forma acorde con el nivel de ambición de los objetivos y las metas del Marco.',
           'eje': 'Actuar',
         },
         '21': {
           'nombre': 'Acceso al conocimiento',
-          'descripcion':
-              'Lograr que los mejores datos, información y conocimientos estén disponibles a los encargados de la toma de decisiones, los profesionales y el público, para que guíen una gobernanza eficaz y equitativa, una gestión integrada y participativa de la diversidad biológica, y para mejorar la comunicación, la concienciación, la educación, la investigación y la gestión de los conocimientos, y también en el contexto de que solo se disponga de los conocimientos tradicionales, las innovaciones, las prácticas y las tecnologías de los pueblos indígenas y las comunidades locales con su consentimiento libre, previo e informado, de conformidad con la legislación nacional.',
+          'descripcion': 'Lograr que los mejores datos, información y conocimientos estén disponibles a los encargados de la toma de decisiones, los profesionales y el público, para que guíen una gobernanza eficaz y equitativa, una gestión integrada y participativa de la diversidad biológica, y para mejorar la comunicación, la concienciación, la educación, la investigación y la gestión de los conocimientos, y también en el contexto de que solo se disponga de los conocimientos tradicionales, las innovaciones, las prácticas y las tecnologías de los pueblos indígenas y las comunidades locales con su consentimiento libre, previo e informado, de conformidad con la legislación nacional.',
           'eje': 'Actuar',
         },
         '22': {
           'nombre': 'Participación social en la toma de decisiones',
-          'descripcion':
-              'Garantizar la participación y representación plena, equitativa, inclusiva, efectiva y con perspectiva de género de los pueblos indígenas y las comunidades locales en la toma de decisiones, y su acceso a la justicia y a información en materia de biodiversidad, respetando sus culturas y sus derechos sobre las tierras, los territorios, los recursos y los conocimientos tradicionales, así como de las mujeres y las niñas, la infancia y la juventud y las personas con discapacidad, y garantizar la protección plena de los defensores y las defensoras de los derechos humanos relacionados con el medio ambiente.',
+          'descripcion': 'Garantizar la participación y representación plena, equitativa, inclusiva, efectiva y con perspectiva de género de los pueblos indígenas y las comunidades locales en la toma de decisiones, y su acceso a la justicia y a información en materia de biodiversidad, respetando sus culturas y sus derechos sobre las tierras, los territorios, los recursos y los conocimientos tradicionales, así como de las mujeres y las niñas, la infancia y la juventud y las personas con discapacidad, y garantizar la protección plena de los defensores y las defensoras de los derechos humanos relacionados con el medio ambiente.',
           'eje': 'Actuar',
         },
         '23': {
           'nombre': 'Igualdad de género al aplicar el Marco',
-          'descripcion':
-              'Garantizar la igualdad de género en la implementación del Marco mediante un enfoque con perspectiva de género en el cual todas las mujeres y las niñas tengan igualdad de oportunidades y capacidad para contribuir a los tres objetivos del Convenio, entre otras cosas reconociendo su igualdad en cuanto a los derechos y el acceso a las tierras y a los recursos naturales y su participación y liderazgo plenos, equitativos, significativos e informados en todos los niveles de acción, participación, formulación de políticas y toma de decisiones relacionados con la biodiversidad.',
+          'descripcion': 'Garantizar la igualdad de género en la implementación del Marco mediante un enfoque con perspectiva de género en el cual todas las mujeres y las niñas tengan igualdad de oportunidades y capacidad para contribuir a los tres objetivos del Convenio, entre otras cosas reconociendo su igualdad en cuanto a los derechos y el acceso a las tierras y a los recursos naturales y su participación y liderazgo plenos, equitativos, significativos e informados en todos los niveles de acción, participación, formulación de políticas y toma de decisiones relacionados con la biodiversidad.',
           'eje': 'Actuar',
         },
       };
@@ -359,8 +338,7 @@ class ContenidoSeed {
         },
         '1.4': {
           'nombre': "Tasa de cero deforestación neta",
-          'descripcion':
-              "Para 2030, en México se logra una tasa de 0% deforestación neta.",
+          'descripcion': "Para 2030, en México se logra una tasa de 0% deforestación neta.",
           'eje': 'Conservar',
           'global': '1',
         },
@@ -403,8 +381,7 @@ class ContenidoSeed {
         },
         '5.0': {
           'nombre': "Uso y comercio sustentables de especies silvestres",
-          'descripcion':
-              "Al 2030 se cuenta con los mecanismos robustos y armonizados para conducir la sustentabilidad, legalidad, trazabilidad y seguridad de las actividades extractivas y de comercio de la vida silvestre.",
+          'descripcion': "Al 2030 se cuenta con los mecanismos robustos y armonizados para conducir la sustentabilidad, legalidad, trazabilidad y seguridad de las actividades extractivas y de comercio de la vida silvestre.",
           'eje': 'Evitar',
           'global': '5',
         },
@@ -531,8 +508,7 @@ class ContenidoSeed {
         },
         '14.2': {
           'nombre': "Integración de la biodiversidad en el turismo",
-          'descripcion':
-              "Para 2030, el sector turístico en México ha incorporado consideraciones de conservación y uso sustentable de la biodiversidad en el marco normativo, planes, programas, estrategias, actividades y negocios.",
+          'descripcion': "Para 2030, el sector turístico en México ha incorporado consideraciones de conservación y uso sustentable de la biodiversidad en el marco normativo, planes, programas, estrategias, actividades y negocios.",
           'eje': 'Actuar',
           'global': '14',
         },
@@ -580,8 +556,7 @@ class ContenidoSeed {
         },
         '19.3': {
           'nombre': "Financiamiento privado",
-          'descripcion':
-              "Para 2030, México instrumenta planes innovadores de financiamiento para la biodiversidad que habilitan, crean o implementan instrumentos económicos que incentivan la participación y movilización de recursos del sector empresarial y financiero privado, considerando, entre otros, los indicados en la Ley General del Equilibrio Ecológico y Protección al Ambiente (LGEEPA) en la materia.",
+          'descripcion': "Para 2030, México instrumenta planes innovadores de financiamiento para la biodiversidad que habilitan, crean o implementan instrumentos económicos que incentivan la participación y movilización de recursos del sector empresarial y financiero privado, considerando, entre otros, los indicados en la Ley General del Equilibrio Ecológico y Protección al Ambiente (LGEEPA) en la materia.",
           'eje': 'Actuar',
           'global': '19',
         },
@@ -599,8 +574,7 @@ class ContenidoSeed {
         },
         '20.2': {
           'nombre': "Fortalecimiento de capacidades a través de la cooperación regional y global",
-          'descripcion':
-              "Para 2030, México contribuye al fortalecimiento de capacidades regionales y globales en materia de biodiversidad mediante la cooperación Sur-Sur y triangular.",
+          'descripcion': "Para 2030, México contribuye al fortalecimiento de capacidades regionales y globales en materia de biodiversidad mediante la cooperación Sur-Sur y triangular.",
           'eje': 'Actuar',
           'global': '20',
         },
@@ -612,8 +586,7 @@ class ContenidoSeed {
         },
         '21.2': {
           'nombre': "Integración del conocimiento tradicional en la toma de decisiones",
-          'descripcion':
-              "Para 2030, México logra que sus políticas públicas relativas al manejo, aprovechamiento y conservación sustentable de la biodiversidad integren la información disponible, reconociendo e incluyendo conocimientos tradicionales que hayan sido compartidos por pueblos y comunidades indígenas y afromexicanas, a través de un proceso de consulta libre, previa e informada, según corresponda.",
+          'descripcion': "Para 2030, México logra que sus políticas públicas relativas al manejo, aprovechamiento y conservación sustentable de la biodiversidad integren la información disponible, reconociendo e incluyendo conocimientos tradicionales que hayan sido compartidos por pueblos y comunidades indígenas y afromexicanas, a través de un proceso de consulta libre, previa e informada, según corresponda.",
           'eje': 'Actuar',
           'global': '21',
         },
@@ -625,15 +598,30 @@ class ContenidoSeed {
         },
         '23.0': {
           'nombre': "Integración de la igualdad de género",
-          'descripcion':
-              "México promueve y fortalece la participación plena y efectiva de las mujeres en toda su diversidad en la toma de decisiones relacionadas con el acceso y control a los beneficios de la conservación, restauración y aprovechamiento sustentable de los recursos naturales a través de la implementación de los programas, políticas, proyectos y acciones de la administración pública federal que involucren temas sobre la diversidad biológica, incluyendo la Estrategia Nacional sobre Biodiversidad de México (ENBioMex).",
+          'descripcion': "México promueve y fortalece la participación plena y efectiva de las mujeres en toda su diversidad en la toma de decisiones relacionadas con el acceso y control a los beneficios de la conservación, restauración y aprovechamiento sustentable de los recursos naturales a través de la implementación de los programas, políticas, proyectos y acciones de la administración pública federal que involucren temas sobre la diversidad biológica, incluyendo la Estrategia Nacional sobre Biodiversidad de México (ENBioMex).",
           'eje': 'Actuar',
           'global': '23',
         },
       };
 
+      // Las metas 17.1 y 17.2 pertenecen al pilar Evitar y se muestran
+      // inmediatamente después de la meta 8.2.
+      final metasOrdenadas = metasNacionales.entries
+          .where((entry) => entry.key != '17.1' && entry.key != '17.2')
+          .toList();
+
+      final indice82 = metasOrdenadas.indexWhere((entry) => entry.key == '8.2');
+      if (indice82 == -1) {
+        throw StateError('No se encontró la meta nacional 8.2');
+      }
+
+      metasOrdenadas.insertAll(indice82 + 1, [
+        MapEntry('17.1', metasNacionales['17.1']!),
+        MapEntry('17.2', metasNacionales['17.2']!),
+      ]);
+
       var ordenMetaNacional = 1;
-      for (final entry in metasNacionales.entries) {
+      for (final entry in metasOrdenadas) {
         final meta = entry.value;
         await insertarMetaNacional(
           codigo: entry.key,
@@ -1537,8 +1525,7 @@ class ContenidoSeed {
         {
           'codigo': '3.1.8',
           'periodo': '2030',
-          'descripcion':
-              "En 2030, el gobierno federal ha incrementado la superficie marina protegida.",
+          'descripcion': "En 2030, el gobierno federal ha incrementado la superficie marina protegida.",
         },
         {
           'codigo': '3.1.9',
@@ -1649,8 +1636,7 @@ class ContenidoSeed {
         {
           'codigo': '7.1.5',
           'periodo': '2025',
-          'descripcion':
-              "Para 2025, se fortalecen las capacidades de inspección y vigilancia.",
+          'descripcion': "Para 2025, se fortalecen las capacidades de inspección y vigilancia.",
         },
         {
           'codigo': '7.1.6',
@@ -2066,8 +2052,7 @@ class ContenidoSeed {
           referenciaOrigenId: i < 7 ? ref54 : ref55,
         );
       }
-      const subhitos812 = <Map<String, String>>[
-      ];
+      const subhitos812 = <Map<String, String>>[];
       for (var i = 0; i < subhitos812.length; i++) {
         final subhito = subhitos812[i];
         await insertarSubhito(
@@ -2203,8 +2188,7 @@ class ContenidoSeed {
         {
           'codigo': '10.1.1',
           'periodo': '2025',
-          'descripcion':
-              "Para 2025, se impulsa la producción sustentable en Unidades de Producción.",
+          'descripcion': "Para 2025, se impulsa la producción sustentable en Unidades de Producción.",
         },
         {
           'codigo': '10.1.2',
@@ -3365,7 +3349,7 @@ class ContenidoSeed {
         },
         {
           'codigo': '21.1.1.12',
-          'descripcion': "Entre 2025 y 2030, el Sistema de Información y Análisis Marino Costero (SIMAR), través de su explorador, incorpora mejoras y nuevos sistemas de alerta temprana y herramientas de monitoreo in situ sobre biodiversidad marina, que gestionan monitoreos de campo, imágenes satelitales, modelos ambientales y datos geoespaciales: • Sistema Satelital de Alerta Temprana de Blanqueamiento de Corales 1-km (SATCORAL); Sistema Satelital de Alerta Temprana de Sargazo (SATSUM); Sistema de Alerta de la Calidad del Agua Marina (SATWALITY); Sistema Satelital de Alerta Temprana de Florecimientos de Fitoplancton (SATFIT); proyecto de ciencia ciudadana sat-Collect; y bases de datos de la biodiversidad marina (bioinfo).",
+          'descripcion': "Entre 2025 y 2030, el Sistema de Información y Análisis Marino Costero (SIMAR), través de su explorador, incorpora mejoras y nuevos sistemas de alerta temprana y herramientas de monitoreo in situ sobre biodiversidad marina, que gestionan monitoreos de campo, imágenes satelitales, modelos ambientales y datos geoespaciales: Sistema Satelital de Alerta Temprana de Blanqueamiento de Corales 1-km (SATcoral); Sistema Satelital de Alerta Temprana de Sargazo (SATsum); Sistema de Alerta de la Calidad del Agua Marina (SATwality); Sistema Satelital de Alerta Temprana de Florecimientos de Fitoplancton (SATfit); proyecto de ciencia ciudadana SAT-Collect; y bases de datos de la biodiversidad marina (BIOinfo).",
         },
         {
           'codigo': '21.1.1.13',

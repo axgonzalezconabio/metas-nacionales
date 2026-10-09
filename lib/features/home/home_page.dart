@@ -8,17 +8,10 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import 'package:metas_nacionales/core/providers/metas_nacionales_provider.dart';
 
-
-
 class HomePage extends ConsumerWidget {
-
   const HomePage({super.key});
 
-
-
   static const Color vino = Color(0xFFF2F3F1);
-
-
 
   static const Color conservar = Color(0xFF94A65B);
 
@@ -28,480 +21,219 @@ class HomePage extends ConsumerWidget {
 
   static const Color actuar = Color(0xFFEA5E25);
 
-
-
   @override
-
-  Widget build(
-
-    BuildContext context,
-
-    WidgetRef ref,
-
-  ) {
-
-    final totalHitosAsync =
-
-        ref.watch(totalHitosProvider);
-
-
+  Widget build(BuildContext context, WidgetRef ref) {
+    final totalHitosAsync = ref.watch(totalHitosProvider);
 
     final totalHitos = totalHitosAsync.when(
-
       data: (total) => total.toString(),
 
       loading: () => '...',
 
       error: (error, stack) => '—',
-
     );
 
-
-
     return Scaffold(
-
       backgroundColor: const Color(0xFFF7F7F4),
 
       body: SafeArea(
-
         child: CustomScrollView(
-
           slivers: [
-
-            SliverToBoxAdapter(
-
-              child: _Header(
-
-                vino: vino,
-
-              ),
-
-            ),
-
-
+            SliverToBoxAdapter(child: _Header(vino: vino)),
 
             // ---------------------------------------------------------
 
             // PRESENTACIÓN
 
             // ---------------------------------------------------------
-
             SliverToBoxAdapter(
-
               child: Padding(
-
-                padding: const EdgeInsets.fromLTRB(
-
-                  20,
-
-                  24,
-
-                  20,
-
-                  8,
-
-                ),
+                padding: const EdgeInsets.fromLTRB(20, 24, 20, 8),
 
                 child: Column(
-
-                  crossAxisAlignment:
-
-                      CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
 
                   children: [
-                    
                     Text(
-
                       'Consulta las metas nacionales y la información '
-
                       'relacionada con su implementación.',
 
-                      style: Theme.of(context)
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: const Color(0xFF777777),
 
-                          .textTheme
-
-                          .bodyMedium
-
-                          ?.copyWith(
-
-                            color: const Color(0xFF777777),
-
-                            height: 1.45,
-
-                          ),
-
+                        height: 1.45,
+                      ),
                     ),
-
-
 
                     const SizedBox(height: 18),
 
-
-
-                    _SummaryRow(
-
-                      totalHitos: totalHitos,
-
-                    ),
-
+                    _SummaryRow(totalHitos: totalHitos),
                   ],
-
                 ),
-
               ),
-
             ),
-
-
 
             // ---------------------------------------------------------
 
             // BUSCADOR
 
             // ---------------------------------------------------------
-
             SliverToBoxAdapter(
-
               child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 18, 20, 24),
 
-                padding: const EdgeInsets.fromLTRB(
-
-                  20,
-
-                  18,
-
-                  20,
-
-                  24,
-
-                ),
-
-                child: _SearchButton(
-
-                  onTap: () => context.push('/buscar'),
-
-                ),
-
+                child: _SearchButton(onTap: () => context.push('/buscar')),
               ),
-
             ),
-
-
 
             // ---------------------------------------------------------
 
             // PILARES
 
             // ---------------------------------------------------------
-
             SliverToBoxAdapter(
-
               child: Padding(
-
-                padding: const EdgeInsets.fromLTRB(
-
-                  20,
-
-                  0,
-
-                  20,
-
-                  14,
-
-                ),
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 14),
 
                 child: Text(
-
                   'Explora por pilar',
 
-                  style: Theme.of(context)
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w800,
 
-                      .textTheme
-
-                      .titleLarge
-
-                      ?.copyWith(
-
-                        fontWeight: FontWeight.w800,
-
-                        color: const Color(0xFF252525),
-
-                      ),
-
+                    color: const Color(0xFF252525),
+                  ),
                 ),
-
               ),
-
             ),
-
-
 
             SliverPadding(
-
-              padding: const EdgeInsets.symmetric(
-
-                horizontal: 20,
-
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
 
               sliver: SliverList(
+                delegate: SliverChildListDelegate([
+                  _PillarCard(
+                    title: 'Conservar',
 
-                delegate: SliverChildListDelegate(
+                    description:
+                        'Conservación y restauración de la biodiversidad.',
 
-                  [
+                    color: conservar,
 
-                    _PillarCard(
+                    imagePath: 'assets/pilares/CONSERVAR.png',
 
-                      title: 'Conservar',
+                    onTap: () => context.push('/ejes/Conservar'),
+                  ),
 
-                      description:
+                  const SizedBox(height: 12),
 
-                          'Conservación y restauración de la biodiversidad.',
+                  _PillarCard(
+                    title: 'Evitar',
 
-                      color: conservar,
+                    description: 'Prevención y reducción de impactos sobre la biodiversidad.',
 
-                      imagePath:
+                    color: evitar,
 
-                          'assets/pilares/CONSERVAR.png',
+                    imagePath: 'assets/pilares/EVITAR.png',
 
-                      onTap: () => context.push(
+                    onTap: () => context.push('/ejes/Evitar'),
+                  ),
 
-                        '/ejes/Conservar',
+                  const SizedBox(height: 12),
 
-                      ),
+                  _PillarCard(
+                    title: 'Salvaguardar',
 
-                    ),
+                    description:
+                        'Protección de la biodiversidad y sus beneficios.',
 
+                    color: salvaguardar,
 
+                    imagePath: 'assets/pilares/SALVAGUARDAR.png',
 
-                    const SizedBox(height: 12),
+                    onTap: () => context.push('/ejes/Salvaguardar'),
+                  ),
 
+                  const SizedBox(height: 12),
 
+                  _PillarCard(
+                    title: 'Actuar',
 
-                    _PillarCard(
+                    description: 'Acciones, capacidades y participación para la biodiversidad.',
 
-                      title: 'Evitar',
+                    color: actuar,
 
-                      description:
+                    imagePath: 'assets/pilares/ACTUAR.png',
 
-                          'Prevención y reducción de impactos sobre la biodiversidad.',
-
-                      color: evitar,
-
-                      imagePath:
-
-                          'assets/pilares/EVITAR.png',
-
-                      onTap: () => context.push(
-
-                        '/ejes/Evitar',
-
-                      ),
-
-                    ),
-
-
-
-                    const SizedBox(height: 12),
-
-
-
-                    _PillarCard(
-
-                      title: 'Salvaguardar',
-
-                      description:
-
-                          'Protección de la biodiversidad y sus beneficios.',
-
-                      color: salvaguardar,
-
-                      imagePath:
-
-                          'assets/pilares/SALVAGUARDAR.png',
-
-                      onTap: () => context.push(
-
-                        '/ejes/Salvaguardar',
-
-                      ),
-
-                    ),
-
-
-
-                    const SizedBox(height: 12),
-
-
-
-                    _PillarCard(
-
-                      title: 'Actuar',
-
-                      description:
-
-                          'Acciones, capacidades y participación para la biodiversidad.',
-
-                      color: actuar,
-
-                      imagePath:
-
-                          'assets/pilares/ACTUAR.png',
-
-                      onTap: () => context.push(
-
-                        '/ejes/Actuar',
-
-                      ),
-
-                    ),
-
-                  ],
-
-                ),
-
+                    onTap: () => context.push('/ejes/Actuar'),
+                  ),
+                ]),
               ),
-
             ),
-
-
 
             // ---------------------------------------------------------
 
             // ACCESOS SECUNDARIOS
 
             // ---------------------------------------------------------
-
             SliverToBoxAdapter(
-
               child: Padding(
-
-                padding: const EdgeInsets.fromLTRB(
-
-                  20,
-
-                  28,
-
-                  20,
-
-                  12,
-
-                ),
+                padding: const EdgeInsets.fromLTRB(20, 28, 20, 12),
 
                 child: Text(
-
                   'Consulta',
 
-                  style: Theme.of(context)
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w800,
 
-                      .textTheme
-
-                      .titleLarge
-
-                      ?.copyWith(
-
-                        fontWeight: FontWeight.w800,
-
-                        color: const Color(0xFF252525),
-
-                      ),
-
+                    color: const Color(0xFF252525),
+                  ),
                 ),
-
               ),
-
             ),
 
-
-
             SliverPadding(
-
-              padding: const EdgeInsets.fromLTRB(
-
-                20,
-
-                0,
-
-                20,
-
-                32,
-
-              ),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
 
               sliver: SliverToBoxAdapter(
-
                 child: Row(
-
                   children: [
-
                     Expanded(
-
                       child: _SecondaryCard(
-
                         icon: Icons.flag_outlined,
 
                         title: 'Metas',
 
                         color: vino,
 
-                        onTap: () => context.push(
-
-                          '/metas',
-
-                        ),
-
+                        onTap: () => context.push('/metas'),
                       ),
-
                     ),
-
-
 
                     const SizedBox(width: 12),
 
-
-
                     Expanded(
-
                       child: _SecondaryCard(
-
-                        icon:
-
-                            Icons.account_balance_outlined,
+                        icon: Icons.account_balance_outlined,
 
                         title: 'Instituciones',
 
                         color: vino,
 
-                        onTap: () => context.push(
-
-                          '/instituciones',
-
-                        ),
-
+                        onTap: () => context.push('/instituciones'),
                       ),
-
                     ),
-
                   ],
-
                 ),
-
               ),
-
             ),
 
             //------------
             // descarga
             //------
-
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  20,
-                  28,
-                  20,
-                  28,
-                ),
+                padding: const EdgeInsets.fromLTRB(20, 28, 20, 28),
                 child: const _PdfDocumentCard(),
               ),
             ),
@@ -511,64 +243,28 @@ class HomePage extends ConsumerWidget {
             // PIE
 
             // ---------------------------------------------------------
-
             SliverToBoxAdapter(
-
               child: Padding(
-
-                padding: const EdgeInsets.fromLTRB(
-
-                  20,
-
-                  0,
-
-                  20,
-
-                  28,
-
-                ),
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
 
                 child: Center(
-
                   child: Text(
-
                     'Comisión Nacional para el Conocimiento y Uso de la Biodiversidad (CONABIO). 2026. Estrategia Nacional sobre Biodiversidad de México (ENBioMex 2.0).  CONABIO, SEMARNAT, PNUD, GIZ, NBSAP-AP. México. ',
 
                     textAlign: TextAlign.center,
 
-                    style: Theme.of(context)
-
-                        .textTheme
-
-                        .bodySmall
-
-                        ?.copyWith(
-
-                          color: const Color(0xFF999999),
-
-                        ),
-
+                    style: Theme.of(context).textTheme.bodySmall
+                        ?.copyWith(color: const Color(0xFF999999)),
                   ),
-
                 ),
-
               ),
-
             ),
-
           ],
-
         ),
-
       ),
-
     );
-
   }
-
 }
-
-
 
 // =====================================================================
 
@@ -576,12 +272,8 @@ class HomePage extends ConsumerWidget {
 
 // =====================================================================
 
-
-
 class _SummaryRow extends StatelessWidget {
-  const _SummaryRow({
-    required this.totalHitos,
-  });
+  const _SummaryRow({required this.totalHitos});
 
   final String totalHitos;
 
@@ -589,45 +281,24 @@ class _SummaryRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(
-        vertical: 14,
-      ),
-      decoration: const BoxDecoration(
-        color: Colors.transparent,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 14),
+      decoration: const BoxDecoration(color: Colors.transparent),
       child: Row(
         children: [
           const Expanded(
-            child: _SummaryItem(
-              value: '4',
-              label: 'Pilares de acción',
-            ),
+            child: _SummaryItem(value: '4', label: 'Pilares de acción'),
           ),
 
-          Container(
-            width: 1,
-            height: 42,
-            color: Color(0xFFE2E2DD),
-          ),
+          Container(width: 1, height: 42, color: Color(0xFFE2E2DD)),
 
           const Expanded(
-            child: _SummaryItem(
-              value: '47',
-              label: 'Metas nacionales',
-            ),
+            child: _SummaryItem(value: '47', label: 'Metas nacionales'),
           ),
 
-          Container(
-            width: 1,
-            height: 42,
-            color: Color(0xFFE2E2DD),
-          ),
+          Container(width: 1, height: 42, color: Color(0xFFE2E2DD)),
 
           Expanded(
-            child: _SummaryItem(
-              value: totalHitos,
-              label: 'Hitos',
-            ),
+            child: _SummaryItem(value: totalHitos, label: 'Hitos'),
           ),
         ],
       ),
@@ -635,13 +306,8 @@ class _SummaryRow extends StatelessWidget {
   }
 }
 
-
-
 class _SummaryItem extends StatelessWidget {
-  const _SummaryItem({
-    required this.value,
-    required this.label,
-  });
+  const _SummaryItem({required this.value, required this.label});
 
   final String value;
   final String label;
@@ -675,20 +341,14 @@ class _SummaryItem extends StatelessWidget {
   }
 }
 
-
-
 // =====================================================================
 
 // HEADER
 
 // =====================================================================
 
-
-
 class _Header extends StatelessWidget {
-  const _Header({
-    required this.vino,
-  });
+  const _Header({required this.vino});
 
   final Color vino;
 
@@ -700,10 +360,7 @@ class _Header extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xFFF7F7F4),
         border: Border(
-          bottom: BorderSide(
-            color: const Color(0xFFE5E5E1),
-            width: 1,
-          ),
+          bottom: BorderSide(color: const Color(0xFFE5E5E1), width: 1),
         ),
       ),
       child: Column(
@@ -715,11 +372,7 @@ class _Header extends StatelessWidget {
               'assets/logo.png',
               fit: BoxFit.contain,
               errorBuilder: (context, error, stackTrace) {
-                return Icon(
-                  Icons.eco_outlined,
-                  color: vino,
-                  size: 48,
-                );
+                return Icon(Icons.eco_outlined, color: vino, size: 48);
               },
             ),
           ),
@@ -756,145 +409,72 @@ class _Header extends StatelessWidget {
   }
 }
 
-
 // =====================================================================
 // BUSCADOR
 
 // =====================================================================
 
-
-
 class _SearchButton extends StatelessWidget {
-
-  const _SearchButton({
-
-    required this.onTap,
-
-  });
-
-
+  const _SearchButton({required this.onTap});
 
   final VoidCallback onTap;
 
-
-
   @override
-
   Widget build(BuildContext context) {
-
     return Material(
-
       color: Colors.white,
 
       borderRadius: BorderRadius.circular(18),
 
       child: InkWell(
-
         onTap: onTap,
 
         borderRadius: BorderRadius.circular(18),
 
         child: Container(
-
-          padding: const EdgeInsets.symmetric(
-
-            horizontal: 16,
-
-            vertical: 15,
-
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
 
           decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(18),
 
-            borderRadius:
-
-                BorderRadius.circular(18),
-
-            border: Border.all(
-
-              color: const Color(0xFFE5E5E0),
-
-            ),
-
+            border: Border.all(color: const Color(0xFFE5E5E0)),
           ),
 
           child: Row(
-
             children: [
-
-              const Icon(
-
-                Icons.search,
-
-                color: Color(0xFF777777),
-
-              ),
-
-
+              const Icon(Icons.search, color: Color(0xFF777777)),
 
               const SizedBox(width: 12),
 
-
-
               Expanded(
-
                 child: Text(
-
                   'Buscar metas nacionales',
 
-                  style: Theme.of(context)
-
-                      .textTheme
-
-                      .bodyMedium
-
-                      ?.copyWith(
-
-                        color:
-
-                            const Color(0xFF777777),
-
-                      ),
-
+                  style: Theme.of(context).textTheme.bodyMedium
+                      ?.copyWith(color: const Color(0xFF777777)),
                 ),
-
               ),
 
-
-
               const Icon(
-
                 Icons.arrow_forward_ios,
 
                 size: 15,
 
                 color: Color(0xFF999999),
-
               ),
-
             ],
-
           ),
-
         ),
-
       ),
-
     );
-
   }
-
 }
-
-
 
 // =====================================================================
 
 // TARJETA DE PILAR
 
 // =====================================================================
-
-
 
 class _PillarCard extends StatelessWidget {
   const _PillarCard({
@@ -944,16 +524,8 @@ class _PillarCard extends StatelessWidget {
                 child: Image.asset(
                   imagePath,
                   fit: BoxFit.contain,
-                  errorBuilder: (
-                    context,
-                    error,
-                    stackTrace,
-                  ) {
-                    return Icon(
-                      Icons.eco_outlined,
-                      color: color,
-                      size: 38,
-                    );
+                  errorBuilder: (context, error, stackTrace) {
+                    return Icon(Icons.eco_outlined, color: color, size: 38);
                   },
                 ),
               ),
@@ -991,11 +563,7 @@ class _PillarCard extends StatelessWidget {
               const SizedBox(width: 8),
 
               // Indicador de navegación
-              Icon(
-                Icons.arrow_forward_ios,
-                color: color,
-                size: 16,
-              ),
+              Icon(Icons.arrow_forward_ios, color: color, size: 16),
             ],
           ),
         ),
@@ -1004,20 +572,14 @@ class _PillarCard extends StatelessWidget {
   }
 }
 
-
-
 // =====================================================================
 
 // TARJETAS SECUNDARIAS
 
 // =====================================================================
 
-
-
 class _SecondaryCard extends StatelessWidget {
-
   const _SecondaryCard({
-
     required this.icon,
 
     required this.title,
@@ -1025,10 +587,7 @@ class _SecondaryCard extends StatelessWidget {
     required this.color,
 
     required this.onTap,
-
   });
-
-
 
   final IconData icon;
 
@@ -1038,106 +597,50 @@ class _SecondaryCard extends StatelessWidget {
 
   final VoidCallback onTap;
 
-
-
   @override
-
   Widget build(BuildContext context) {
-
     return Material(
-
       color: Colors.white,
 
       borderRadius: BorderRadius.circular(18),
 
       child: InkWell(
-
         onTap: onTap,
 
         borderRadius: BorderRadius.circular(18),
 
         child: Container(
-
-          padding: const EdgeInsets.symmetric(
-
-            horizontal: 14,
-
-            vertical: 18,
-
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 18),
 
           decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(18),
 
-            borderRadius:
-
-                BorderRadius.circular(18),
-
-            border: Border.all(
-
-              color: const Color(0xFFE7E7E2),
-
-            ),
-
+            border: Border.all(color: const Color(0xFFE7E7E2)),
           ),
 
           child: Column(
-
             children: [
-
-              Icon(
-
-                icon,
-
-                color: color,
-
-                size: 28,
-
-              ),
-
-
+              Icon(icon, color: color, size: 28),
 
               const SizedBox(height: 9),
 
-
-
               Text(
-
                 title,
 
                 textAlign: TextAlign.center,
 
-                style: Theme.of(context)
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: const Color(0xFF333333),
 
-                    .textTheme
-
-                    .labelLarge
-
-                    ?.copyWith(
-
-                      color:
-
-                          const Color(0xFF333333),
-
-                      fontWeight:
-
-                          FontWeight.w700,
-
-                    ),
-
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-
             ],
-
           ),
-
         ),
-
       ),
-
     );
-
   }
-
 }
 
 class _PdfDocumentCard extends StatelessWidget {
@@ -1152,25 +655,16 @@ class _PdfDocumentCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(18),
       child: InkWell(
         onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => const _PdfViewerPage(),
-            ),
-          );
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => const _PdfViewerPage()));
         },
         borderRadius: BorderRadius.circular(18),
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 18,
-            vertical: 16,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
-            border: Border.all(
-              color: const Color(0xFFE4E1DD),
-              width: 1,
-            ),
+            border: Border.all(color: const Color(0xFFE4E1DD), width: 1),
           ),
           child: Row(
             children: [
@@ -1213,11 +707,7 @@ class _PdfDocumentCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              const Icon(
-                Icons.arrow_forward_ios,
-                color: vino,
-                size: 15,
-              ),
+              const Icon(Icons.arrow_forward_ios, color: vino, size: 15),
             ],
           ),
         ),
@@ -1239,14 +729,10 @@ class _PdfViewerPage extends StatelessWidget {
         elevation: 0,
         title: const Text(
           'Metas Nacionales',
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w700),
         ),
       ),
-      body: SfPdfViewer.asset(
-        'assets/documentos/metas_nacionales.pdf',
-      ),
+      body: SfPdfViewer.asset('assets/documentos/metas_nacionales.pdf'),
     );
   }
 }

@@ -29,9 +29,7 @@ class _BusquedaPageState extends ConsumerState<BusquedaPage> {
     });
   }
 
-  List<MetaNacionalConEje> _filtrarMetas(
-    List<MetaNacionalConEje> metas,
-  ) {
+  List<MetaNacionalConEje> _filtrarMetas(List<MetaNacionalConEje> metas) {
     if (_busqueda.isEmpty) {
       return metas;
     }
@@ -78,16 +76,12 @@ class _BusquedaPageState extends ConsumerState<BusquedaPage> {
         elevation: 0,
         title: const Text(
           'Buscar',
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w700),
         ),
       ),
       body: metasAsync.when(
         loading: () => const Center(
-          child: CircularProgressIndicator(
-            color: Color(0xFF641C34),
-          ),
+          child: CircularProgressIndicator(color: Color(0xFF641C34)),
         ),
         error: (error, stack) => _ErrorView(
           onRetry: () {
@@ -138,9 +132,7 @@ class _SearchHeader extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 18),
-      decoration: const BoxDecoration(
-        color: Color(0xFF641C34),
-      ),
+      decoration: const BoxDecoration(color: Color(0xFF641C34)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -154,7 +146,7 @@ class _SearchHeader extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            'Busca por código, nombre, descripción o eje de acción.',
+            'Busca por número, nombre, descripción o pilar.',
             style: TextStyle(
               color: Colors.white.withValues(alpha: 0.82),
               fontSize: 14,
@@ -168,9 +160,7 @@ class _SearchHeader extends StatelessWidget {
             textInputAction: TextInputAction.search,
             decoration: InputDecoration(
               hintText: 'Ej. 1.1, deforestación, conservar...',
-              hintStyle: TextStyle(
-                color: Colors.grey.shade600,
-              ),
+              hintStyle: TextStyle(color: Colors.grey.shade600),
               prefixIcon: const Icon(
                 Icons.search_rounded,
                 color: Color(0xFF641C34),
@@ -213,9 +203,7 @@ class _SearchResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (resultados.isEmpty) {
-      return _EmptySearch(
-        busqueda: busqueda,
-      );
+      return _EmptySearch(busqueda: busqueda);
     }
 
     return LayoutBuilder(
@@ -259,10 +247,7 @@ class _SearchResults extends StatelessWidget {
 }
 
 class _MetaSearchCard extends StatelessWidget {
-  const _MetaSearchCard({
-    required this.item,
-    required this.color,
-  });
+  const _MetaSearchCard({required this.item, required this.color});
 
   final MetaNacionalConEje item;
   final Color color;
@@ -283,9 +268,7 @@ class _MetaSearchCard extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
-            border: Border.all(
-              color: Colors.black.withValues(alpha: 0.06),
-            ),
+            border: Border.all(color: Colors.black.withValues(alpha: 0.06)),
           ),
           padding: const EdgeInsets.all(17),
           child: Row(
@@ -298,11 +281,7 @@ class _MetaSearchCard extends StatelessWidget {
                   color: color.withValues(alpha: 0.13),
                   borderRadius: BorderRadius.circular(14),
                 ),
-                child: Icon(
-                  Icons.eco_rounded,
-                  color: color,
-                  size: 25,
-                ),
+                child: Icon(Icons.eco_rounded, color: color, size: 25),
               ),
               const SizedBox(width: 14),
               Expanded(
@@ -385,9 +364,7 @@ class _MetaSearchCard extends StatelessWidget {
 }
 
 class _EmptySearch extends StatelessWidget {
-  const _EmptySearch({
-    required this.busqueda,
-  });
+  const _EmptySearch({required this.busqueda});
 
   final String busqueda;
 
@@ -429,7 +406,7 @@ class _EmptySearch extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               tieneBusqueda
-                  ? 'Prueba con otro código, nombre, palabra o eje de acción.'
+                  ? 'Prueba con otro número, nombre, palabra o pilar.'
                   : 'Escribe algo en el campo de búsqueda para comenzar.',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -446,9 +423,7 @@ class _EmptySearch extends StatelessWidget {
 }
 
 class _ErrorView extends StatelessWidget {
-  const _ErrorView({
-    required this.onRetry,
-  });
+  const _ErrorView({required this.onRetry});
 
   final VoidCallback onRetry;
 
@@ -469,10 +444,7 @@ class _ErrorView extends StatelessWidget {
             const Text(
               'No se pudo cargar la búsqueda',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-              ),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 16),
             FilledButton(

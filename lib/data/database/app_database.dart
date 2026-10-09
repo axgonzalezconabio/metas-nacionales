@@ -42,18 +42,16 @@ class Ejes extends Table {
 
   TextColumn get descripcion => text().nullable()();
 
-  IntColumn get publicacionId =>
-      integer().references(Publicaciones, #id)();
+  IntColumn get publicacionId => integer().references(Publicaciones, #id)();
 
   IntColumn get orden => integer()();
 
-  
   List<Index> get customIndexes => [
-        Index(
-          'idx_ejes_publicacion',
-          'CREATE INDEX idx_ejes_publicacion ON ejes (publicacion_id)',
-        ),
-      ];
+    Index(
+      'idx_ejes_publicacion',
+      'CREATE INDEX idx_ejes_publicacion ON ejes (publicacion_id)',
+    ),
+  ];
 }
 
 /// E03 - Meta Global
@@ -66,18 +64,16 @@ class MetasGlobales extends Table {
 
   TextColumn get descripcion => text().nullable()();
 
-  IntColumn get ejeId =>
-      integer().references(Ejes, #id)();
+  IntColumn get ejeId => integer().references(Ejes, #id)();
 
   IntColumn get orden => integer()();
 
-  
   List<Index> get customIndexes => [
-        Index(
-          'idx_metas_globales_eje',
-          'CREATE INDEX idx_metas_globales_eje ON metas_globales (eje_id)',
-        ),
-      ];
+    Index(
+      'idx_metas_globales_eje',
+      'CREATE INDEX idx_metas_globales_eje ON metas_globales (eje_id)',
+    ),
+  ];
 }
 
 /// E04 - Meta Nacional
@@ -90,38 +86,34 @@ class MetasNacionales extends Table {
 
   TextColumn get descripcion => text().nullable()();
 
-  IntColumn get ejeId =>
-      integer().references(Ejes, #id)();
+  IntColumn get ejeId => integer().references(Ejes, #id)();
 
-  IntColumn get metaGlobalId =>
-      integer().references(MetasGlobales, #id)();
+  IntColumn get metaGlobalId => integer().references(MetasGlobales, #id)();
 
-  IntColumn get publicacionId =>
-      integer().references(Publicaciones, #id)();
+  IntColumn get publicacionId => integer().references(Publicaciones, #id)();
 
   IntColumn get referenciaOrigenId =>
       integer().nullable().references(ReferenciasOrigen, #id)();
 
   IntColumn get orden => integer()();
 
-  
   List<Index> get customIndexes => [
-        Index(
-          'idx_metas_nacionales_codigo_publicacion',
-          'CREATE UNIQUE INDEX idx_metas_nacionales_codigo_publicacion '
-              'ON metas_nacionales (codigo, publicacion_id)',
-        ),
-        Index(
-          'idx_metas_nacionales_eje',
-          'CREATE INDEX idx_metas_nacionales_eje '
-              'ON metas_nacionales (eje_id)',
-        ),
-        Index(
-          'idx_metas_nacionales_meta_global',
-          'CREATE INDEX idx_metas_nacionales_meta_global '
-              'ON metas_nacionales (meta_global_id)',
-        ),
-      ];
+    Index(
+      'idx_metas_nacionales_codigo_publicacion',
+      'CREATE UNIQUE INDEX idx_metas_nacionales_codigo_publicacion '
+          'ON metas_nacionales (codigo, publicacion_id)',
+    ),
+    Index(
+      'idx_metas_nacionales_eje',
+      'CREATE INDEX idx_metas_nacionales_eje '
+          'ON metas_nacionales (eje_id)',
+    ),
+    Index(
+      'idx_metas_nacionales_meta_global',
+      'CREATE INDEX idx_metas_nacionales_meta_global '
+          'ON metas_nacionales (meta_global_id)',
+    ),
+  ];
 }
 
 /// E05 - Hito
@@ -134,8 +126,7 @@ class Hitos extends Table {
 
   TextColumn get descripcion => text().nullable()();
 
-  IntColumn get metaNacionalId =>
-      integer().references(MetasNacionales, #id)();
+  IntColumn get metaNacionalId => integer().references(MetasNacionales, #id)();
 
   IntColumn get orden => integer()();
 
@@ -146,14 +137,13 @@ class Hitos extends Table {
   IntColumn get referenciaOrigenId =>
       integer().references(ReferenciasOrigen, #id)();
 
-  
   List<Index> get customIndexes => [
-        Index(
-          'idx_hitos_meta_nacional',
-          'CREATE INDEX idx_hitos_meta_nacional '
-              'ON hitos (meta_nacional_id)',
-        ),
-      ];
+    Index(
+      'idx_hitos_meta_nacional',
+      'CREATE INDEX idx_hitos_meta_nacional '
+          'ON hitos (meta_nacional_id)',
+    ),
+  ];
 }
 
 /// E06 - Subhito
@@ -164,21 +154,19 @@ class Subhitos extends Table {
 
   TextColumn get descripcion => text()();
 
-  IntColumn get hitoId =>
-      integer().references(Hitos, #id)();
+  IntColumn get hitoId => integer().references(Hitos, #id)();
 
   IntColumn get orden => integer()();
 
   IntColumn get referenciaOrigenId =>
       integer().nullable().references(ReferenciasOrigen, #id)();
 
-  
   List<Index> get customIndexes => [
-        Index(
-          'idx_subhitos_hito',
-          'CREATE INDEX idx_subhitos_hito ON subhitos (hito_id)',
-        ),
-      ];
+    Index(
+      'idx_subhitos_hito',
+      'CREATE INDEX idx_subhitos_hito ON subhitos (hito_id)',
+    ),
+  ];
 }
 
 /// E07 - Institución
@@ -198,14 +186,12 @@ class Instituciones extends Table {
 class ParticipacionesInstitucionales extends Table {
   IntColumn get id => integer().autoIncrement()();
 
-  IntColumn get institucionId =>
-      integer().references(Instituciones, #id)();
+  IntColumn get institucionId => integer().references(Instituciones, #id)();
 
   IntColumn get metaNacionalId =>
       integer().nullable().references(MetasNacionales, #id)();
 
-  IntColumn get hitoId =>
-      integer().nullable().references(Hitos, #id)();
+  IntColumn get hitoId => integer().nullable().references(Hitos, #id)();
 
   TextColumn get tipoParticipacion => text()();
 
@@ -214,46 +200,44 @@ class ParticipacionesInstitucionales extends Table {
   IntColumn get referenciaOrigenId =>
       integer().nullable().references(ReferenciasOrigen, #id)();
 
-  
   List<Index> get customIndexes => [
-        Index(
-          'idx_participaciones_institucion',
-          'CREATE INDEX idx_participaciones_institucion '
-              'ON participaciones_institucionales (institucion_id)',
-        ),
-        Index(
-          'idx_participaciones_meta_nacional',
-          'CREATE INDEX idx_participaciones_meta_nacional '
-              'ON participaciones_institucionales (meta_nacional_id)',
-        ),
-        Index(
-          'idx_participaciones_hito',
-          'CREATE INDEX idx_participaciones_hito '
-              'ON participaciones_institucionales (hito_id)',
-        ),
-      ];
+    Index(
+      'idx_participaciones_institucion',
+      'CREATE INDEX idx_participaciones_institucion '
+          'ON participaciones_institucionales (institucion_id)',
+    ),
+    Index(
+      'idx_participaciones_meta_nacional',
+      'CREATE INDEX idx_participaciones_meta_nacional '
+          'ON participaciones_institucionales (meta_nacional_id)',
+    ),
+    Index(
+      'idx_participaciones_hito',
+      'CREATE INDEX idx_participaciones_hito '
+          'ON participaciones_institucionales (hito_id)',
+    ),
+  ];
 }
 
 /// E09 - Sigla / Acrónimo
 class SiglasAcronimos extends Table {
   IntColumn get id => integer().autoIncrement()();
 
-  IntColumn get institucionId =>
-      integer().references(Instituciones, #id)();
+  IntColumn get institucionId => integer().references(Instituciones, #id)();
 
   TextColumn get sigla => text()();
 
   TextColumn get descripcion => text().nullable()();
 
-  
   List<Index> get customIndexes => [
-        Index(
-          'idx_siglas_institucion',
-          'CREATE INDEX idx_siglas_institucion '
-              'ON siglas_acronimos (institucion_id)',
-        ),
-      ];
+    Index(
+      'idx_siglas_institucion',
+      'CREATE INDEX idx_siglas_institucion '
+          'ON siglas_acronimos (institucion_id)',
+    ),
+  ];
 }
+
 /// Control de versión del contenido cargado en la base de datos.
 class ConfiguracionContenido extends Table {
   TextColumn get clave => text()();
@@ -277,12 +261,10 @@ class ConfiguracionContenido extends Table {
     ParticipacionesInstitucionales,
     SiglasAcronimos,
     ConfiguracionContenido,
-
   ],
 )
 class AppDatabase extends _$AppDatabase {
-  AppDatabase([QueryExecutor? executor])
-      : super(executor ?? openConnection());
+  AppDatabase([QueryExecutor? executor]) : super(executor ?? openConnection());
 
   @override
   int get schemaVersion => 2;

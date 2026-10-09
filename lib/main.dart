@@ -3,11 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:metas_nacionales/core/router/app_router.dart';
 
 void main() {
-  runApp(
-    const ProviderScope(
-      child: MetasNacionalesApp(),
-    ),
-  );
+  runApp(const ProviderScope(child: MetasNacionalesApp()));
 }
 
 class MetasNacionalesApp extends StatelessWidget {
@@ -18,9 +14,7 @@ class MetasNacionalesApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Metas Nacionales de Biodiversidad',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
+      theme: ThemeData(useMaterial3: true),
       routerConfig: appRouter,
     );
   }

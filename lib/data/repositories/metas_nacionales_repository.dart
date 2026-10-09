@@ -28,10 +28,7 @@ class MetaGlobalDetalle {
 }
 
 class MetaNacionalConEje {
-  const MetaNacionalConEje({
-    required this.meta,
-    required this.eje,
-  });
+  const MetaNacionalConEje({required this.meta, required this.eje});
 
   final MetasNacionale meta;
   final Eje eje;
@@ -76,60 +73,42 @@ class MetasNacionalesRepository {
     return _database.select(_database.metasNacionales).get();
   }
 
-  Future<List<MetaNacionalConEje>>
-      obtenerMetasNacionalesConEje() async {
-    final consulta = _database
-        .select(_database.metasNacionales)
-        .join([
+  Future<List<MetaNacionalConEje>> obtenerMetasNacionalesConEje() async {
+    final consulta = _database.select(_database.metasNacionales).join([
       innerJoin(
         _database.ejes,
-        _database.ejes.id.equalsExp(
-          _database.metasNacionales.ejeId,
-        ),
+        _database.ejes.id.equalsExp(_database.metasNacionales.ejeId),
       ),
     ]);
 
     consulta.orderBy([
-      OrderingTerm(
-        expression: _database.metasNacionales.orden,
-      ),
+      OrderingTerm(expression: _database.metasNacionales.orden),
     ]);
 
     final resultados = await consulta.get();
 
     return resultados.map((fila) {
       return MetaNacionalConEje(
-        meta: fila.readTable(
-          _database.metasNacionales,
-        ),
-        eje: fila.readTable(
-          _database.ejes,
-        ),
+        meta: fila.readTable(_database.metasNacionales),
+        eje: fila.readTable(_database.ejes),
       );
     }).toList();
   }
 
-  Future<MetasNacionale?> obtenerMetaNacionalPorId(
-    int id,
-  ) {
-    return (_database.select(_database.metasNacionales)
-          ..where((meta) => meta.id.equals(id)))
-        .getSingleOrNull();
+  Future<MetasNacionale?> obtenerMetaNacionalPorId(int id) {
+    return (_database.select(
+      _database.metasNacionales,
+    )..where((meta) => meta.id.equals(id))).getSingleOrNull();
   }
 
-  Future<MetasNacionale?> obtenerMetaNacionalPorCodigo(
-    String codigo,
-  ) {
-    return (_database.select(_database.metasNacionales)
-          ..where((meta) => meta.codigo.equals(codigo)))
-        .getSingleOrNull();
+  Future<MetasNacionale?> obtenerMetaNacionalPorCodigo(String codigo) {
+    return (_database.select(
+      _database.metasNacionales,
+    )..where((meta) => meta.codigo.equals(codigo))).getSingleOrNull();
   }
 
-  Future<List<MetasNacionale>> buscarMetasNacionales(
-    String texto,
-  ) {
-    final consulta =
-        _database.select(_database.metasNacionales);
+  Future<List<MetasNacionale>> buscarMetasNacionales(String texto) {
+    final consulta = _database.select(_database.metasNacionales);
 
     final patron = '%$texto%';
 
@@ -143,51 +122,32 @@ class MetasNacionalesRepository {
     return consulta.get();
   }
 
-  Future<List<MetasNacionale>> obtenerMetasPorEje(
-    String ejeNombre,
-  ) async {
-    final consulta =
-        _database.select(_database.metasNacionales).join([
+  Future<List<MetasNacionale>> obtenerMetasPorEje(String ejeNombre) async {
+    final consulta = _database.select(_database.metasNacionales).join([
       innerJoin(
         _database.ejes,
-        _database.ejes.id.equalsExp(
-          _database.metasNacionales.ejeId,
-        ),
+        _database.ejes.id.equalsExp(_database.metasNacionales.ejeId),
       ),
     ]);
 
-    consulta.where(
-      _database.ejes.nombre.equals(ejeNombre),
-    );
+    consulta.where(_database.ejes.nombre.equals(ejeNombre));
 
     consulta.orderBy([
-      OrderingTerm(
-        expression: _database.metasNacionales.orden,
-      ),
+      OrderingTerm(expression: _database.metasNacionales.orden),
     ]);
 
     final resultados = await consulta.get();
 
     return resultados
-        .map(
-          (fila) => fila.readTable(
-            _database.metasNacionales,
-          ),
-        )
+        .map((fila) => fila.readTable(_database.metasNacionales))
         .toList();
   }
 
-  Future<MetaNacionalDetalle?>
-      obtenerDetalleMetaNacional(
-    String codigo,
-  ) async {
-    final query =
-        _database.select(_database.metasNacionales).join([
+  Future<MetaNacionalDetalle?> obtenerDetalleMetaNacional(String codigo) async {
+    final query = _database.select(_database.metasNacionales).join([
       innerJoin(
         _database.ejes,
-        _database.ejes.id.equalsExp(
-          _database.metasNacionales.ejeId,
-        ),
+        _database.ejes.id.equalsExp(_database.metasNacionales.ejeId),
       ),
       innerJoin(
         _database.metasGlobales,
@@ -203,104 +163,62 @@ class MetasNacionalesRepository {
       ),
     ]);
 
-    query.where(
-      _database.metasNacionales.codigo.equals(codigo),
-    );
+    query.where(_database.metasNacionales.codigo.equals(codigo));
 
-    final resultado =
-        await query.getSingleOrNull();
+    final resultado = await query.getSingleOrNull();
 
     if (resultado == null) {
       return null;
     }
 
     return MetaNacionalDetalle(
-      meta: resultado.readTable(
-        _database.metasNacionales,
-      ),
-      eje: resultado.readTable(
-        _database.ejes,
-      ),
-      metaGlobal: resultado.readTable(
-        _database.metasGlobales,
-      ),
-      referenciaOrigen: resultado.readTableOrNull(
-        _database.referenciasOrigen,
-      ),
+      meta: resultado.readTable(_database.metasNacionales),
+      eje: resultado.readTable(_database.ejes),
+      metaGlobal: resultado.readTable(_database.metasGlobales),
+      referenciaOrigen: resultado.readTableOrNull(_database.referenciasOrigen),
     );
   }
 
   Future<List<MetasGlobale>> obtenerMetasGlobales() {
-    final consulta =
-        _database.select(_database.metasGlobales);
+    final consulta = _database.select(_database.metasGlobales);
 
     consulta.orderBy([
-      (metaGlobal) => OrderingTerm(
-        expression: metaGlobal.orden,
-      ),
+      (metaGlobal) => OrderingTerm(expression: metaGlobal.orden),
     ]);
 
     return consulta.get();
   }
 
-  Future<MetasGlobale?> obtenerMetaGlobalPorCodigo(
-    String codigo,
-  ) {
+  Future<MetasGlobale?> obtenerMetaGlobalPorCodigo(String codigo) {
     return (_database.select(_database.metasGlobales)
-          ..where(
-            (metaGlobal) =>
-                metaGlobal.codigo.equals(codigo),
-          ))
+          ..where((metaGlobal) => metaGlobal.codigo.equals(codigo)))
         .getSingleOrNull();
   }
 
-  Future<MetaGlobalDetalle?> obtenerDetalleMetaGlobal(
-    String codigo,
-  ) async {
-    final consulta =
-        _database.select(_database.metasGlobales).join([
+  Future<MetaGlobalDetalle?> obtenerDetalleMetaGlobal(String codigo) async {
+    final consulta = _database.select(_database.metasGlobales).join([
       innerJoin(
         _database.ejes,
-        _database.ejes.id.equalsExp(
-          _database.metasGlobales.ejeId,
-        ),
+        _database.ejes.id.equalsExp(_database.metasGlobales.ejeId),
       ),
     ]);
 
-    consulta.where(
-      _database.metasGlobales.codigo.equals(codigo),
-    );
+    consulta.where(_database.metasGlobales.codigo.equals(codigo));
 
-    final resultado =
-        await consulta.getSingleOrNull();
+    final resultado = await consulta.getSingleOrNull();
 
     if (resultado == null) {
       return null;
     }
 
-    final metaGlobal = resultado.readTable(
-      _database.metasGlobales,
-    );
+    final metaGlobal = resultado.readTable(_database.metasGlobales);
 
-    final eje = resultado.readTable(
-      _database.ejes,
-    );
+    final eje = resultado.readTable(_database.ejes);
 
     final metasNacionales =
-        await (_database.select(
-          _database.metasNacionales,
-        )
-              ..where(
-                (meta) =>
-                    meta.metaGlobalId.equals(
-                  metaGlobal.id,
-                ),
-              )
-              ..orderBy([
-                (meta) => OrderingTerm(
-                      expression: meta.orden,
-                    ),
-              ]))
+        await (_database.select(_database.metasNacionales)
+              ..where((meta) => meta.metaGlobalId.equals(metaGlobal.id))
+              ..orderBy([(meta) => OrderingTerm(expression: meta.orden)]))
             .get();
 
     return MetaGlobalDetalle(
@@ -310,131 +228,84 @@ class MetasNacionalesRepository {
     );
   }
 
-  Future<List<Hito>> obtenerHitosPorMetaNacional(
-    int metaNacionalId,
-  ) {
+  Future<List<Hito>> obtenerHitosPorMetaNacional(int metaNacionalId) {
     return (_database.select(_database.hitos)
-          ..where(
-            (hito) =>
-                hito.metaNacionalId.equals(
-              metaNacionalId,
-            ),
-          )
-          ..orderBy([
-            (hito) => OrderingTerm(
-                  expression: hito.orden,
-                ),
-          ]))
+          ..where((hito) => hito.metaNacionalId.equals(metaNacionalId))
+          ..orderBy([(hito) => OrderingTerm(expression: hito.orden)]))
         .get();
   }
 
-  Future<List<Subhito>> obtenerSubhitosPorHito(
-    int hitoId,
-  ) {
+  Future<List<Subhito>> obtenerSubhitosPorHito(int hitoId) {
     return (_database.select(_database.subhitos)
-          ..where(
-            (subhito) =>
-                subhito.hitoId.equals(hitoId),
-          )
-            ..orderBy([
-          (subhito) => OrderingTerm(
-            expression: subhito.orden,
-          ),
-        ]))
-      .get();
+          ..where((subhito) => subhito.hitoId.equals(hitoId))
+          ..orderBy([(subhito) => OrderingTerm(expression: subhito.orden)]))
+        .get();
   }
 
-  Future<List<InstitucionParticipante>>
-      obtenerInstitucionesPorMetaNacional(
+  Future<List<InstitucionParticipante>> obtenerInstitucionesPorMetaNacional(
     int metaNacionalId,
   ) async {
     final consulta = _database
-        .select(
-          _database.participacionesInstitucionales,
-        )
+        .select(_database.participacionesInstitucionales)
         .join([
-      innerJoin(
-        _database.instituciones,
-        _database.instituciones.id.equalsExp(
-          _database
-              .participacionesInstitucionales
-              .institucionId,
-        ),
-      ),
-    ]);
+          innerJoin(
+            _database.instituciones,
+            _database.instituciones.id.equalsExp(
+              _database.participacionesInstitucionales.institucionId,
+            ),
+          ),
+        ]);
 
     consulta.where(
-      _database
-          .participacionesInstitucionales
-          .metaNacionalId
-          .equals(metaNacionalId),
+      _database.participacionesInstitucionales.metaNacionalId.equals(
+        metaNacionalId,
+      ),
     );
 
     final resultados = await consulta.get();
 
     return resultados.map((fila) {
       return InstitucionParticipante(
-        institucion: fila.readTable(
-          _database.instituciones,
-        ),
-        participacion: fila.readTable(
-          _database.participacionesInstitucionales,
-        ),
+        institucion: fila.readTable(_database.instituciones),
+        participacion: fila.readTable(_database.participacionesInstitucionales),
       );
     }).toList();
   }
 
-  Future<List<InstitucionParticipante>>
-      obtenerInstitucionesPorHito(
+  Future<List<InstitucionParticipante>> obtenerInstitucionesPorHito(
     int hitoId,
   ) async {
     final consulta = _database
-        .select(
-          _database.participacionesInstitucionales,
-        )
+        .select(_database.participacionesInstitucionales)
         .join([
-      innerJoin(
-        _database.instituciones,
-        _database.instituciones.id.equalsExp(
-          _database
-              .participacionesInstitucionales
-              .institucionId,
-        ),
-      ),
-    ]);
+          innerJoin(
+            _database.instituciones,
+            _database.instituciones.id.equalsExp(
+              _database.participacionesInstitucionales.institucionId,
+            ),
+          ),
+        ]);
 
     consulta.where(
-      _database
-          .participacionesInstitucionales
-          .hitoId
-          .equals(hitoId),
+      _database.participacionesInstitucionales.hitoId.equals(hitoId),
     );
 
     final resultados = await consulta.get();
 
     return resultados.map((fila) {
       return InstitucionParticipante(
-        institucion: fila.readTable(
-          _database.instituciones,
-        ),
-        participacion: fila.readTable(
-          _database.participacionesInstitucionales,
-        ),
+        institucion: fila.readTable(_database.instituciones),
+        participacion: fila.readTable(_database.participacionesInstitucionales),
       );
     }).toList();
   }
 
-  Future<List<InstitucionResumen>>
-      obtenerInstituciones() async {
-    final instituciones =
-        await _database.select(
-          _database.instituciones,
-        ).get();
+  Future<List<InstitucionResumen>> obtenerInstituciones() async {
+    final instituciones = await _database.select(_database.instituciones).get();
 
-    final participaciones =
-        await _database.select(
-          _database.participacionesInstitucionales,
-        ).get();
+    final participaciones = await _database
+        .select(_database.participacionesInstitucionales)
+        .get();
 
     final conteos = <int, int>{};
 
@@ -447,75 +318,54 @@ class MetasNacionalesRepository {
     }
 
     instituciones.sort(
-      (a, b) => a.nombre.toLowerCase().compareTo(
-            b.nombre.toLowerCase(),
-          ),
+      (a, b) => a.nombre.toLowerCase().compareTo(b.nombre.toLowerCase()),
     );
 
     return instituciones.map((institucion) {
       return InstitucionResumen(
         institucion: institucion,
-        totalParticipaciones:
-            conteos[institucion.id] ?? 0,
+        totalParticipaciones: conteos[institucion.id] ?? 0,
       );
     }).toList();
   }
 
-  Future<Institucione?> obtenerInstitucionPorId(
-    int id,
-  ) {
-    return (_database.select(_database.instituciones)
-          ..where(
-            (institucion) =>
-                institucion.id.equals(id),
-          ))
-        .getSingleOrNull();
+  Future<Institucione?> obtenerInstitucionPorId(int id) {
+    return (_database.select(
+      _database.instituciones,
+    )..where((institucion) => institucion.id.equals(id))).getSingleOrNull();
   }
 
-  Future<List<InstitucionMetaParticipacion>>
-      obtenerMetasPorInstitucion(
-        int institucionId,
-      ) async {
-        final consulta = _database
-            .select(
-              _database.participacionesInstitucionales,
-            )
-            .join([
+  Future<List<InstitucionMetaParticipacion>> obtenerMetasPorInstitucion(
+    int institucionId,
+  ) async {
+    final consulta = _database
+        .select(_database.participacionesInstitucionales)
+        .join([
           innerJoin(
             _database.metasNacionales,
             _database.metasNacionales.id.equalsExp(
-              _database
-                  .participacionesInstitucionales
-                  .metaNacionalId,
+              _database.participacionesInstitucionales.metaNacionalId,
             ),
           ),
         ]);
 
-        consulta.where(
-          _database
-              .participacionesInstitucionales
-              .institucionId
-              .equals(institucionId),
-        );
+    consulta.where(
+      _database.participacionesInstitucionales.institucionId.equals(
+        institucionId,
+      ),
+    );
 
-        consulta.orderBy([
-          OrderingTerm(
-            expression: _database.metasNacionales.orden,
-          ),
-        ]);
+    consulta.orderBy([
+      OrderingTerm(expression: _database.metasNacionales.orden),
+    ]);
 
-        final resultados = await consulta.get();
+    final resultados = await consulta.get();
 
-        return resultados.map((fila) {
-          return InstitucionMetaParticipacion(
-            meta: fila.readTable(
-              _database.metasNacionales,
-            ),
-            participacion: fila.readTable(
-              _database
-                  .participacionesInstitucionales,
-            ),
-          );
-        }).toList();
-      }
-    }
+    return resultados.map((fila) {
+      return InstitucionMetaParticipacion(
+        meta: fila.readTable(_database.metasNacionales),
+        participacion: fila.readTable(_database.participacionesInstitucionales),
+      );
+    }).toList();
+  }
+}

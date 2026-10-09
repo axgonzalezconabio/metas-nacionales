@@ -14,28 +14,21 @@ class DatabaseInitializer {
     if (version == null) {
       await ContenidoSeed.cargar(database);
 
-      await _guardarVersionContenido(
-        contenidoVersionActual,
-      );
+      await _guardarVersionContenido(contenidoVersionActual);
 
       return;
     }
 
     if (version < contenidoVersionActual) {
-      await _actualizarContenido(
-        version,
-        contenidoVersionActual,
-      );
+      await _actualizarContenido(version, contenidoVersionActual);
     }
   }
 
   Future<int?> _obtenerVersionContenido() async {
-    final resultado = await (database.select(
-      database.configuracionContenido,
-    )..where(
-        (config) => config.clave.equals('contenido_version'),
-      ))
-        .getSingleOrNull();
+    final resultado =
+        await (database.select(database.configuracionContenido)
+              ..where((config) => config.clave.equals('contenido_version')))
+            .getSingleOrNull();
 
     if (resultado == null) {
       return null;
@@ -45,7 +38,9 @@ class DatabaseInitializer {
   }
 
   Future<void> _guardarVersionContenido(int version) async {
-    await database.into(database.configuracionContenido).insertOnConflictUpdate(
+    await database
+        .into(database.configuracionContenido)
+        .insertOnConflictUpdate(
           ConfiguracionContenidoCompanion.insert(
             clave: 'contenido_version',
             valor: version.toString(),
@@ -53,10 +48,7 @@ class DatabaseInitializer {
         );
   }
 
-  Future<void> _actualizarContenido(
-    int versionActual,
-    int nuevaVersion,
-  ) async {
+  Future<void> _actualizarContenido(int versionActual, int nuevaVersion) async {
     // Aquí agregaremos las migraciones de contenido
     // cuando exista una nueva versión oficial.
 
