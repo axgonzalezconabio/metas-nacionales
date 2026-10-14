@@ -494,7 +494,7 @@ class _HitoItem extends ConsumerWidget {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Este hito no tiene subhitos registrados.',
+                      ' ',
                       style: TextStyle(color: _muted, fontSize: 14),
                     ),
                   ),

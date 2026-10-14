@@ -5332,7 +5332,7 @@ class ContenidoSeed {
       await insertarParticipacionSeed(
         institucion: 'semarnat-dgpeea',
         meta: '15.0',
-        tipo: 'COADYUVANTE',
+        tipo: 'COORDINADORA',
       );
       await insertarParticipacionSeed(
         institucion: 'semarnat-dgra',

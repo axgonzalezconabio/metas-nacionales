@@ -1,5 +1,9 @@
 const List<String> _siglasMayusculas = [
   'nom-059-semarnat-2010',
+  'nom-232-ssa1-2009',
+  'nom-034-fito-1995',
+  'nom-033-fito-2016',
+  'nom-032-ssa2-2014',
   'conabio',
   'semarnat',
   'conanp',
@@ -187,12 +191,45 @@ final List<({RegExp patron, String reemplazo})> _reglasNombresMixtos =
 
 /// Corrige únicamente la presentación de siglas y nombres oficiales.
 String corregirSiglas(String texto) {
-  var resultado = texto;
+  // 1. Eliminar superíndices.
+  var resultado = texto.replaceAll(
+    RegExp(r'[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁽⁾ⁿ]'),
+    '',
+  );
+
+  // 2. Normalizar saltos de línea.
+  resultado = resultado.replaceAll('\r\n', '\n');
+
+  // 3. Colocar cada viñeta en una línea independiente.
+  resultado = resultado.replaceAllMapped(
+    RegExp(r'[ \t]*•[ \t]*'),
+    (match) => '\n• ',
+  );
+
+  // 4. Eliminar saltos de línea excesivos.
+  resultado = resultado.replaceAll(
+    RegExp(r'\n{3,}'),
+    '\n\n',
+  );
+
+  // 5. Evitar un salto de línea al inicio.
+  resultado = resultado.trim();
+
+  // 6. Corregir siglas.
   for (final regla in _reglasSiglas) {
-    resultado = resultado.replaceAll(regla.patron, regla.reemplazo);
+    resultado = resultado.replaceAll(
+      regla.patron,
+      regla.reemplazo,
+    );
   }
+
+  // 7. Corregir nombres con capitalización mixta.
   for (final regla in _reglasNombresMixtos) {
-    resultado = resultado.replaceAll(regla.patron, regla.reemplazo);
+    resultado = resultado.replaceAll(
+      regla.patron,
+      regla.reemplazo,
+    );
   }
+
   return resultado;
 }

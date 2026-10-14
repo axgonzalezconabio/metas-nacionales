@@ -41,6 +41,7 @@ dependencies:
   path: ^1.9.1
   path_provider: ^2.1.6
   syncfusion_flutter_pdfviewer: ^35.1.39
+  share_plus: ^13.3.1
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +74,7 @@ flutter:
     - assets/
     - assets/pilares/
     - assets/metas/
+    - assets/logos/
     - assets/documentos/metas_nacionales.pdf
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
